@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk">
+
+<f:view contentType="text/html" encoding="UTF-8">
+	<h:head>
+		<f:facet name="first">
+			<title><ui:insert name="title" /></title>
+
+			<ui:insert name="headFirst" />
+
+			<meta http-equiv="Cache-Control" content="no-store" />
+			<!-- HTTP 1.0 -->
+			<meta http-equiv="Pragma" content="no-cache" />
+			<!-- Prevents caching at the Proxy Server -->
+			<meta http-equiv="Expires" content="0" />
+			<meta http-equiv="X-UA-Compatible" content="IE=7" />
+
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+			<link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"
+				type="image/x-icon" />
+		</f:facet>
+
+		<f:facet name="last">
+
+			<h:outputScript name="jquery/jquery.js" library="primefaces" />
+			<h:outputScript name="jquery.main.js" library="js" />
+			<h:outputStylesheet library="css" name="style.css" />
+			<h:outputStylesheet library="css/template" name="all.css" />
+			<h:outputStylesheet library="css/template" name="allmobile.css" />
+			<h:outputStylesheet library="css" name="tools.css" />
+
+			<!--[if lt IE 8]><h:outputStylesheet library="css" name="ie.css" /><![endif]-->
+
+			<ui:insert name="headLast" />
+
+
+		</f:facet>
+	</h:head>
+
+	<h:body>
+
+		<div id="wrapper">
+			<div id="header">
+				<div class="header-section">
+					<ul class="add-nav">
+
+					</ul>
+				</div>
+				<div class="header-section">
+					<a href="#{sk:contextPath()}/index.xhtml"> <h:graphicImage
+							styleClass="logo" library="img" name="logo.png" />
+					</a>
+					<ul id="nav">
+						<li><a href="#{sk:contextPath()}/index.xhtml">Index</a></li>
+						<li><a href="#{sk:contextPath()}/campaignList.xhtml">Campaigns</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="main">
+				<ui:insert name="mainBody" />
+			</div>
+
+			<div id="footer">
+				<div class="footer-section">
+					<div class="block-contact">
+						<dl class="contact">
+							<dt class="message">Frequently Asked Questions</dt>
+							<dd>
+								<a href="faq.xhtml" style="font-size: 10pt;">FAQ</a>
+							</dd>
+						</dl>
+						<dl class="contact">
+							<dt class="mail">Email us at</dt>
+							<dd>
+								<a href="mailto:contact@prime.com.tr">contact@prime.com.tr</a>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="four-columns">
+					<div class="holder">
+						<div class="column"></div>
+						<div class="column"></div>
+						<div class="column"></div>
+						<div class="column"></div>
+					</div>
+				</div>
+				<p class="copy">
+					Copyright 2012 <b>Prime Technology</b> All rights reserved.
+				</p>
+			</div>
+
+		</div>
+	</h:body>
+</f:view>
+</html>

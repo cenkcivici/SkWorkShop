@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/data/mongo 
+           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+           http://www.springframework.org/schema/lang
+           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
+
+	<context:property-placeholder
+		location="classpath:/resources/application.properties" />
+
+	<tx:annotation-driven />
+
+	<context:component-scan base-package="com.sk" />
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>${cp3o.initialPoolSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${cp3o.minPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${cp3o.maxPoolSize}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${cp3o.idleConnectionTestPeriod}</value>
+		</property>
+		<property name="acquireIncrement">
+			<value>${cp3o.acquireIncrement}</value>
+		</property>
+		<property name="maxStatements">
+			<value>${cp3o.maxStatements}</value>
+		</property>
+		<property name="numHelperThreads">
+			<value>${cp3o.numHelperThreads}</value>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="packagesToScan" value="com.sk" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show.sql">${hibernate.showsql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

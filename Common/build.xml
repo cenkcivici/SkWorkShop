@@ -1,0 +1,80 @@
+<project name="Common" basedir="." default="dist">
+
+	<import file="../Libs/build-properties.xml" />
+
+	<property name="jar.file" location="${dist.dir}/Common.jar" />
+
+	<path id="common.master.classpath">
+		<path refid="build.jars.classpath" />
+		<path refid="common.jars.classpath" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/classes" />
+		<mkdir dir="${build.dir}/testclasses" />
+		<mkdir dir="${build.dir}/testreport" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile-prod" depends="init">
+		<copy todir="${prod.classes.dir}">
+			<fileset dir="${prod.src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+				<exclude name="**/log4j.xml" />
+			</fileset>
+		</copy>
+		<javac srcdir="${prod.src.dir}" destdir="${prod.classes.dir}" debug="on" deprecation="on" encoding="utf8">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="common.master.classpath" />
+		</javac>
+	</target>
+
+
+	<target name="compile-test" depends="init, compile-prod">
+		<copy todir="${test.classes.dir}">
+			<fileset dir="${test.src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="utf8">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="common.master.classpath" />
+			<classpath path="${prod.classes.dir}" />
+		</javac>
+	</target>
+
+	<target name="run-unit-tests" depends="init,compile-prod,compile-test">
+		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
+			<jvmarg value="-XX:MaxPermSize=512m" />
+			<classpath>
+				<pathelement location="${prod.classes.dir}" />
+				<pathelement location="${test.classes.dir}" />
+				<path refid="common.master.classpath" />
+			</classpath>
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="${build.dir}/testreport">
+				<fileset dir="${test.classes.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="dist" depends="init,compile-prod">
+		<jar destfile="${jar.file}">
+			<fileset dir="${prod.classes.dir}" />
+		</jar>
+	</target>
+
+
+</project>

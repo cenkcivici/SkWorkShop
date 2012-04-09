@@ -1,0 +1,218 @@
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
+
+.alignCenter {
+	align: center;
+}
+
+.alignBottom {
+	vertical-align: bottom;
+}
+
+.alignTop {
+	vertical-align: top;
+}
+
+.footerLeft {
+	text-align: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.footerRight {
+	text-align: right;
+	padding-right: 20px;
+}
+
+.formLabel {
+	padding-right: 40px;
+	vertical-align: top;
+}
+
+.formInput {
+	padding-bottom: 7px;
+	vertical-align: top;
+}
+
+.ui-icon-pencil {
+	background-position: 0px !important;
+	background-image: url(#{ resource [ 'img:edit.png' ]
+}
+
+)
+!
+important
+;
+
+	
+margin-top
+:
+8px;
+
+
+}
+.loading {
+	text-align: center;
+}
+
+.applicationSmall {
+	vertical-align: top;
+	width: 500px;
+}
+
+.applicationBig {
+	vertical-align: top;
+	width: 600px;
+}
+
+.pageLeft {
+	vertical-align: top;
+	width: 900px;
+}
+
+.pageRight {
+	vertical-align: top;
+	width: 60px;
+}
+
+.confirmPageLeft {
+	vertical-align: top;
+	width: 600px;
+}
+
+.confirmPageRight {
+	width: 300px;
+	vertical-align: top;
+}
+
+.submitClass {
+	display: block;
+	padding: 8px 10px;
+	width: 120px;
+	outline: none;
+	clear: both;
+	margin: 5px auto;
+	border-radius: 8px;
+	border: 1px solid #777;
+	text-decoration: none;
+	background: #3c3c3c;
+	color: #1fe8e0 !important;
+	font-size: 20px;
+}
+
+.firstInput {
+	margin: 20px 20px 20px 20px;
+	border: 1px solid #999;
+	border-radius: 6px;
+	color: #777;
+	font-weight: bold;
+	padding: 4px 10px;
+	height: 32px;
+	font-size: 16pt !important;
+	font-family: sans-serif;
+	width: 200px;
+}
+
+.firstInputText {
+	margin: 20px 20px 20px 20px;
+	color: #777;
+	font-weight: bold;
+	padding: 4px 10px;
+	height: 22px;
+	font-size: 18px;
+	font-family: sans-serif;
+	width: 200px;
+}
+
+.submitClass:hover {
+	background: #4c4c4c;
+}
+
+a img {
+	border: 0;
+}
+
+.headlessDialog .ui-dialog-titlebar {
+	display: none !important;
+}
+
+.wijmo-wijmenu .wijmo-wijmenu-link {
+	width: 82%;
+}
+
+.wijmo-wijmenu .wijmo-wijmenu-item .wijmo-wijmenu-text,.wijmo-wijmenu-horizontal .wijmo-wijmenu-parent .ui-icon,.wijmo-wijmenu-breadcrumb a,.wijmo-wijmenu-breadcrumb span,.wijmo-wijmenu-breadcrumb .wijmo-wijmenu-prev-list a .ui-icon
+	{
+	float: none;
+}
+
+.wizardPanel {
+	min-height: 420px !important;
+}
+
+/* clearing */
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+* html>body .clearfix {
+	width: 100%;
+}
+
+* html .clearfix { /* Hides from IE-mac \*/
+	height: 1%;
+	/* End hide from IE-mac */
+}
+/* end clearing */
+.activeTableRow {
+	background: #FFFFFF;
+}
+
+.passiveTableRow {
+	background: #EDEDED;
+}
+
+.ui-widget {
+	font: 14px/17px 'museo500', Arial, Helvetica, sans-serif !important;
+}
+
+.ui-datatable th,.ui-datatable tfoot td {
+	background: none repeat scroll 0 0 #D6E1E3;
+}
+
+.applicationTestingInfo {
+	text-align: center;
+	font-size: 18px;
+	font-weight: normal;
+	color: #454545;
+	margin-bottom: 10px;
+}
+
+.ui-datatable th,.ui-datatable tfoot td {
+	color: black;
+}
+
+.cursorPointer{
+	cursor: pointer;
+}
+
+.campaignLeft{
+	width: 78%;
+}
+
+.campaignRight{
+	width: 18%;
+}
+
+
+

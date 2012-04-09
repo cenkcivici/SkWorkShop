@@ -1,0 +1,59 @@
+<project name="PrimeAdsLibs">
+
+	<property name="build.dir" location="build" />
+	<property name="prod.src.dir" location="src/main" />
+	<property name="test.src.dir" location="src/test" />
+	<property name="web.dir" location="WebContent" />
+	<property name="webinf.dir" location="WebContent/WEB-INF" />
+	<property name="webinf.classes.dir" location="WebContent/WEB-INF/classes" />
+	<property name="webinf.lib.dir" location="WebContent/WEB-INF/lib" />
+	<property name="dist.dir" location="${build.dir}/dist" />
+	<property name="lib.dir" location="../Libs" />
+	<property name="common.jar" value="Common.jar" />
+	<property name="test.classes.dir" value="${build.dir}/testclasses" />
+	<property name="prod.classes.dir" value="${build.dir}/classes" />
+	<property name="tomcat.home" value="../PrimeAdsTools/apache-tomcat-7.0.16" />
+
+	<path id="build.jars.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="buildonly/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="common.jars.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="common/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="admin.jars.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="admin/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="frontend.jars.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="frontend/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="adserver.common.classpath">
+		<fileset dir="../Common/build/dist/">
+			<include name="${common.jar}" />
+		</fileset>
+	</path>
+
+	<path id="master.classpath">
+		<path refid="build.jars.classpath" />
+		<path refid="admin.jars.classpath" />
+		<path refid="frontend.jars.classpath" />
+		<path refid="common.jars.classpath" />
+	</path>
+
+	<path id="master.test.classpath">
+		<path refid="master.classpath" />
+		<path path="../Common/build/testclasses" />
+	</path>
+
+</project>

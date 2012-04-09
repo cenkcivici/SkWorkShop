@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
+	<application>
+		<locale-config>
+			<default-locale>tr</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>resources.i18n.bundle</base-name>
+			<var>lbl</var>
+		</resource-bundle>
+
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<system-event-listener>
+			<system-event-listener-class>com.sk.admin.web.util.LabelProvider
+			</system-event-listener-class>
+			<system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+			<source-class>javax.faces.component.html.HtmlOutputLabel</source-class>
+		</system-event-listener>
+	</application>
+
+	<converter>
+		<converter-for-class>com.sk.domain.BaseEntity</converter-for-class>
+		<converter-class>com.sk.admin.web.util.EntityConverter</converter-class>
+	</converter>
+
+	<converter>
+		<converter-id>entityConverter</converter-id>
+		<converter-class>com.sk.admin.web.util.EntityConverter</converter-class>
+	</converter>
+
+
+</faces-config>

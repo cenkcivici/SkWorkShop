@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+	version="2.0">
+	<namespace>http://www.prime.com.tr/sk</namespace>
+
+	<function>
+		<function-name>size</function-name>
+		<function-class>com.sk.admin.web.util.FaceletUtils</function-class>
+		<function-signature>int size(java.util.Collection)</function-signature>
+	</function>
+	<function>
+		<function-name>toList</function-name>
+		<function-class>com.sk.admin.web.util.FaceletUtils</function-class>
+		<function-signature>java.util.List toList(java.util.Set)</function-signature>
+	</function>
+	<function>
+		<function-name>contextPath</function-name>
+		<function-class>com.sk.admin.web.util.FaceletUtils</function-class>
+		<function-signature>java.lang.String contextPath()</function-signature>
+	</function>
+
+</facelet-taglib>

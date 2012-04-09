@@ -1,0 +1,82 @@
+@charset "UTF-8";
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+}
+#zemin {
+	height: 506px;
+	width: 932px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #212121;
+}
+#cerceve_zemn {
+	float: left;
+	height: 326px;
+	width: 733px;
+	margin-top: 52px;
+	margin-left: 95px;
+	background-image:  url(#{resource['img/error:cercevePX_zmn.png']});
+	background-repeat: repeat-x;
+}
+#foto_img {
+	float: left;
+	height: 326px;
+	width: 275px;
+	background-image: url(#{resource['img/error:fotoY_img.png']});
+	background-repeat: no-repeat;
+}
+#left {
+	background-image:  url(#{resource['img/error:left.png']});
+	background-repeat: no-repeat;
+	float: left;
+	height: 326px;
+	width: 6px;
+}
+#text_alan {
+	float: left;
+	height: 173px;
+	width: 393px;
+	margin-top: 116px;
+	margin-left: 23px;
+}
+#title {
+	float: left;
+	height: 30px;
+	width: 390px;
+	font-family: "Museo 500 Regular";
+	font-size: 24px;
+	color: #1b1b1b;
+}
+#icerik_text {
+	float: left;
+	height: 60px;
+	width: 390px;
+	margin-top: 5px;
+}
+#right {
+	background-image: url(#{resource['img/error:right.png']});
+	background-repeat: no-repeat;
+	float: right;
+	height: 326px;
+	width: 6px;
+}
+#question {
+	float: left;
+	height: 25px;
+	width: 200px;
+	font-size: 11px;
+	color: #959595;
+	font-family: "Museo 500 Regular";
+}
+#links {
+	float: left;
+	height: 50px;
+	width: 200px;
+	font-family: "Museo 500 Regular";
+	font-size: 12px;
+	color: #034576;
+}
+

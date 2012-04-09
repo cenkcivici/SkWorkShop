@@ -1,0 +1,118 @@
+<project name="Frontend" basedir="." default="init">
+
+	<import file="../Libs/build-properties.xml" />
+
+	<property name="war.file" location="${dist.dir}/frontend.war" />
+
+	<path id="frontend.master.classpath">
+		<path refid="build.jars.classpath" />
+		<path refid="frontend.jars.classpath" />
+		<path refid="common.jars.classpath" />
+
+	</path>
+
+	<path id="frontend.test.classpath">
+		<path refid="frontend.master.classpath" />
+		<path path="../Common/build/testclasses" />
+	</path>
+
+
+	<target name="clean" description="Cleans the project">
+		<delete dir="${build.dir}" />
+		<delete dir="${webinf.classes.dir}" />
+		<delete>
+			<fileset dir="${webinf.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="init">
+		<ant antfile="../Common/build.xml" target="dist" inheritall="false" />
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${webinf.classes.dir}" />
+		<mkdir dir="${build.dir}/testclasses" />
+		<mkdir dir="${build.dir}/testreport" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${webinf.classes.dir}" />
+
+		<copy todir="${webinf.lib.dir}" flatten="true">
+			<fileset dir="${lib.dir}/frontend">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/common">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="../Common/build/dist/">
+				<include name="${common.jar}" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile-prod" depends="init">
+		<copy todir="${webinf.classes.dir}">
+			<fileset dir="${prod.src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<javac srcdir="${prod.src.dir}" destdir="${webinf.classes.dir}" debug="on" deprecation="on" encoding="utf8">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="frontend.master.classpath" />
+		</javac>
+	</target>
+
+	<target name="compile-test" depends="compile-prod">
+		<copy todir="${test.classes.dir}">
+			<fileset dir="${test.src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="utf8">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="master.test.classpath" />
+			<classpath path="${webinf.classes.dir}" />
+		</javac>
+	</target>
+
+	<target name="run-unit-tests" depends="compile-prod,compile-test">
+		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
+			<jvmarg value="-XX:MaxPermSize=512m" />
+			<classpath>
+				<pathelement location="${webinf.classes.dir}" />
+				<path refid="master.test.classpath" />
+			</classpath>
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="${build.dir}/testreport">
+				<fileset dir="${test.classes.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="deploy-to-tomcat" depends="init, compile-prod">
+		<sleep seconds="3" />
+		<delete dir="${tomcat.home}/webapps/frontend" />
+		<mkdir dir="${tomcat.home}/webapps/frontend" />
+		<copy todir="${tomcat.home}/webapps/frontend">
+			<fileset dir="${web.dir}">
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="frontend-dist" depends="clean,init,compile-prod">
+		<war destfile="${war.file}" webxml="${webinf.dir}/web.xml" basedir="${build.dir}/../WebContent">
+			<lib dir="${webinf.lib.dir}">
+				<include name="*.jar" />
+			</lib>
+			<classes dir="${webinf.classes.dir}" />
+		</war>
+	</target>
+
+</project>
