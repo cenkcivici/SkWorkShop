@@ -5,7 +5,6 @@
 	<classpathentry exported="true" kind="lib" path="admin/el-impl-2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="admin/jsf-api.jar"/>
 	<classpathentry exported="true" kind="lib" path="admin/jsf-impl.jar"/>
-	<classpathentry exported="true" kind="lib" path="admin/primefaces-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/antlr-2.7.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/aopalliance.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/c3p0-0.9.1.jar"/>
@@ -54,5 +53,6 @@
 	<classpathentry exported="true" kind="lib" path="buildonly/org.springframework.test-3.1.0.RELEASE.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/commons-digester-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/commons-beanutils-1.8.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="admin/primefaces-3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
