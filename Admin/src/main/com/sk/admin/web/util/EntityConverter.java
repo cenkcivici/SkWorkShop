@@ -12,6 +12,7 @@ import com.sk.domain.dao.BaseEntityDao;
 
 public class EntityConverter implements Converter {
 
+	
 	private BaseEntityDao baseEntityDao;
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
