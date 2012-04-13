@@ -1,0 +1,1 @@
+package com.sk.domain;import javax.persistence.Embeddable;@Embeddablepublic class Photo {	private String fileName;	public String getFileName() {		return fileName;	}	public void setFileName(String fileName) {		this.fileName = fileName;	}		}

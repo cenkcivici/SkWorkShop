@@ -1,0 +1,1 @@
+package com.sk.domain.dao;import org.springframework.stereotype.Repository;import com.sk.domain.Product;@Repositorypublic class ProductDao extends GenericDao<Product> {	public ProductDao() {		super(Product.class);	}}

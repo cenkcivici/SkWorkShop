@@ -1,0 +1,1 @@
+package com.sk.util.builder;import com.sk.domain.Photo;public class PhotoBuilder {	private String fileName;	public Photo build() {		Photo photo = new Photo();		photo.setFileName(fileName);		return photo;	}	public PhotoBuilder fileName(String fileName) {		this.fileName = fileName;		return this;	}}

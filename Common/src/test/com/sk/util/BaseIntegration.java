@@ -36,9 +36,4 @@ public class BaseIntegration {
 		getSession().clear();
 	}
 
-	@Test
-	public void shouldHaveAtLeastOneTest() {
-		
-	}
-
 }
