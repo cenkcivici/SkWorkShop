@@ -294,20 +294,20 @@ ul li {
 	padding-bottom: 5px;
 	margin-bottom: 25px;
 	clear: both;
-	background: #fff url(#{resource['images:bnd.gif']}) bottom center repeat-x;
+	background: #fff url(#{resource['img/template:bnd.gif']}) bottom center repeat-x;
 }
 
 .block .bendl {
 	width: 5px;
 	height: 5px;
-	background: url(#{resource['images:bendl.gif']}) bottom left no-repeat;
+	background: url(#{resource['img/template:bendl.gif']}) bottom left no-repeat;
 	float: left;
 }
 
 .block .bendr {
 	width: 5px;
 	height: 5px;
-	background: url(#{resource['images:bendr.gif']}) bottom left no-repeat;
+	background: url(#{resource['img/template:bendr.gif']}) bottom left no-repeat;
 	float: right;
 }
 
@@ -323,14 +323,14 @@ ul li {
 	width: 20px;
 	height: 54px;
 	float: left;
-	background: url(#{resource['images:bheadl.gif']}) top left no-repeat;
+	background: url(#{resource['img/template:bheadl.gif']}) top left no-repeat;
 }
 
 .block .block_head .bheadr {
 	width: 20px;
 	height: 54px;
 	float: right;
-	background: url(#{resource['images:bheadr.gif']}) top right no-repeat;
+	background: url(#{resource['img/template:bheadr.gif']}) top right no-repeat;
 }
 
 .block .block_head h2 {
@@ -743,7 +743,7 @@ ul li {
 /* Small blocks */
 .block.small {
 	width: 49%;
-	background: #fff url(#{resource['images:bnd.gif']}) bottom center repeat-x;
+	background: #fff url(#{resource['img:bnd.gif']}) bottom center repeat-x;
 	padding-bottom: 0;
 }
 
@@ -781,7 +781,7 @@ ul li {
 /* Login block */
 .block.small.center.login {
 	width: 470px;
-	background: #fff url(../images/bnd.gif) bottom center repeat-x;
+	background: #fff url(../img/bnd.gif) bottom center repeat-x;
 	margin-top: 100px;
 	margin-bottom: 100px;
 	padding-bottom: 5px;

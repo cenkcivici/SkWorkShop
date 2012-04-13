@@ -12,48 +12,70 @@
 	</ui:define>
 
 	<ui:define name="formBody">
-		
+
 		<h:panelGrid columns="2">
-			<h:outputLabel for="title" value="Title"/>
-			<p:inputText required="true" id="title" value="#{productFormView.product.title}"/>
-		
-			<h:outputLabel for="description" value="Description"/>
-			<p:inputTextarea required="true" id="description" value="#{productFormView.product.description}"/>
-		
-			<h:outputLabel for="price" value="Price"/>
-			<p:inputText required="true" id="price" value="#{productFormView.product.price}"/>
-		
-			<h:outputLabel for="category" value="category"/>
-			<p:selectOneMenu id="category" value="#{productFormView.product.category}">
-				<f:selectItem itemLabel="Select"/>
+			<h:outputLabel for="title" value="Title" />
+			<p:inputText required="true" id="title" style="width:200px;"
+				value="#{productFormView.product.title}">
+			</p:inputText>
+
+			<h:outputLabel for="url" value="Url" />
+			<p:outputPanel id="urlPanel">
+				<p:inputText id="url" required="true" style="width:200px;"
+					value="#{productFormView.product.url}" />
+				<p:commandButton value="Create From Title" process="@this title"
+					update="urlPanel title" action="#{productFormView.createURIFromTitle}" />
+			</p:outputPanel>
+
+			<h:outputLabel for="description" value="Description" />
+			<p:inputTextarea required="true" id="description" autoResize="true"
+				value="#{productFormView.product.description}" />
+
+			<h:outputLabel for="price" value="Price" />
+			<p:inputText required="true" id="price"
+				value="#{productFormView.product.price}" />
+
+			<h:outputLabel for="category" value="category" />
+			<p:selectOneMenu id="category"
+				value="#{productFormView.product.category}">
+				<f:selectItem itemLabel="Select" />
 			</p:selectOneMenu>
-			
-		</h:panelGrid>	
-		
-		<p:panel header="Photos" id="photosPanel" style="margin-top:15px;margin-bottom:15px;">
-			
-			<h:outputLabel for="photoUrl" value="Photo Url"/>
-			<p:inputText id="photoUrl" value="#{productFormView.photo.fileName}"/>
-			
-			<p:commandButton value="Add Photo" process="photosPanel" update="photosPanel" action="#{productFormView.addPhoto}"/>
-			
-			<p:dataTable value="#{productFormView.product.photos}" var="photo" id="photos" >
+
+
+		</h:panelGrid>
+
+		<p:panel header="Photos" id="photosPanel"
+			style="margin-top:15px;margin-bottom:15px;">
+
+			<h:outputLabel for="photoUrl" value="Photo Url" />
+			<p:inputText id="photoUrl" value="#{productFormView.photo.fileName}" />
+
+			<p:commandButton value="Add Photo" process="photosPanel"
+				update="photosPanel" action="#{productFormView.addPhoto}" />
+
+			<p:dataTable value="#{productFormView.product.photos}" var="photo"
+				id="photos">
 				<p:column headerText="URL">
 					#{photo.fileName}
 				</p:column>
 				<p:column headerText="Image">
-					<h:graphicImage value="#{photo.fileName}" height="120px" width="120px"/>
+					<h:graphicImage value="#{photo.fileName}" height="120px"
+						width="120px" />
 				</p:column>
 				<p:column headerText="Delete">
-					<p:commandButton value="Delete Photo" process="@this" update="@form" action="#{productFormView.deletePhoto(photo)}"/>
+					<p:commandButton value="Delete Photo" process="@this"
+						update="@form" action="#{productFormView.deletePhoto(photo)}" />
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		
-		<p:commandButton value="Save" ajax="false" action="#{productFormView.save}"/>
-		<p:commandButton value="Apply" process="@form" update="@form" action="#{productFormView.apply}"/>
-		<p:commandButton value="Cancel" action="products?faces-redirect=true" ajax="false" immediate="true"/>
-		
+
+		<p:commandButton value="Save" ajax="false"
+			action="#{productFormView.save}" />
+		<p:commandButton value="Apply" process="@form" update="@form"
+			action="#{productFormView.apply}" />
+		<p:commandButton value="Cancel" action="products?faces-redirect=true"
+			ajax="false" immediate="true" />
+
 	</ui:define>
 
 </ui:composition>
