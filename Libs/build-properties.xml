@@ -38,7 +38,7 @@
 		</fileset>
 	</path>
 
-	<path id="adserver.common.classpath">
+	<path id="common.classpath">
 		<fileset dir="../Common/build/dist/">
 			<include name="${common.jar}" />
 		</fileset>

@@ -61,6 +61,7 @@
 		<javac srcdir="${prod.src.dir}" destdir="${webinf.classes.dir}" debug="on" deprecation="on" encoding="utf8">
 			<compilerarg value="-Xlint:unchecked" />
 			<classpath refid="frontend.master.classpath" />
+			<classpath path="${webinf.classes.dir}" />
 		</javac>
 	</target>
 
