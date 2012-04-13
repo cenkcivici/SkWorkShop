@@ -1,8 +1,0 @@
-.block-btn span,
-.block-clients .heading h3,
-.block-clients .clients-list{ margin-top: expression(this.parentNode.offsetHeight > this.offsetHeight ? ((this.parentNode.offsetHeight-this.offsetHeight)/2 + "px") : "0"); }
-.clients li a {
-	width: auto;
-	display:block;
-	margin-top: expression(this.parentNode.offsetHeight > this.offsetHeight ? ((this.parentNode.offsetHeight-this.offsetHeight)/2 + "px") : "0"); 
-}
