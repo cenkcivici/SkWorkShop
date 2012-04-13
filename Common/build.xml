@@ -70,7 +70,7 @@
 		</junit>
 	</target>
 
-	<target name="dist" depends="init,compile-prod">
+	<target name="dist" depends="run-unit-tests">
 		<jar destfile="${jar.file}">
 			<fileset dir="${prod.classes.dir}" />
 		</jar>

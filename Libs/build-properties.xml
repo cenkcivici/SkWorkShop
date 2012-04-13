@@ -1,4 +1,4 @@
-<project name="PrimeAdsLibs">
+<project name="Libs">
 
 	<property name="build.dir" location="build" />
 	<property name="prod.src.dir" location="src/main" />
@@ -43,17 +43,5 @@
 			<include name="${common.jar}" />
 		</fileset>
 	</path>
-
-	<path id="master.classpath">
-		<path refid="build.jars.classpath" />
-		<path refid="admin.jars.classpath" />
-		<path refid="frontend.jars.classpath" />
-		<path refid="common.jars.classpath" />
-	</path>
-
-	<path id="master.test.classpath">
-		<path refid="master.classpath" />
-		<path path="../Common/build/testclasses" />
-	</path>
-
+	
 </project>

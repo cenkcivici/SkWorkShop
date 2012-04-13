@@ -35,6 +35,12 @@
 				#{product.category}
 			</p:column>
 			
+			<p:column headerText="Edit">
+				<p:commandButton style="float:left;" action="productForm" process="@this" ajax="false" immediate="true" value="Edit">
+					<f:setPropertyActionListener target="#{flash.product}" value="#{product}"/>
+				</p:commandButton>
+			</p:column>
+			
 		</p:dataTable>
 		
 	</ui:define>

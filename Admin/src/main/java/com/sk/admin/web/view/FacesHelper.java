@@ -80,6 +80,10 @@ public class FacesHelper implements Serializable {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public String redirectFaces(String path){
+		return path + "?faces-redirect=true";
+	}
 
 	public void performNavigation(String to) {
 		ConfigurableNavigationHandler navHandler = (ConfigurableNavigationHandler) getFacesContext()
