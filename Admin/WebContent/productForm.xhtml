@@ -15,13 +15,13 @@
 		
 		<h:panelGrid columns="2">
 			<h:outputLabel for="title" value="Title"/>
-			<p:inputText id="title" value="#{productFormView.product.title}"/>
+			<p:inputText required="true" id="title" value="#{productFormView.product.title}"/>
 		
 			<h:outputLabel for="description" value="Description"/>
-			<p:inputTextarea id="description" value="#{productFormView.product.description}"/>
+			<p:inputTextarea required="true" id="description" value="#{productFormView.product.description}"/>
 		
 			<h:outputLabel for="price" value="Price"/>
-			<p:inputText id="price" value="#{productFormView.product.price}"/>
+			<p:inputText required="true" id="price" value="#{productFormView.product.price}"/>
 		
 			<h:outputLabel for="category" value="category"/>
 			<p:selectOneMenu id="category" value="#{productFormView.product.category}">
@@ -30,7 +30,7 @@
 			
 		</h:panelGrid>	
 		
-		<p:panel header="Photos" id="photosPanel">
+		<p:panel header="Photos" id="photosPanel" style="margin-top:15px;margin-bottom:15px;">
 			
 			<h:outputLabel for="photoUrl" value="Photo Url"/>
 			<p:inputText id="photoUrl" value="#{productFormView.photo.fileName}"/>

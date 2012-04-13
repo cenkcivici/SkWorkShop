@@ -214,5 +214,8 @@ a img {
 	width: 18%;
 }
 
+.ui-state-error{
+	border : 2px solid #CD0A0A !important;
+}
 
 
