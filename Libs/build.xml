@@ -7,7 +7,7 @@
 		<ant antfile="../Admin/build.xml" target="clean" inheritall="false" />
 		<ant antfile="../Frontend/build.xml" target="clean" inheritall="false" />
 
-		<ant antfile="../Admin/build.xml" target="run-unit-tests" inheritall="false" />
-		<ant antfile="../Frontend/build.xml" target="run-unit-tests" inheritall="false" />
+		<ant antfile="../Admin/build.xml" target="init" inheritall="false" />
+		<ant antfile="../Frontend/build.xml" target="init" inheritall="false" />
 	</target>
 </project>
