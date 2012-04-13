@@ -61,7 +61,7 @@
 		<javac srcdir="${prod.src.dir}" destdir="${webinf.classes.dir}" debug="on" deprecation="on" encoding="utf8">
 			<compilerarg value="-Xlint:unchecked" />
 			<classpath refid="admin.master.classpath" />
-			<classpath path="${webinf.classes.dir}" />
+			<classpath refid="common.classpath" />
 		</javac>
 	</target>
 
@@ -76,7 +76,7 @@
 		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="utf8">
 			<compilerarg value="-Xlint:unchecked" />
 			<classpath refid="master.test.classpath" />
-			<classpath path="${webinf.classes.dir}" />
+			<classpath refid="common.classpath" />
 		</javac>
 	</target>
 
