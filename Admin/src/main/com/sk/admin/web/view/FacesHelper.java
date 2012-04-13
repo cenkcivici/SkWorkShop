@@ -108,7 +108,7 @@ public class FacesHelper implements Serializable {
 	}
 
 	public void addPartialUpdateTarget(String target) {
-		getRequestContext().addPartialUpdateTarget(target);
+		getRequestContext().update(target);
 	}
 
 	public void executeJS(String js) {

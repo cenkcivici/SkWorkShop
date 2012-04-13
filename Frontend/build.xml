@@ -85,6 +85,7 @@
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<classpath>
 				<pathelement location="${webinf.classes.dir}" />
+				<pathelement location="${test.classes.dir}" />
 				<path refid="master.test.classpath" />
 			</classpath>
 			<formatter type="brief" usefile="false" />

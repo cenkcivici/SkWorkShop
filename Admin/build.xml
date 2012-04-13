@@ -117,6 +117,4 @@
 		</war>
 	</target>
 
-	<target name="integration-build" depends="clean, run-unit-tests"/>
-		
 </project>
