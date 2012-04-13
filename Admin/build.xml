@@ -81,10 +81,11 @@
 	</target>
 
 	<target name="run-unit-tests" depends="compile-prod,compile-test">
-		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" forkmode="once" maxmemory="512M">
+		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<classpath>
 				<pathelement location="${webinf.classes.dir}" />
+				<pathelement location="${test.classes.dir}" />
 				<path refid="master.test.classpath" />
 			</classpath>
 			<formatter type="brief" usefile="false" />
