@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Products
+	</ui:define>
+
+	<ui:define name="formBody">
+		
+		<p:dataTable var="product" value="#{productsView.all}" paginator="true" paginatorPosition="top">
+			
+			 <f:facet name="header">  
+	            <p:commandButton style="float:left;" action="productForm" process="@this" ajax="false" immediate="true" value="New Product"/>
+	        </f:facet>  
+        
+			<p:column headerText="Title">
+				#{product.title}
+			</p:column>
+			
+			<p:column headerText="Description">
+				#{product.description}
+			</p:column>
+			
+			<p:column headerText="Price">
+				#{product.price}
+			</p:column>
+			
+			<p:column headerText="Category">
+				#{product.category}
+			</p:column>
+			
+		</p:dataTable>
+		
+	</ui:define>
+
+</ui:composition>
