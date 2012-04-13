@@ -1,0 +1,13 @@
+<project name="Lib" basedir="." default="integration-build">
+
+	<import file="../Libs/build-properties.xml" />
+	
+	<target name="integration-build">
+		<ant antfile="../Common/build.xml" target="clean" inheritall="false" />
+		<ant antfile="../Admin/build.xml" target="clean" inheritall="false" />
+		<ant antfile="../Frontend/build.xml" target="clean" inheritall="false" />
+
+		<ant antfile="../Admin/build.xml" target="run-unit-tests" inheritall="false" />
+		<ant antfile="../Frontend/build.xml" target="run-unit-tests" inheritall="false" />
+	</target>
+</project>
