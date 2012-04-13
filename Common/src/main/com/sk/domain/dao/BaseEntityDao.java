@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "baseEntityDao")
 public class BaseEntityDao {
 
+	cc
 	@Autowired
 	private SessionFactory sessionFactory;
 
