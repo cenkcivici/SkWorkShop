@@ -7,63 +7,37 @@
 	xmlns:skc="http://java.sun.com/jsf/composite/skc"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:define name="headLast">
+	<ui:define name="body">
 
-		<h:outputScript library="js" name="primefacesLanguageStrings.js" />
+		<div class="block">
 
-		<ui:insert name="head" />
+			<div class="block_head">
+				<div class="bheadl"></div>
+				<div class="bheadr"></div>
 
-		<p:ajaxStatus onstart="dialogLoadingWidget.show();"
-			onsuccess="dialogLoadingWidget.hide();" />
-
-		<script type="text/javascript">
-			function redirectLogin() {
-				window.location = "#{ads:contextPath()}/login.jsf";
-			}
-
-			function stopRKey(evt) {
-				var evt = (evt) ? evt : ((event) ? event : null);
-				var node = (evt.target) ? evt.target
-						: ((evt.srcElement) ? evt.srcElement : null);
-				if (evt.keyCode == 13) {
-					if (node.type == 'text') {
-						return false;
-					}
-				}
-			}
-
-			document.onkeypress = stopRKey;
-		</script>
-		
-
-	</ui:define>
-
-	<ui:define name="mainBody">
-
-		<p:dialog id="dialogLoading" styleClass="headlessDialog"
-			position="top" modal="true" widgetVar="dialogLoadingWidget"
-			visible="false" closable="false" draggable="false" resizable="false">
-			<h:panelGrid width="100%" columnClasses="loading">
-				<h:graphicImage width="64" height="64" name="ajax-loader.gif"
-					library="img" />
-				<h:outputText value="#{lbl['loading']}" />
-			</h:panelGrid>
-		</p:dialog>
-
-		<div id="adminTwocolumns" class="adminContent-practice">
-			<div id="adminContent">
-				<div class="adminContent">
-
-					<ui:insert name="body">
-						Body to be replaced.
-					</ui:insert>
-				</div>
+				<h2>
+					<ui:insert name="contentTitle" />
+				</h2>
 			</div>
+			<!-- .block_head ends -->
+
+
+
+			<div class="block_content">
+				<h:form id="form" prependId="false">
+					<p:growl id="growl" showSummary="false" showDetail="true"
+						autoUpdate="true" />
+					<ui:insert name="formBody" />
+				</h:form>
+
+			</div>
+			<!-- .block_content ends -->
+
+			<div class="bendl"></div>
+			<div class="bendr"></div>
+
 		</div>
-
-
-		<ui:insert name="outerPanel">
-		</ui:insert>
+		<!-- .leftcol ends -->
 
 
 	</ui:define>
