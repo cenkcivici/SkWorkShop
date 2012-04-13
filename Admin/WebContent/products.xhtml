@@ -36,9 +36,12 @@
 			</p:column>
 			
 			<p:column headerText="Edit">
-				<p:commandButton style="float:left;" action="productForm" process="@this" ajax="false" immediate="true" value="Edit">
+				<p:commandButton  action="productForm" process="@this" ajax="false" immediate="true" value="Edit">
 					<f:setPropertyActionListener target="#{flash.product}" value="#{product}"/>
 				</p:commandButton>
+			</p:column>
+			<p:column headerText="Delete">
+				<p:commandButton action="#{productsView.deleteProduct(product)}" process="@this" update="@form" value="Delete"/>
 			</p:column>
 			
 		</p:dataTable>
