@@ -8,12 +8,15 @@
 		<path refid="build.jars.classpath" />
 		<path refid="frontend.jars.classpath" />
 		<path refid="common.jars.classpath" />
+		<path refid="common.classpath" />
 
 	</path>
 
 	<path id="frontend.test.classpath">
+		<pathelement location="${test.classes.dir}" />
 		<path refid="frontend.master.classpath" />
-		<path path="../Common/build/testclasses" />
+		<pathelement location="../Common/build/testclasses" />
+		<pathelement location="${webinf.classes.dir}" />
 	</path>
 
 
@@ -75,8 +78,8 @@
 		</copy>
 		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="utf8">
 			<compilerarg value="-Xlint:unchecked" />
-			<classpath refid="master.test.classpath" />
-			<classpath path="${webinf.classes.dir}" />
+			<classpath refid="frontend.test.classpath" />
+			<classpath refid="common.classpath" />
 		</javac>
 	</target>
 
@@ -84,9 +87,8 @@
 		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<classpath>
-				<pathelement location="${webinf.classes.dir}" />
-				<pathelement location="${test.classes.dir}" />
-				<path refid="master.test.classpath" />
+				<path refid="frontend.test.classpath" />
+				<path refid="common.classpath" />
 			</classpath>
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />

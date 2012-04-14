@@ -1,0 +1,33 @@
+@charset "windows-1251";
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+
+body{margin: 0px; padding: 0px;}
+div,td{font-family: Tahoma; font-size: 9px; color: #808080;}
+form{margin: 0px}
+.sel1{height: 19px; width: 109px; font-family: Tahoma; font-size: 10px; color: #46484A;}
+.topmenu{font-family: Tahoma; font-size: 10px; color: #46484A; font-weight: 600}
+.top11{font-family: Tahoma; font-size: 11px; color: #46484A;}
+.or11{font-family: Tahoma; font-size: 11px; color: #FF7E00;}
+
+
+.mb{color: #000000; font-size: 11px; position: absolute; font-family: tahoma; font-weight: 600}
+.mw{position: relative; left: -1; top: -1; color: #ffffff; font-size: 11px; font-family: tahoma; font-weight: 600}
+.aw{color: #ffffff; font-size: 11px; font-family: tahoma; font-weight: 600}
+
+.lb{color: #78BE30; font-size: 11px; position: absolute; font-family: tahoma; font-weight: 600}
+.lw{position: relative; left: -1; top: -1; color: #ffffff; font-size: 11px; font-family: tahoma; font-weight: 600}
+.law{color: #ffffff; font-size: 11px; font-family: tahoma; font-weight: 600}
+
+.lmenu{padding: 7px 0 4px 0}
+.lm11{font-family: Tahoma; font-size: 11px; color: #484E53;}
+
+.search{height: 20px; width: 117px; font-family: Tahoma; font-size: 11px; color: #46484A; border: #000000 1px solid; padding: 2px 3px 2px 3px}
+
+.so{font-family: Tahoma; font-size: 11px; color: #828B93;}
+
+
+.item_name{font-family: Tahoma; font-size: 14px; color: #E55C19; font-weight: 600; padding: 0 7px 0px 7px}
+.item_desc{font-family: Tahoma; font-size: 11px; color: #484E53; font-weight: 600; padding: 7px}
+.item_price{font-family: Tahoma; font-size: 14px; color: #3091BB; font-weight: 600; padding: 0 7px 15px 7px}
