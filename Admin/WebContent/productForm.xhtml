@@ -39,6 +39,7 @@
 			<p:selectOneMenu id="category"
 				value="#{productFormView.product.category}">
 				<f:selectItem itemLabel="Select" />
+				<f:selectItems values="#{productFormView.allCategories"/>
 			</p:selectOneMenu>
 			
 			<h:outputLabel for="featured" value="featured" />

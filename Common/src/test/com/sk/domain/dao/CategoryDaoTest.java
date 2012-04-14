@@ -19,7 +19,7 @@ public class CategoryDaoTest extends BaseIntegration {
 	
 	@Test
 	public void shouldPersistCategory() {
-		Category toPersist = new CategoryBuilder().name("Electronics").build();
+		Category toPersist = new CategoryBuilder().name("Electronics").url("url").description("desc").build();
 		
 		toPersist = categoryDao.persist(toPersist);
 		
@@ -28,6 +28,8 @@ public class CategoryDaoTest extends BaseIntegration {
 		Category fromDb = reget(toPersist);
 		
 		assertThat(fromDb.getName(), equalTo("Electronics"));
+		assertThat(fromDb.getUrl(),equalTo("url"));
+		assertThat(fromDb.getDescription(), equalTo("desc"));
 	}
 	
 

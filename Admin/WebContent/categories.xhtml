@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Categories
+	</ui:define>
+
+	<ui:define name="formBody">
+
+		<br />
+		<br />
+
+		<p:dataTable var="category" value="#{categoriesView.all}"
+			paginator="true" paginatorPosition="bottom">
+
+			<f:facet name="header">
+				<p:commandButton style="float:left;" action="categoryForm"
+					process="@this" ajax="false" immediate="true" value="New Category" />
+			</f:facet>
+
+			<p:column headerText="Name">
+				#{category.name}
+			</p:column>
+
+			<p:column headerText="Description">
+				#{category.description}
+			</p:column>
+
+			<p:column headerText="Url">
+				#{category.url}
+			</p:column>
+
+			<p:column headerText="Edit">
+				<p:commandButton action="categoryForm" process="@this" ajax="false"
+					immediate="true" value="Edit">
+					<f:setPropertyActionListener target="#{flash.category}"
+						value="#{category}" />
+				</p:commandButton>
+			</p:column>
+			<p:column headerText="Delete">
+				<p:commandButton action="#{categoriesView.deleteCategory(category)}"
+					process="@this" update="@form" value="Delete" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+		<br />
+
+	</ui:define>
+
+</ui:composition>

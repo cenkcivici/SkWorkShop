@@ -11,8 +11,7 @@
 <f:view contentType="text/html" encoding="UTF-8">
 	<h:head>
 		<f:facet name="first">
-			<title><ui:insert name="title" />
-			</title>
+			<title><ui:insert name="title" /></title>
 
 			<ui:insert name="headFirst" />
 
@@ -47,7 +46,7 @@
 				function redirectLogin() {
 					window.location = "#{sk:contextPath()}/login.jsf";
 				}
-	
+
 				function stopRKey(evt) {
 					var evt = (evt) ? evt : ((event) ? event : null);
 					var node = (evt.target) ? evt.target
@@ -58,7 +57,7 @@
 						}
 					}
 				}
-	
+
 				document.onkeypress = stopRKey;
 			</script>
 
@@ -81,11 +80,13 @@
 				</div>
 				<div class="header-section">
 					<a href="#{sk:contextPath()}/index.xhtml"> <h:graphicImage
-							styleClass="logo" library="img" name="logo.png" /> </a>
+							styleClass="logo" library="img" name="logo.png" />
+					</a>
 					<ul id="nav">
-						<li><a href="#{sk:contextPath()}/index.xhtml">Index</a>
-						</li>
+						<li><a href="#{sk:contextPath()}/index.xhtml">Index</a></li>
 						<li><a href="#{sk:contextPath()}/products.xhtml">Products</a>
+						</li>
+						<li><a href="#{sk:contextPath()}/categories.xhtml">Categories</a>
 						</li>
 					</ul>
 				</div>
@@ -93,26 +94,27 @@
 			<div id="main">
 				<p:dialog id="dialogLoading" styleClass="headlessDialog"
 					position="top" modal="true" widgetVar="dialogLoadingWidget"
-					visible="false" closable="false" draggable="false" resizable="false">
+					visible="false" closable="false" draggable="false"
+					resizable="false">
 					<h:panelGrid width="100%" columnClasses="loading">
 						<h:graphicImage width="64" height="64" name="ajax-loader.gif"
 							library="img" />
 						<h:outputText value="#{lbl['loading']}" />
 					</h:panelGrid>
 				</p:dialog>
-		
+
 				<div id="adminTwocolumns" class="adminContent-practice">
 					<div id="adminContent">
 						<div class="adminContent">
-		
+
 							<ui:insert name="body">
 								Body to be replaced.
 							</ui:insert>
 						</div>
 					</div>
 				</div>
-		
-		
+
+
 				<ui:insert name="outerPanel">
 				</ui:insert>
 			</div>

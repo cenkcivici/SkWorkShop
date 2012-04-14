@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Product Form
+	</ui:define>
+
+	<ui:define name="formBody">
+
+		<h:panelGrid columns="2">
+			<h:outputLabel for="name" value="Name" />
+			<p:inputText required="true" id="name" style="width:200px;"
+				value="#{categoryFormView.category.name}">
+			</p:inputText>
+
+			<h:outputLabel for="url" value="Url" />
+			<p:outputPanel id="urlPanel">
+				<p:inputText id="url" required="true" style="width:200px;"
+					value="#{categoryFormView.category.url}" />
+				<p:commandButton value="Create From Name" process="@this name"
+					update="urlPanel" action="#{categoryFormView.createURIFromName}" />
+			</p:outputPanel>
+
+			<h:outputLabel for="description" value="Description" />
+			<p:inputTextarea required="true" id="description" autoResize="true"
+				value="#{categoryFormView.category.description}" />
+
+
+		</h:panelGrid>
+
+		<p:commandButton value="Save" ajax="false"
+			action="#{categoryFormView.save}" />
+		<p:commandButton value="Apply" process="@form" update="@form"
+			action="#{categoryFormView.apply}" />
+		<p:commandButton value="Cancel"
+			action="categories?faces-redirect=true" ajax="false" immediate="true" />
+
+	</ui:define>
+
+</ui:composition>
