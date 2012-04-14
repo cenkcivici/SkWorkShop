@@ -40,6 +40,9 @@
 				value="#{productFormView.product.category}">
 				<f:selectItem itemLabel="Select" />
 			</p:selectOneMenu>
+			
+			<h:outputLabel for="featured" value="featured" />
+			<p:selectBooleanCheckbox id="featured" value="#{productFormView.product.featured}" />  
 
 
 		</h:panelGrid>

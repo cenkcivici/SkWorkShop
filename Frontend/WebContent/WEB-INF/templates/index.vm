@@ -184,94 +184,7 @@
 				<tr><td><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td></tr>
 			</table>
 			<div><img src="${staticRoot}/images/spacer.gif" width="1" height="3" border="0" alt=""></div>
-			<table border="0" cellpadding="0" cellspacing="0"  style="background: url(${staticRoot}/images/left_bg.gif)">
-				<tr>
-					<td><img src="${staticRoot}/images/left_left.gif" width="21" height="29" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/spacer.gif" width="7" height="1" border="0" alt=""></td>
-					<td width="404"><div class="lb">FEATURED PRODUCTS</div> <div class="lw">FEATURED PRODUCTS</div></td>
-					<td><img src="${staticRoot}/images/left_right.gif" width="6" height="29" border="0" alt=""></td>
-				</tr>
-			</table>
-			<table border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<td style="background: url(${staticRoot}/images/c_left.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td width="428" align="center">
-					<div><img src="${staticRoot}/images/spacer.gif" width="1" height="12" border="0" alt=""></div>
-					<table border="0" cellpadding="0" cellspacing="0">
-						<tr>
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td width="86" align="center"><a href="#"><img src="${staticRoot}/images/img1.jpg" width="79" height="66" border="0" alt=""></a></td>
-										<td width="120">
-											<div class="item_name">TFT-Monitor</div>
-											<div class="item_desc">Morbi nunc odio, gravida at, cursus.</div>
-											<div class="item_price"><span class="top11">price:</span> $749.00</div>
-											<div style="padding-bottom: 5px"><a href="#"><img src="${staticRoot}/images/but_info.gif" width="53" height="23" border="0" alt=""></a><a href="#"><img src="${staticRoot}/images/but_buy.gif" width="55" height="23" border="0" alt=""></a></div>
-										</td>
-									</tr>
-								</table>
-							</td>
-							<td style="background: url(${staticRoot}/images/bg_ver.gif) repeat-y center" height="126"><img src="${staticRoot}/images/spacer.gif" width="14" height="1" border="0" alt=""></td>
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td width="86" align="center"><a href="#"><img src="${staticRoot}/images/img2.jpg" width="72" height="56" border="0" alt=""></a></td>
-										<td width="120">
-											<div class="item_name">Sony®</div>
-											<div class="item_desc">Morbi nunc odio, gravida at, cursus.</div>
-											<div class="item_price"><span class="top11">price:</span> $149.00</div>
-											<div style="padding-bottom: 5px"><a href="#"><img src="${staticRoot}/images/but_info.gif" width="53" height="23" border="0" alt=""></a><a href="#"><img src="${staticRoot}/images/but_buy.gif" width="55" height="23" border="0" alt=""></a></div>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-							<td><img src="${staticRoot}/images/spacer.gif" width="1" height="19" border="0" alt=""></td>
-							<td style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-						</tr>
-						<tr>
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td width="86" align="center"><a href="#"><img src="${staticRoot}/images/img3.jpg" width="86" height="98" border="0" alt=""></a></td>
-										<td width="120">
-											<div class="item_name">Aurora 7500</div>
-											<div class="item_desc">Morbi nunc odio, gravida at, cursus.</div>
-											<div class="item_price"><span class="top11">price:</span> $1749.00</div>
-											<div style="padding-bottom: 5px"><a href="#"><img src="${staticRoot}/images/but_info.gif" width="53" height="23" border="0" alt=""></a><a href="#"><img src="${staticRoot}/images/but_buy.gif" width="55" height="23" border="0" alt=""></a></div>
-										</td>
-									</tr>
-								</table>
-							</td>
-							<td style="background: url(${staticRoot}/images/bg_ver.gif) repeat-y center" height="126"><img src="${staticRoot}/images/spacer.gif" width="14" height="1" border="0" alt=""></td>
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td width="86" align="center"><a href="#"><img src="${staticRoot}/images/img4.jpg" width="78" height="56" border="0" alt=""></a></td>
-										<td width="120">
-											<div class="item_name">Vaio</div>
-											<div class="item_desc">Morbi nunc odio, gravida at, cursus.</div>
-											<div class="item_price"><span class="top11">price:</span> $779.00</div>
-											<div style="padding-bottom: 5px"><a href="#"><img src="${staticRoot}/images/but_info.gif" width="53" height="23" border="0" alt=""></a><a href="#"><img src="${staticRoot}/images/but_buy.gif" width="55" height="23" border="0" alt=""></a></div>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-					<div><img src="${staticRoot}/images/spacer.gif" width="1" height="14" border="0" alt=""></div>
-					</td>
-					<td style="background: url(${staticRoot}/images/c_right.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-				</tr>
-				<tr>
-					<td><img src="${staticRoot}/images/c4.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c3.gif" width="5" height="5" border="0" alt=""></td>
-				</tr>
-			</table>
+			#parse("featuredProducts.vm")
 		</td>
 	</tr>
 </table>
@@ -289,21 +202,10 @@
 <table border="0" cellpadding="0" cellspacing="0" width="647" align="center">
 	<tr>
 		<td><img src="${staticRoot}/images/bot_ps.gif" width="181" height="26" border="0" alt=""></td>
-		<td align="right" valign="top"><div class="top11">Copyright © 2005 Company Name <b>Powered by <a href="#" class="top11">osCommerce</a></b><br>
-		<a href="http://icetemplates.com/" class="top11">Website Templates</a> by <a href="http://icetemplates.com/" class="top11">IceTemplates.com</a>
+		<td align="right" valign="top"><div class="top11">Copyright © 2012 Company Name <b>Powered by <a href="#" class="top11">Prime Technology</a></b><br>
 		</div></td>
 	</tr>
 </table>
 <div><img src="${staticRoot}/images/spacer.gif" width="1" height="42" border="0" alt=""></div>
-<!-- Start of StatCounter Code -->
-<script type="text/javascript" language="javascript">
-var sc_project=1952940; 
-var sc_invisible=1; 
-var sc_partition=17; 
-var sc_security="fa1db912"; 
-</script>
-
-<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c18.statcounter.com/counter.php?sc_project=1952940&amp;java=0&amp;security=fa1db912&amp;invisible=1" alt="hit counter" border="0"></a> </noscript>
-<!-- End of StatCounter Code -->
 </body>
 </html>
