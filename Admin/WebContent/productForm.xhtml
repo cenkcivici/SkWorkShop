@@ -35,14 +35,13 @@
 			<p:inputText required="true" id="price"
 				value="#{productFormView.product.price}" />
 
-			<h:outputLabel for="category" value="category" />
-			<p:selectOneMenu id="category"
-				value="#{productFormView.product.category}">
+			<h:outputLabel for="category" value="Category" />
+			<p:selectOneMenu id="category" value="#{productFormView.product.category}">
 				<f:selectItem itemLabel="Select" />
-				<f:selectItems values="#{productFormView.allCategories"/>
+				<f:selectItems value="#{productFormView.allCategories}" itemLabel="#{category.name}" var="category" itemValue="#{category}"/>
 			</p:selectOneMenu>
 			
-			<h:outputLabel for="featured" value="featured" />
+			<h:outputLabel for="featured" value="Featured" />
 			<p:selectBooleanCheckbox id="featured" value="#{productFormView.product.featured}" />  
 
 

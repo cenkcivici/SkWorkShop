@@ -16,7 +16,7 @@
 		<br />
 		<br />
 
-		<p:dataTable var="product" value="#{productsView.all}"
+		<p:dataTable var="product" value="#{productsView.all}" 
 			paginator="true" paginatorPosition="bottom">
 
 			<f:facet name="header">
@@ -37,7 +37,7 @@
 			</p:column>
 
 			<p:column headerText="Category">
-				#{product.category}
+				#{product.category.name}
 			</p:column>
 
 			<p:column headerText="Url">
