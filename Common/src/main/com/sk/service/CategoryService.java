@@ -45,5 +45,9 @@ public class CategoryService {
 		return categoryDao.persist(category);
 	}
 	
+	public Category findByUrl(String url) {
+		return categoryDao.findByUrl(url);
+	}
+	
 
 }

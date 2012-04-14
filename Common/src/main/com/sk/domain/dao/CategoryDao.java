@@ -11,4 +11,10 @@ public class CategoryDao extends GenericDao<Category> {
 		super(Category.class);
 	}
 
+	public Category findByUrl(String url) {
+		return (Category) getSession()
+						.createQuery("from Category where url=:url")
+						.setParameter("url", url).uniqueResult();
+	}
+
 }

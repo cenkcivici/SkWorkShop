@@ -32,5 +32,17 @@ public class CategoryDaoTest extends BaseIntegration {
 		assertThat(fromDb.getDescription(), equalTo("desc"));
 	}
 	
+	@Test
+	public void shouldFindByUrl() {
+		Category toPersistA = new CategoryBuilder().name("Toys").url("urlA").description("descA").persist(getSession());
+
+		flushAndClear();
+		
+		Category foundCategory = categoryDao.findByUrl("urlA");
+		
+		assertThat(foundCategory,equalTo(toPersistA));
+		
+	}
+	
 
 }
