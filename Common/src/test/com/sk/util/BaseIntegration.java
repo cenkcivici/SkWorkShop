@@ -3,7 +3,6 @@ package com.sk.util;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,7 +14,7 @@ import com.sk.domain.BaseEntity;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(transactionManager = "transactionManager")
+@TransactionConfiguration(defaultRollback=true, transactionManager = "transactionManager")
 @ContextConfiguration(locations = { "classpath:/resources/applicationContext-common.xml" })
 public class BaseIntegration {
 
