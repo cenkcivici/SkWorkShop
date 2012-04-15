@@ -1,58 +1,85 @@
-<table border="0" cellpadding="0" cellspacing="0"  style="background: url(${staticRoot}/images/left_bg.gif)">
-				<tr>
-					<td><img src="${staticRoot}/images/left_left.gif" width="21" height="29" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/spacer.gif" width="7" height="1" border="0" alt=""></td>
-					<td width="404"><div class="lb">FEATURED PRODUCTS</div> <div class="lw">FEATURED PRODUCTS</div></td>
-					<td><img src="${staticRoot}/images/left_right.gif" width="6" height="29" border="0" alt=""></td>
-				</tr>
-			</table>
+<table border="0" cellpadding="0" cellspacing="0"
+	style="background: url(${staticRoot}/images/left_bg.gif)">
+	<tr>
+		<td><img src="${staticRoot}/images/left_left.gif" width="21"
+			height="29" border="0" alt=""></td>
+		<td><img src="${staticRoot}/images/spacer.gif" width="7"
+			height="1" border="0" alt=""></td>
+		<td width="404"><div class="lb">FEATURED PRODUCTS</div>
+			<div class="lw">FEATURED PRODUCTS</div></td>
+		<td><img src="${staticRoot}/images/left_right.gif" width="6"
+			height="29" border="0" alt=""></td>
+	</tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td style="background: url(${staticRoot}/images/c_left.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+		<td width="428" align="center">
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="12"
+					border="0" alt="">
+			</div>
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td style="background: url(${staticRoot}/images/c_left.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td width="428" align="center">
-					<div><img src="${staticRoot}/images/spacer.gif" width="1" height="12" border="0" alt=""></div>
-					<table border="0" cellpadding="0" cellspacing="0">
+					#foreach($product in $featuredProducts)
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0">
 							<tr>
-							#foreach($product in $featuredProducts)
-							<td>
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tr>
-										<td width="86" align="center"><a href="#"><img src="${product.photos[0].fileName}" width="79" height="66" border="0" alt=""></a></td>
-										<td width="120">
-											<div class="item_name">${product.title}</div>
-											<div class="item_desc">${product.description}</div>
-											<div class="item_price"><span class="top11">price:</span> ${product.price}</div>
-											<div style="padding-bottom: 5px">
-											<a href="#">
-												<img src="${staticRoot}/images/but_info.gif" width="53" height="23" border="0" alt=""></a>
-											<a href="#">
-												<img src="${staticRoot}/images/but_buy.gif" width="55" height="23" border="0" alt="">
-											</a>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</td>
-							#if ($foreach.count % 2 == 1) 
-								<td style="background: url(${staticRoot}/images/bg_ver.gif) repeat-y center" height="126"><img src="${staticRoot}/images/spacer.gif" width="14" height="1" border="0" alt=""></td>
-							#else
-								</tr>
-								<tr>
-									<td style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-									<td><img src="${staticRoot}/images/spacer.gif" width="1" height="19" border="0" alt=""></td>
-									<td style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-								</tr>
-								<tr>
-							#end
-						#end
-					</table>
-					<div><img src="${staticRoot}/images/spacer.gif" width="1" height="14" border="0" alt=""></div>
-					</td>
-					<td style="background: url(${staticRoot}/images/c_right.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
+								<td width="86" align="center"><a href="#"><img
+										src="${product.photos[0].fileName}" width="79" height="66"
+										border="0" alt=""></a></td>
+								<td width="120">
+									<div class="item_name">${product.title}</div>
+									<div class="item_desc">${product.description}</div>
+									<div class="item_price">
+										<span class="top11">price:</span> ${product.price}
+									</div>
+									<div style="padding-bottom: 5px">
+										<a href="${appRoot}/product/${product.url}"> <img
+											src="${staticRoot}/images/but_info.gif" width="53"
+											height="23" border="0" alt=""></a> </a>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td> #if ($foreach.count % 2 == 1)
+					<td
+						style="background: url(${staticRoot}/images/bg_ver.gif) repeat-y center"
+						height="126"><img src="${staticRoot}/images/spacer.gif"
+						width="14" height="1" border="0" alt=""></td> #else
 				</tr>
 				<tr>
-					<td><img src="${staticRoot}/images/c4.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c3.gif" width="5" height="5" border="0" alt=""></td>
+					<td
+						style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/spacer.gif" width="1"
+						height="19" border="0" alt=""></td>
+					<td
+						style="background: url(${staticRoot}/images/bg_hor.gif) repeat-x center"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
 				</tr>
+				<tr>#end #end
 			</table>
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="14"
+					border="0" alt="">
+			</div>
+		</td>
+		<td style="background: url(${staticRoot}/images/c_right.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+	</tr>
+	<tr>
+		<td><img src="${staticRoot}/images/c4.gif" width="5" height="5"
+			border="0" alt=""></td>
+		<td style="background: url(${staticRoot}/images/c_bot.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+		<td><img src="${staticRoot}/images/c3.gif" width="5" height="5"
+			border="0" alt=""></td>
+	</tr>
+</table>
