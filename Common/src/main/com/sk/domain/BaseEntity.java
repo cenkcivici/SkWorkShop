@@ -44,13 +44,16 @@ public abstract class BaseEntity implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
+		}
 		if (!HibernateProxyHelper.getClassWithoutInitializingProxy(obj).equals(
-				HibernateProxyHelper.getClassWithoutInitializingProxy(this)))
+				HibernateProxyHelper.getClassWithoutInitializingProxy(this))){
 			return false;
+		}
 
 		BaseEntity other = (BaseEntity) obj;
 

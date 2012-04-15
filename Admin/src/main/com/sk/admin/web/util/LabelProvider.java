@@ -8,17 +8,21 @@ import javax.faces.event.SystemEventListener;
 
 public class LabelProvider implements SystemEventListener {
 
+	@Override
 	public boolean isListenerForSource(Object source) {
-		if (source instanceof HtmlOutputLabel)
+		if (source instanceof HtmlOutputLabel){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 
+	@Override
 	public void processEvent(SystemEvent event) throws AbortProcessingException {
 		HtmlOutputLabel outputLabel = (HtmlOutputLabel) event.getSource();
-		if (outputLabel.getFor() == null)
+		if (outputLabel.getFor() == null){
 			return;
+		}
 
 		UIComponent target = outputLabel.findComponent(outputLabel.getFor());
 
