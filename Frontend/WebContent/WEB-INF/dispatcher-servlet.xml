@@ -45,6 +45,7 @@ http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 			<props>
 				<prop key="output.encoding">UTF-8</prop>
 				<prop key="input.encoding">UTF-8</prop>
+				<prop key="velocimacro.library">macros.vm</prop>
 			</props>
 		</property>
 	</bean>

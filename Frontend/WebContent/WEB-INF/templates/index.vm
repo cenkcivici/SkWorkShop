@@ -1,211 +1,124 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title></title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<link href="${staticRoot}/css/style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<table border="0" cellpadding="0" cellspacing="0" align="center">
-	<tr>
-		<td height="143" width="240"><a href="#"><img src="${staticRoot}/images/logo.gif" width="200" height="37" border="0" alt="Your company name"></a></td>
-		<td width="403">
-			<table border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<td><img src="${staticRoot}/images/c1.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_top.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c2.gif" width="5" height="5" border="0" alt=""></td>
-				</tr>
-				<tr>
-					<td style="background: url(${staticRoot}/images/c_left.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td width="393" align="center">
-						<table border="0" cellpadding="0" cellspacing="0">
-							<tr>
-								<td><img src="${staticRoot}/images/spacer.gif" width="4" height="1" border="0" alt=""></td>
-								<td>
-									<div class="topmenu">Choose<br>
-										your language:</div>
-									<div style="padding: 2px"><a href="#"><img src="${staticRoot}/images/language1.gif" width="24" height="15" border="0" alt=""></a><a href="#"><img src="${staticRoot}/images/language2.gif" width="24" height="15" border="0" alt="" hspace="4"></a><a href="#"><img src="${staticRoot}/images/language3.gif" width="24" height="15" border="0" alt=""></a></div>
-									<img src="${staticRoot}/images/line_h1.gif" width="106" height="1" border="0" alt="" vspace="5">
-									<div class="topmenu">Currencies:</div>
-									<div style="padding: 5px 0 5px 0">
-										<form>
-										<select name="curency" size="1" class="sel1">
-							              	<option value="$"> $</option>
-							              	<option value="EUR"> EUR</option>
-							             </select>
-										 </form>
-						             </div>
-								</td>
-								<td><img src="${staticRoot}/images/line_v1.gif" width="1" height="86" border="0" alt="" hspace="9"></td>
-								<td>
-									<div style="padding: 3px 0 3px 0"><img src="${staticRoot}/images/ico.gif" width="9" height="7" border="0" alt=""> <a href="#" class="topmenu"><u>Specials</u></a></div>
-									<div style="padding: 3px 0 3px 0"><img src="${staticRoot}/images/ico.gif" width="9" height="7" border="0" alt=""> <a href="#" class="topmenu"><u>Search</u></a></div>
-									<div style="padding: 3px 0 3px 0"><img src="${staticRoot}/images/ico.gif" width="9" height="7" border="0" alt=""> <a href="#" class="topmenu"><u>Contact Us</u></a></div>
-									<div style="padding: 3px 0 3px 0"><img src="${staticRoot}/images/ico.gif" width="9" height="7" border="0" alt=""> <a href="#" class="topmenu"><u>Create an account</u></a></div>
-									<div style="padding: 3px 0 3px 0"><img src="${staticRoot}/images/ico.gif" width="9" height="7" border="0" alt=""> <a href="#" class="topmenu"><u>Customer Login</u></a></div>
-								</td>
-								<td><img src="${staticRoot}/images/line_v1.gif" width="1" height="86" border="0" alt="" hspace="9"></td>
-								<td>
-									<table border="0" cellpadding="0" cellspacing="0">
-										<tr>
-											<td><img src="${staticRoot}/images/sc.gif" width="40" height="34" border="0" alt=""></td>
-											<td><a href="#" class="top11"><b>Shopping<br>
-												Cart</b></a></td>
-										</tr>
-										<tr><td colspan="2"><img src="${staticRoot}/images/spacer.gif" width="1" height="8" border="0" alt=""></td></tr>
-										<tr><td colspan="2"><div class="top11">now in your cart <span class="or11"><b>5 items</b></span></div></td></tr>
-									</table>
-								</td>
-								
-							</tr>
-						</table>
-					</td>
-					<td style="background: url(${staticRoot}/images/c_right.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-				</tr>
-				<tr>
-					<td><img src="${staticRoot}/images/c4.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c3.gif" width="5" height="5" border="0" alt=""></td>
-				</tr>
-			</table>
-		</td>
-		<td><img src="${staticRoot}/images/spacer.gif" width="5" height="1" border="0" alt=""></td>
-	</tr>
-</table>
-
-
-
-
-<table border="0" cellpadding="0" cellspacing="0" align="center">
-	<tr>
-		<td><img src="${staticRoot}/images/menu_left.gif" width="7" height="40" border="0" alt=""></td>
-		<td width="635" style="background: url(${staticRoot}/images/menu_bg.gif)">
-		
-		
-			<table border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<form>
-					<td><div style="padding: 0 6px 0 7px"><input type="text" name="search" size="40" maxlength="256" class="search" value="search"></div></td>
-					<td><input type="image" src="${staticRoot}/images/menu_go.gif" border="0" width="38" height="28" alt=""></td>
-					</form>
-					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="16"></td>
-					<td><div class="mb">Home</div> <div class="mw"><a href="#" class="aw">Home</a></div></td>
-					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
-					<td><div class="mb">New Products</div> <div class="mw"><a href="#" class="aw">New Products</a></div></td>
-					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
-					<td><div class="mb">My Account</div> <div class="mw"><a href="#" class="aw">My Account</a></div></td>
-					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
-					<td><div class="mb">Shopping Cart</div> <div class="mw"><a href="#" class="aw">Shopping Cart</a></div></td>
-					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
-					<td><div class="mb">Checkout</div> <div class="mw"><a href="#" class="aw">Checkout</a></div></td>
-					
-					
-				</tr>
-			</table>
-		
-		</td>
-		<td><img src="${staticRoot}/images/menu_right.gif" width="6" height="40" border="0" alt=""></td>
-	</tr>
-</table>
-<div><img src="${staticRoot}/images/spacer.gif" width="1" height="7" border="0" alt=""></div>
-
-
-
+#@page()
 <table border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr>
 		<td valign="top">
-			<table border="0" cellpadding="0" cellspacing="0"  style="background: url(${staticRoot}/images/left_bg.gif)">
+			<table border="0" cellpadding="0" cellspacing="0"
+				style="background: url(${staticRoot}/images/left_bg.gif)">
 				<tr>
-					<td><img src="${staticRoot}/images/left_left.gif" width="21" height="29" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/spacer.gif" width="7" height="1" border="0" alt=""></td>
-					<td width="170"><div class="lb">BROWSE BY CATEGORIES</div> <div class="lw">BROWSE BY CATEGORIES</div></td>
-					<td><img src="${staticRoot}/images/left_right.gif" width="6" height="29" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/left_left.gif" width="21"
+						height="29" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/spacer.gif" width="7"
+						height="1" border="0" alt=""></td>
+					<td width="170"><div class="lb">BROWSE BY CATEGORIES</div>
+						<div class="lw">BROWSE BY CATEGORIES</div></td>
+					<td><img src="${staticRoot}/images/left_right.gif" width="6"
+						height="29" border="0" alt=""></td>
 				</tr>
 			</table>
 			<table border="0" cellpadding="0" cellspacing="0">
-			   	<tr>
-					<td style="background: url(${staticRoot}/images/c_left.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td width="194" align="center">
-						#parse("categories.vm")
-					</td>
-			   		<td style="background: url(${staticRoot}/images/c_right.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-			   	</tr>
 				<tr>
-					<td><img src="${staticRoot}/images/c4.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c3.gif" width="5" height="5" border="0" alt=""></td>
+					<td style="background: url(${staticRoot}/images/c_left.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td width="194" align="center">#parse("categories.vm")</td>
+					<td style="background: url(${staticRoot}/images/c_right.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+				</tr>
+				<tr>
+					<td><img src="${staticRoot}/images/c4.gif" width="5"
+						height="5" border="0" alt=""></td>
+					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/c3.gif" width="5"
+						height="5" border="0" alt=""></td>
 				</tr>
 			</table>
-			<div><img src="${staticRoot}/images/spacer.gif" width="1" height="7" border="0" alt=""></div>
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="7"
+					border="0" alt="">
+			</div>
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td><img src="${staticRoot}/images/c1.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_top.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c2.gif" width="5" height="5" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/c1.gif" width="5"
+						height="5" border="0" alt=""></td>
+					<td style="background: url(${staticRoot}/images/c_top.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/c2.gif" width="5"
+						height="5" border="0" alt=""></td>
 				</tr>
 				<tr>
-					<td style="background: url(${staticRoot}/images/c_left.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td width="194" align="center">
-					
-					<a href="#"><img src="${staticRoot}/images/so_img.jpg" width="116" height="112" border="0" alt=""></a>
-					<div style="padding: 9px 0 4px 0"><img src="${staticRoot}/images/so.gif" width="137" height="15" border="0" alt=""></div>
-					<div class="so"><b>Morbi nunc odi gravida.</b></div>
-					
-					</td>
-					<td style="background: url(${staticRoot}/images/c_right.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
+					<td style="background: url(${staticRoot}/images/c_left.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td width="194" align="center"><a href="#"><img
+							src="${staticRoot}/images/so_img.jpg" width="116" height="112"
+							border="0" alt=""></a>
+						<div style="padding: 9px 0 4px 0">
+							<img src="${staticRoot}/images/so.gif" width="137" height="15"
+								border="0" alt="">
+						</div>
+						<div class="so">
+							<b>Morbi nunc odi gravida.</b>
+						</div></td>
+					<td style="background: url(${staticRoot}/images/c_right.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
 				</tr>
 				<tr>
-					<td><img src="${staticRoot}/images/c4.gif" width="5" height="5" border="0" alt=""></td>
-					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/c3.gif" width="5" height="5" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/c4.gif" width="5"
+						height="5" border="0" alt=""></td>
+					<td style="background: url(${staticRoot}/images/c_bot.gif)"><img
+						src="${staticRoot}/images/spacer.gif" width="1" height="1"
+						border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/c3.gif" width="5"
+						height="5" border="0" alt=""></td>
 				</tr>
 			</table>
 		</td>
-		<td><img src="${staticRoot}/images/spacer.gif" width="4" height="1" border="0" alt=""></td>
+		<td><img src="${staticRoot}/images/spacer.gif" width="4"
+			height="1" border="0" alt=""></td>
 		<td valign="top">
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td rowspan="4"><img src="${staticRoot}/images/new1.jpg" width="297" height="188" border="0" alt=""></td>
-					<td><img src="${staticRoot}/images/new2.jpg" width="142" height="105" border="0" alt=""></td>
+					<td rowspan="4"><img src="${staticRoot}/images/new1.jpg"
+						width="297" height="188" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/new2.jpg" width="142"
+						height="105" border="0" alt=""></td>
 				</tr>
-				<tr><td style="background: url(${staticRoot}/images/new_bg.jpg)" height="22">
+				<tr>
+					<td style="background: url(${staticRoot}/images/new_bg.jpg)"
+						height="22">
 						<table border="0" cellpadding="0" cellspacing="0">
 							<tr>
-								<td valign="bottom"><img src="${staticRoot}/images/ico_click.gif" width="3" height="4" border="0" alt="" hspace="6" vspace="4"></td>
-								<td><div class="mb">Shopping Cart</div> <div class="mw"><a href="#" class="aw">Shopping Cart</a></div></td>
+								<td valign="bottom"><img
+									src="${staticRoot}/images/ico_click.gif" width="3" height="4"
+									border="0" alt="" hspace="6" vspace="4"></td>
+								<td><div class="mb">Shopping Cart</div>
+									<div class="mw">
+										<a href="#" class="aw">Shopping Cart</a>
+									</div></td>
 							</tr>
 						</table>
-				
-				</td></tr>
-				<tr><td><img src="${staticRoot}/images/new3.jpg" width="142" height="60" border="0" alt=""></td></tr>
-				<tr><td><img src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0" alt=""></td></tr>
+
+					</td>
+				</tr>
+				<tr>
+					<td><img src="${staticRoot}/images/new3.jpg" width="142"
+						height="60" border="0" alt=""></td>
+				</tr>
+				<tr>
+					<td><img src="${staticRoot}/images/spacer.gif" width="1"
+						height="1" border="0" alt=""></td>
+				</tr>
 			</table>
-			<div><img src="${staticRoot}/images/spacer.gif" width="1" height="3" border="0" alt=""></div>
-			#parse("featuredProducts.vm")
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="3"
+					border="0" alt="">
+			</div> #parse("featuredProducts.vm")
 		</td>
 	</tr>
 </table>
-
-
-<div><img src="${staticRoot}/images/spacer.gif" width="1" height="9" border="0" alt=""></div>
-<table border="0" cellpadding="0" cellspacing="0" style="background: #767F82" width="647" align="center">
-	<tr>
-		<td><img src="${staticRoot}/images/bot_left.gif" width="3" height="7" border="0" alt=""></td>
-		<td align="right"><img src="${staticRoot}/images/bot_right.gif" width="4" height="7" border="0" alt=""></td>
-	</tr>
-</table>
-<div><img src="${staticRoot}/images/spacer.gif" width="1" height="6" border="0" alt=""></div>
-
-<table border="0" cellpadding="0" cellspacing="0" width="647" align="center">
-	<tr>
-		<td><img src="${staticRoot}/images/bot_ps.gif" width="181" height="26" border="0" alt=""></td>
-		<td align="right" valign="top"><div class="top11">Copyright © 2012 Company Name <b>Powered by <a href="#" class="top11">Prime Technology</a></b><br>
-		</div></td>
-	</tr>
-</table>
-<div><img src="${staticRoot}/images/spacer.gif" width="1" height="42" border="0" alt=""></div>
-</body>
-</html>
+#end
