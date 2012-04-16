@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.sk.domain.ShoppingCart;
@@ -52,7 +53,12 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute(CART, shoppingCart);
 
 		return true;
-
+	}
+	
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+		ShoppingCart cart = (ShoppingCart) request.getAttribute("cart");
+		modelAndView.addObject("cart", cart);
 	}
 
 }

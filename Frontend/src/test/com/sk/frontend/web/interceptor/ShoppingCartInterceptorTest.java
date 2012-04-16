@@ -2,6 +2,7 @@ package com.sk.frontend.web.interceptor;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.service.UniqueIdGeneratorService;
@@ -103,6 +105,18 @@ public class ShoppingCartInterceptorTest {
 		Cookie cookie = response.getCookie("cart");
 		assertThat(cookie.getValue(), equalTo("UNIQUE"));
 		assertThat(cookie.getMaxAge(), equalTo(ShoppingCartInterceptor.SEVENDAYS / 1000));
+	}
+
+	@Test
+	public void shouldPopulateModelWithCart() throws Exception {
+		ShoppingCart cart = new ShoppingCartBuilder().build();
+		request.setAttribute("cart", cart);
+
+		ModelAndView mav = new ModelAndView();
+
+		interceptor.postHandle(request, response, null, mav);
+
+		assertThat(mav.getModel(), hasEntry("cart", (Object) cart));
 	}
 
 }
