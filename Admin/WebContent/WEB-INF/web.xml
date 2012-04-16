@@ -54,7 +54,7 @@
 
 	<filter>
 		<filter-name>openSessionInViewFilter</filter-name>
-		<filter-class>com.sk.admin.web.util.PrimeAdsOpenSessionInViewFilter</filter-class>
+		<filter-class>com.sk.admin.web.util.SkOpenSessionInViewFilter</filter-class>
 	</filter>
 
 	<filter-mapping>

@@ -59,8 +59,8 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 	@SuppressWarnings("unused")
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-		ShoppingCart cart = (ShoppingCart) request.getAttribute("cart");
-		modelAndView.addObject("cart", cart);
+		ShoppingCart cart = (ShoppingCart) request.getAttribute(CART);
+		modelAndView.addObject(CART, cart);
 	}
 
 }

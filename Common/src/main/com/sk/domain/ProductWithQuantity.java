@@ -81,6 +81,11 @@ public class ProductWithQuantity extends BaseEntity {
 	public double getCost() {
 		return quantity * product.getPrice();
 	}
+
+	public void incrementQuantity() {
+		quantity++;
+		
+	}
 	
 	
 
