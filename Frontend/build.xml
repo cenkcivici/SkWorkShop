@@ -2,7 +2,7 @@
 
 	<import file="../Libs/build-properties.xml" />
 
-	<property name="war.file" location="${dist.dir}/frontend.war" />
+	<property name="war.file" location="${dist.dir}/Frontend.war" />
 
 	<path id="frontend.master.classpath">
 		<path refid="build.jars.classpath" />

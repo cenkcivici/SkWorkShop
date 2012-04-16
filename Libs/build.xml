@@ -9,5 +9,8 @@
 
 		<ant antfile="../Admin/build.xml" target="init" inheritall="false" />
 		<ant antfile="../Frontend/build.xml" target="init" inheritall="false" />
+		
+		<ant antfile="../Admin/build.xml" target="admin-dist" inheritall="false" />
+		<ant antfile="../Frontend/build.xml" target="frontend-dist" inheritall="false" />
 	</target>
 </project>
