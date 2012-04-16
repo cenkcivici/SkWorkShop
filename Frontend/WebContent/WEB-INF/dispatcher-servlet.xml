@@ -13,6 +13,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 http://www.springframework.org/schema/util 
 http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+	<import resource="classpath:/resources/propertiesBean.xml"/>
+	
 	<mvc:annotation-driven />
 	
 	<mvc:interceptors>
