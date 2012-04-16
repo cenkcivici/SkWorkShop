@@ -13,14 +13,23 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 http://www.springframework.org/schema/util 
 http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<import resource="classpath:/resources/propertiesBean.xml"/>
-	
+	<import resource="classpath:/resources/propertiesBean.xml" />
+
 	<mvc:annotation-driven />
-	
+
 	<mvc:interceptors>
-         <bean class="com.sk.frontend.web.interceptor.ShoppingCartInterceptor" />
-    </mvc:interceptors>
-	
+		<bean class="com.sk.frontend.web.interceptor.ShoppingCartInterceptor" />
+	</mvc:interceptors>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="resources/messages" />
+	</bean>
 
 	<context:component-scan base-package="com.sk.frontend.web" />
 
@@ -53,6 +62,6 @@ http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 			</props>
 		</property>
 	</bean>
-	
+
 
 </beans>
