@@ -34,7 +34,7 @@
 							</tr>
 							#foreach($item in $cart.items)
 							<tr>	
-								<td>$item.product.name</td>
+								<td>$item.product.title</td>
 								<td>$item.product.price</td>
 								<td>$item.quantity</td>
 								<td>$item.cost</td>

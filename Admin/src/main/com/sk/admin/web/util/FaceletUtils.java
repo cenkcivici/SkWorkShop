@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-public class FaceletUtils {
+public final class FaceletUtils {
 
 	private FaceletUtils(){}
 	

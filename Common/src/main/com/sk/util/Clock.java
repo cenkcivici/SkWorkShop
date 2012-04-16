@@ -3,7 +3,7 @@ package com.sk.util;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Clock {
+public final class Clock {
 
 	private Clock(){}
 	
