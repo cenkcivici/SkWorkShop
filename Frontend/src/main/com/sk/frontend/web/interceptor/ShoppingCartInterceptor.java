@@ -14,6 +14,8 @@ import com.sk.service.CacheService;
 
 public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 
+	private static final String CART = "cart";
+
 	public static final int SEVENDAYS = 60*60*24*7;
 
 	@Autowired
@@ -31,7 +33,7 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		Cookie cookie = CookieUtils.getCookieByName(request, "cart");
+		Cookie cookie = CookieUtils.getCookieByName(request, CART);
 		String shoppingCartId = null;
 		ShoppingCart shoppingCart = null;
 		
@@ -44,10 +46,10 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 			shoppingCart = new ShoppingCart();
 			shoppingCartId = uniqueIdGeneratorService.newUniqueId();
 			cacheService.put(shoppingCartId, shoppingCart, SEVENDAYS);
-			CookieUtils.addCookie(response,"cart",shoppingCartId,SEVENDAYS/1000);
+			CookieUtils.addCookie(response,CART,shoppingCartId,SEVENDAYS/1000);
 		}
 		
-		request.setAttribute("cart", shoppingCart);
+		request.setAttribute(CART, shoppingCart);
 
 		return true;
 

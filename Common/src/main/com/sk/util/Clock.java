@@ -5,12 +5,11 @@ import java.util.Date;
 
 public class Clock {
 
-	public static boolean isFrozen;
+	private static boolean isFrozen;
 	private static Date timeSet;
 
 	public static void freeze() {
 		isFrozen = true;
-
 	}
 
 	public static void unfreeze() {
