@@ -9,8 +9,8 @@
 						height="29" border="0" alt=""></td>
 					<td><img src="${staticRoot}/images/spacer.gif" width="7"
 						height="1" border="0" alt=""></td>
-					<td width="404"><div class="lb">Product</div>
-						<div class="lw">Product</div></td>
+					<td width="404"><div class="lb">Cart Content</div>
+						<div class="lw">Cart Content</div></td>
 					<td><img src="${staticRoot}/images/left_right.gif" width="6"
 						height="29" border="0" alt=""></td>
 				</tr>
@@ -25,31 +25,21 @@
 							<img src="${staticRoot}/images/spacer.gif" width="1" height="12"
 								border="0" alt="">
 						</div>
-						<table border="0" cellpadding="0" cellspacing="0">
-							<tr>
-								<td>
-									<table border="0" cellpadding="0" cellspacing="0">
-										<tr>
-											<td width="86" align="center"><a href="#"><img
-													src="${product.photos[0].fileName}" width="79" height="66"
-													border="0" alt=""></a></td>
-											<td width="120">
-												<div class="item_name">${product.title}</div>
-												<div class="item_desc">${product.description}</div>
-												<div class="item_price">
-													<span class="top11">price:</span> ${product.price}
-												</div>
-												<div style="padding-bottom: 5px">
-													<a href="#"> <img
-														src="${staticRoot}/images/but_buy.gif" width="55"
-														height="23" border="0" alt="">
-													</a>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</td>
+						<table border="0" cellpadding="10" cellspacing="10">
+							<tr>	
+								<td>Product Name</td>
+								<td>Price</td>
+								<td>Quantity</td>
+								<td>Cost</td>
 							</tr>
+							#foreach($item in $cart.items)
+							<tr>	
+								<td>$item.product.name</td>
+								<td>$item.product.price</td>
+								<td>$item.quantity</td>
+								<td>$item.cost</td>
+							</tr>
+							#end
 						</table>
 						<div>
 							<img src="${staticRoot}/images/spacer.gif" width="1" height="14"
@@ -73,5 +63,4 @@
 		</td>
 	</tr>
 </table>
-
 #end

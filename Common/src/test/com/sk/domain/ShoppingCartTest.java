@@ -2,6 +2,7 @@ package com.sk.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.sameInstance;
 
 import org.junit.Test;
 
@@ -36,6 +37,34 @@ public class ShoppingCartTest {
 		ShoppingCart cart = new ShoppingCartBuilder().items(productWithQuantityA,productWithQuantityB).build();
 	
 		assertThat(cart.getCount(),equalTo(2));
+	}
+	
+	@Test
+	public void shouldAddProductWithQuantityOneIfNotExistsBefore() {
+		ShoppingCart cart = new ShoppingCartBuilder().build();
+		Product product = new ProductBuilder().price(100d).build();
+		
+		cart.addProduct(product);
+
+		
+		ProductWithQuantity item = cart.getItems().iterator().next();
+		assertThat(item.getProduct(), sameInstance(product));
+		assertThat(item.getQuantity(), equalTo(1));
+	}
+	
+	@Test
+	public void shouldIncrementQuantityIfExistsBefore() {
+		ShoppingCart cart = new ShoppingCartBuilder().build();
+		Product product = new ProductBuilder().price(100d).build();
+		
+		cart.addProduct(product);
+		cart.addProduct(product);
+
+		ProductWithQuantity item = cart.getItems().iterator().next();
+		
+		assertThat(cart.getItems().size(), equalTo(1));
+		assertThat(item.getProduct(), sameInstance(product));
+		assertThat(item.getQuantity(), equalTo(2));
 	}
 	
 

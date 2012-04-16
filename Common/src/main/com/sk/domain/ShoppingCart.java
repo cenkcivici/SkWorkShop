@@ -14,9 +14,9 @@ import javax.persistence.Table;
 public class ShoppingCart extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="cartItems")
+	@JoinTable(name = "cartItems")
 	private Set<ProductWithQuantity> items = new HashSet<ProductWithQuantity>();
 
 	public Set<ProductWithQuantity> getItems() {
@@ -32,7 +32,7 @@ public class ShoppingCart extends BaseEntity {
 		for (ProductWithQuantity eachProductWithQuantity : items) {
 			totalCost += eachProductWithQuantity.getCost();
 		}
-		
+
 		return totalCost;
 	}
 
@@ -40,6 +40,25 @@ public class ShoppingCart extends BaseEntity {
 		return items.size();
 	}
 	
-	
-	
+	private ProductWithQuantity getItemForProduct(Product product) {
+		for (ProductWithQuantity eachItem : items) {
+			if (eachItem.getProduct().equals(product)) {
+				return eachItem;
+			}
+		}
+		
+		return null;
+		
+	}
+
+	public void addProduct(Product product) {
+		ProductWithQuantity itemForProduct = getItemForProduct(product);
+		if (itemForProduct != null) {
+			itemForProduct.incrementQuantity();
+		} else {
+			ProductWithQuantity newItem = new ProductWithQuantity(product, 1);
+			items.add(newItem);
+		}
+	}
+
 }
