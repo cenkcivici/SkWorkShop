@@ -24,7 +24,5 @@ public class ShoppingCart extends BaseEntity {
 	public void setItems(Set<ProductWithQuantity> items) {
 		this.items = items;
 	}
-
 	
-
 }

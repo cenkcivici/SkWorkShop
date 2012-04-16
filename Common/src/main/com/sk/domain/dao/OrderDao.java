@@ -1,0 +1,1 @@
+package com.sk.domain.dao;import org.springframework.stereotype.Repository;import com.sk.domain.Order;@Repositorypublic class OrderDao extends GenericDao<Order> {	public OrderDao() {		super(Order.class);	}}
