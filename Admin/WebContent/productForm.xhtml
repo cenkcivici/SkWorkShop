@@ -17,32 +17,41 @@
 			<h:outputLabel for="title" value="Title" />
 			<p:inputText required="true" id="title" style="width:200px;"
 				value="#{productFormView.product.title}">
+				<f:validateLength maximum="150" />
 			</p:inputText>
 
 			<h:outputLabel for="url" value="Url" />
 			<p:outputPanel id="urlPanel">
 				<p:inputText id="url" required="true" style="width:200px;"
-					value="#{productFormView.product.url}" />
+					value="#{productFormView.product.url}">
+					<f:validateLength maximum="150" />
+				</p:inputText>
 				<p:commandButton value="Create From Title" process="@this title"
-					update="urlPanel title" action="#{productFormView.createURIFromTitle}" />
+					update="urlPanel title"
+					action="#{productFormView.createURIFromTitle}" />
 			</p:outputPanel>
 
 			<h:outputLabel for="description" value="Description" />
 			<p:inputTextarea required="true" id="description" autoResize="true"
-				value="#{productFormView.product.description}" />
+				value="#{productFormView.product.description}">
+				<f:validateLength maximum="500" />
+			</p:inputTextarea>
 
 			<h:outputLabel for="price" value="Price" />
 			<p:inputText required="true" id="price"
 				value="#{productFormView.product.price}" />
 
 			<h:outputLabel for="category" value="Category" />
-			<p:selectOneMenu id="category" value="#{productFormView.product.category}">
+			<p:selectOneMenu id="category"
+				value="#{productFormView.product.category}" required="true">
 				<f:selectItem itemLabel="Select" />
-				<f:selectItems value="#{productFormView.allCategories}" itemLabel="#{category.name}" var="category" itemValue="#{category}"/>
+				<f:selectItems value="#{productFormView.allCategories}"
+					itemLabel="#{category.name}" var="category" itemValue="#{category}" />
 			</p:selectOneMenu>
-			
+
 			<h:outputLabel for="featured" value="Featured" />
-			<p:selectBooleanCheckbox id="featured" value="#{productFormView.product.featured}" />  
+			<p:selectBooleanCheckbox id="featured"
+				value="#{productFormView.product.featured}" />
 
 
 		</h:panelGrid>

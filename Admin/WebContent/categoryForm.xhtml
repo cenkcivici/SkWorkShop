@@ -15,22 +15,26 @@
 
 		<h:panelGrid columns="2">
 			<h:outputLabel for="name" value="Name" />
-			<p:inputText required="true" id="name" style="width:200px;"
-				value="#{categoryFormView.category.name}">
+			<p:inputText id="name" style="width:200px;"
+				required="true" value="#{categoryFormView.category.name}">
+				<f:validateLength maximum="150" />
 			</p:inputText>
 
 			<h:outputLabel for="url" value="Url" />
 			<p:outputPanel id="urlPanel">
 				<p:inputText id="url" required="true" style="width:200px;"
-					value="#{categoryFormView.category.url}" />
+					value="#{categoryFormView.category.url}">
+					<f:validateLength maximum="150" />
+				</p:inputText>
 				<p:commandButton value="Create From Name" process="@this name"
 					update="urlPanel" action="#{categoryFormView.createURIFromName}" />
 			</p:outputPanel>
 
 			<h:outputLabel for="description" value="Description" />
 			<p:inputTextarea required="true" id="description" autoResize="true"
-				value="#{categoryFormView.category.description}" />
-
+				value="#{categoryFormView.category.description}">
+				<f:validateLength maximum="500" />
+			</p:inputTextarea>
 
 		</h:panelGrid>
 
