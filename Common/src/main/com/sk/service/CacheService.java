@@ -12,8 +12,9 @@ public class CacheService {
 
 	@Autowired
 	private MemcachedClient memcachedClient;
-	
-	public CacheService() {}
+
+	public CacheService() {
+	}
 
 	public CacheService(MemcachedClient cacheClient) {
 		memcachedClient = cacheClient;
@@ -21,6 +22,10 @@ public class CacheService {
 
 	public void put(String key, Serializable element, int expiry) {
 		memcachedClient.set(key, expiry, element);
+	}
+
+	public Object get(String key) {
+		return memcachedClient.get(key);
 	}
 
 }
