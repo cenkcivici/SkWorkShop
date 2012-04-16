@@ -3,16 +3,28 @@ package com.sk.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ShoppingCart {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-	private Set<Product> products = new HashSet<Product>();
+@Entity
+@Table(name = "shoppingCart")
+public class ShoppingCart extends BaseEntity {
 
-	public Set<Product> getProducts() {
-		return products;
+	private static final long serialVersionUID = 1L;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<ProductWithQuantity> items = new HashSet<ProductWithQuantity>();
+
+	public Set<ProductWithQuantity> getItems() {
+		return items;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public void setItems(Set<ProductWithQuantity> items) {
+		this.items = items;
 	}
+
+	
 
 }
