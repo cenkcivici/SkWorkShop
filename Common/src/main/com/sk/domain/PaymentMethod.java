@@ -1,0 +1,1 @@
+package com.sk.domain;import javax.persistence.Entity;import javax.persistence.Inheritance;import javax.persistence.InheritanceType;@Entity@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)public abstract class PaymentMethod extends BaseEntity {	private static final long serialVersionUID = 9064814454467095502L;}
