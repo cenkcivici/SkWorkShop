@@ -14,7 +14,7 @@
 	</category>
 
 	<category name="org.springframework">
-		<priority value="error" />
+		<priority value="debug" />
 	</category>
 
 	<root>
