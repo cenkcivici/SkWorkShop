@@ -1,5 +1,8 @@
 package com.sk.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.mockito.Mockito.when;
 import net.spy.memcached.MemcachedClient;
 
 import org.junit.Before;
@@ -23,6 +26,16 @@ public class CacheServiceTest {
 	@Test
 	public void shouldSendToMemcached() {
 		service.put("data", "value", 100);
+	}
+
+	@Test
+	public void shouldGetFromMemcached() {
+		String element = "CCC";
+		when(cacheClient.get("key")).thenReturn(element);
+
+		Object cachedElement = service.get("key");
+
+		assertThat(cachedElement, sameInstance((Object) element));
 	}
 
 }
