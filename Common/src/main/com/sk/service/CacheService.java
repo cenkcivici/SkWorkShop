@@ -12,6 +12,8 @@ public class CacheService {
 
 	@Autowired
 	private MemcachedClient memcachedClient;
+	
+	public CacheService() {}
 
 	public CacheService(MemcachedClient cacheClient) {
 		memcachedClient = cacheClient;
