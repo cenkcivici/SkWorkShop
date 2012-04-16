@@ -9,13 +9,13 @@ public class ProductWithQuantityBuilder extends BaseBuilder<ProductWithQuantity,
 	private int quantity = 1;
 
 
-	public ProductWithQuantityBuilder setProduct(Product product) {
+	public ProductWithQuantityBuilder product(Product product) {
 		this.product = product;
 		return this;
 	}
 
 
-	public ProductWithQuantityBuilder setQuantity(int quantity) {
+	public ProductWithQuantityBuilder quantity(int quantity) {
 		this.quantity = quantity;
 		return this;
 	}
