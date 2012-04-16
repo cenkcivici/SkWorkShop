@@ -70,6 +70,10 @@ public class ProductWithQuantity extends BaseEntity {
 			return false;
 		return true;
 	}
+
+	public double getCost() {
+		return quantity * product.getPrice();
+	}
 	
 	
 

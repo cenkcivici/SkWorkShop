@@ -44,7 +44,7 @@
 												Cart</b></a></td>
 										</tr>
 										<tr><td colspan="2"><img src="${staticRoot}/images/spacer.gif" width="1" height="8" border="0" alt=""></td></tr>
-										<tr><td colspan="2"><div class="top11">now in your cart <span class="or11"><b>5 items</b></span></div></td></tr>
+										<tr><td colspan="2"><div class="top11">now in your cart <span class="or11"><b><a href="${appRoot}/cart/show">${cart.count} items</a></b></span></div></td></tr>
 									</table>
 								</td>
 								
@@ -84,7 +84,7 @@
 					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
 					<td><div class="mb">My Account</div> <div class="mw"><a href="#" class="aw">My Account</a></div></td>
 					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
-					<td><div class="mb">Shopping Cart</div> <div class="mw"><a href="#" class="aw">Shopping Cart</a></div></td>
+					<td><div class="mb">Shopping Cart</div> <div class="mw"><a href="${appRoot}/cart/show" class="aw">Shopping Cart</a></div></td>
 					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
 					<td><div class="mb">Checkout</div> <div class="mw"><a href="#" class="aw">Checkout</a></div></td>
 					
