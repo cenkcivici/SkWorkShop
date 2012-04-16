@@ -10,7 +10,7 @@
 			<default-locale>en</default-locale>
 		</locale-config>
 		<resource-bundle>
-			<base-name>i18n.bundle</base-name>
+			<base-name>resources.i18n.bundle</base-name>
 			<var>lbl</var>
 		</resource-bundle>
 

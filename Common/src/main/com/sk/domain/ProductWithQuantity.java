@@ -60,8 +60,10 @@ public class ProductWithQuantity extends BaseEntity {
 		if (!super.equals(obj)){
 			return false;
 		}
-		if (getClass() != obj.getClass())
+		if (getClass() != obj.getClass()){
 			return false;
+		}
+		
 		ProductWithQuantity other = (ProductWithQuantity) obj;
 		if (product == null) {
 			if (other.product != null){
