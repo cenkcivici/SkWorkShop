@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 
-public class PrimeAdsOpenSessionInViewFilter extends OpenSessionInViewFilter {
+public class SkOpenSessionInViewFilter extends OpenSessionInViewFilter {
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
