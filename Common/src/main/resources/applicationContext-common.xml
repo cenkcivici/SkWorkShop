@@ -18,8 +18,8 @@
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
 			<list>
-				<value>classpath:application.properties</value>
-				<value>classpath:application.${target_platform}.properties</value>
+				<value>classpath:/resources/application.properties</value>
+				<value>classpath:/resources/application.${target_platform}.properties</value>
 			</list>
 		</property>
 		<property name="ignoreResourceNotFound" value="true" />
