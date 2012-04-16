@@ -33,7 +33,6 @@ public class CategoryController {
 		this.productService = productService;
 	}
 
-
 	@RequestMapping(value = "/{categoryUrl}", method = RequestMethod.GET)
 	public ModelAndView productsByCategory(@PathVariable String categoryUrl) {
 		ModelAndView mav = new ModelAndView("categoryFront");
