@@ -1,0 +1,1 @@
+package com.sk.domain;import javax.persistence.Entity;@Entitypublic class CreditCardPaymentMethod extends PaymentMethod {	private static final long serialVersionUID = 5855690590187104905L;	private String cardNumber;	public String getCardNumber() {		return cardNumber;	}	public void setCardNumber(String cardNumber) {		this.cardNumber = cardNumber;	}}

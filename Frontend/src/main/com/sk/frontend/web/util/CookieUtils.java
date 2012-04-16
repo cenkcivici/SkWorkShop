@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieUtils {
 
+	private CookieUtils(){}
+	
 	public static Cookie getCookieByName(ServletRequest request, String cookieName) {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Cookie[] cookies = httpRequest.getCookies();

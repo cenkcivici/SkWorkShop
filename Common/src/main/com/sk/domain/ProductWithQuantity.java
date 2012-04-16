@@ -54,20 +54,27 @@ public class ProductWithQuantity extends BaseEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
+		
 		ProductWithQuantity other = (ProductWithQuantity) obj;
 		if (product == null) {
-			if (other.product != null)
+			if (other.product != null){
 				return false;
-		} else if (!product.equals(other.product))
+			}
+		} else if (!product.equals(other.product)){
 			return false;
-		if (quantity != other.quantity)
+		}
+		if (quantity != other.quantity){
 			return false;
+		}
 		return true;
 	}
 

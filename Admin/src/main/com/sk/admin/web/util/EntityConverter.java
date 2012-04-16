@@ -15,14 +15,16 @@ public class EntityConverter implements Converter {
 	
 	private BaseEntityDao baseEntityDao;
 
+	@SuppressWarnings("unused")
+	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (StringUtils.isBlank(value)) {
 			return null;
 		}
 
 		try {
-			int underscoreIndex = value.indexOf("_");
-			int lastUnderscoreIndex = value.lastIndexOf("_");
+			int underscoreIndex = value.indexOf('_');
+			int lastUnderscoreIndex = value.lastIndexOf('_');
 
 			String className = value.substring(0, underscoreIndex);
 			String id = value.substring(lastUnderscoreIndex + 1, value.length());
@@ -35,6 +37,8 @@ public class EntityConverter implements Converter {
 		}
 	}
 
+	@SuppressWarnings("unused")
+	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value == null) {
 			return null;

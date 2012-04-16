@@ -10,11 +10,7 @@ public class LabelProvider implements SystemEventListener {
 
 	@Override
 	public boolean isListenerForSource(Object source) {
-		if (source instanceof HtmlOutputLabel){
-			return true;
-		}else{
-			return false;
-		}
+		return source instanceof HtmlOutputLabel;
 	}
 
 	@Override
