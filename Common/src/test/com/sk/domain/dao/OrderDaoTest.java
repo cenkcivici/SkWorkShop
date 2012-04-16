@@ -2,9 +2,7 @@ package com.sk.domain.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
-import org.hamcrest.collection.IsCollectionContaining;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,10 +15,10 @@ import com.sk.util.BaseIntegration;
 import com.sk.util.builder.CategoryBuilder;
 import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ProductBuilder;
+import com.sk.util.builder.ShoppingCartBuilder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
 
 public class OrderDaoTest extends BaseIntegration {
 
@@ -33,15 +31,11 @@ public class OrderDaoTest extends BaseIntegration {
 	public void shouldPersistOrder() {
 		Date now = new Date();
 
-		// Replace with shopping cart builder when cenk pushes shop.cart.builder
-		ShoppingCart shoppingCart = new ShoppingCart();
 		Category category = new CategoryBuilder().persist(getSession());
 		Product product1 = new ProductBuilder().category(category).persist(getSession());
 		Product product2 = new ProductBuilder().category(category).persist(getSession());
 
-		shoppingCart.getItems().add(new ProductWithQuantity(product1, 1));
-		shoppingCart.getItems().add(new ProductWithQuantity(product2, 2));
-		// //////////////////////////////////////////////////////////////////////
+		ShoppingCart shoppingCart = new ShoppingCartBuilder().items(new ProductWithQuantity(product1, 1),new ProductWithQuantity(product2, 2)).build();
 
 		Order toPersist = new OrderBuilder().shoppingCart(shoppingCart).orderDate(now).build();
 

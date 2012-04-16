@@ -8,18 +8,19 @@ import com.sk.domain.ProductWithQuantity;
 import com.sk.domain.ShoppingCart;
 
 public class ShoppingCartBuilder extends BaseBuilder<ShoppingCart, ShoppingCartBuilder> {
-	
-	private Set<ProductWithQuantity> items = new HashSet<ProductWithQuantity>();
 
+	private Set<ProductWithQuantity> items = new HashSet<ProductWithQuantity>();
 
 	@Override
 	protected ShoppingCart doBuild() {
 		ShoppingCart shoppingCart = new ShoppingCart();
+		shoppingCart.setItems(items);
 		return shoppingCart;
 	}
-	
-	public ShoppingCartBuilder(ProductWithQuantity... items) {
+
+	public ShoppingCartBuilder items(ProductWithQuantity... items) {
 		this.items.addAll(Arrays.asList(items));
+		return this;
 	}
 
 }
