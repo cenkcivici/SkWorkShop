@@ -32,8 +32,9 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 		this.uniqueIdGeneratorService = uniqueIdGeneratorService;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		Cookie cookie = CookieUtils.getCookieByName(request, CART);
 		String shoppingCartId = null;
 		ShoppingCart shoppingCart = null;
@@ -55,8 +56,9 @@ public class ShoppingCartInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 		ShoppingCart cart = (ShoppingCart) request.getAttribute("cart");
 		modelAndView.addObject("cart", cart);
 	}

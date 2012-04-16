@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class Clock {
 
+	private Clock(){}
+	
 	private static boolean isFrozen;
 	private static Date timeSet;
 

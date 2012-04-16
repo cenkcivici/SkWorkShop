@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class FaceletUtils {
 
+	private FaceletUtils(){}
+	
 	public static int size(Collection<?> collection) {
 		if (collection == null) {
 			return 0;
