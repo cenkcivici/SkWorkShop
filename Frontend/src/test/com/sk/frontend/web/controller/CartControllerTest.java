@@ -86,5 +86,36 @@ public class CartControllerTest {
 		
 		verify(cacheService).put("1234", cart, ShoppingCartInterceptor.SEVENDAYS);
 	}
+	
+	@Test
+	public void shouldDeleteProductInShoppingCart() {
+		String productUrl = "product-url";
+		
+		Product product = new ProductBuilder().build();
+		ShoppingCart cart = new ShoppingCartBuilder().build();
+		cart.addProduct(product);
+		
+		when(productService.findByUrl(productUrl)).thenReturn(product);
+		request.setAttribute("cart", cart);
+		request.setCookies(new Cookie("cart", "1234"));
+		
+		cartController.deleteFromCart(productUrl, request);
+		
+		
+		assertThat(cart.getItems().size(), equalTo(0));
+	}
+
+	@Test
+	public void shouldAddCartToCacheEveryDelete(){
+		String productUrl = "product-url";
+		ShoppingCart cart = new ShoppingCartBuilder().build();
+		
+		request.setAttribute("cart", cart);
+		request.setCookies(new Cookie("cart", "1234"));
+		
+		cartController.deleteFromCart(productUrl, request);
+		
+		verify(cacheService).put("1234", cart, ShoppingCartInterceptor.SEVENDAYS);
+	}
 
 }
