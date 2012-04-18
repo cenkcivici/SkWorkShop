@@ -85,8 +85,6 @@ public class CartControllerTest {
 		cartController.addToCart(productUrl, request);
 		
 		verify(cacheService).put("1234", cart, ShoppingCartInterceptor.SEVENDAYS);
-		
 	}
-	
 
 }

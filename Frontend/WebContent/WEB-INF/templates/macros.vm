@@ -8,6 +8,12 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <link href="${staticRoot}/css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${staticRoot}/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="${staticRoot}/scripts/app.js"></script>
+<script type="text/javascript">
+	var staticRoot = '${staticRoot}';
+	var appRoot = '${appRoot}';
+</script>
 </head>
 <body>
 <table border="0" cellpadding="0" cellspacing="0" align="center">
@@ -37,15 +43,9 @@
 								</td>
 								<td><img src="${staticRoot}/images/line_v1.gif" width="1" height="86" border="0" alt="" hspace="9"></td>
 								<td>
-									<table border="0" cellpadding="0" cellspacing="0">
-										<tr>
-											<td><img src="${staticRoot}/images/sc.gif" width="40" height="34" border="0" alt=""></td>
-											<td><a href="#" class="top11"><b>Shopping<br>
-												Cart</b></a></td>
-										</tr>
-										<tr><td colspan="2"><img src="${staticRoot}/images/spacer.gif" width="1" height="8" border="0" alt=""></td></tr>
-										<tr><td colspan="2"><div class="top11">now in your cart <span class="or11"><b><a href="${appRoot}/cart/show">${cart.count} items</a></b></span></div></td></tr>
-									</table>
+									<div id="cartSummary">
+										#parse("cartSummary.vm")
+									</div>
 								</td>
 								
 							</tr>
