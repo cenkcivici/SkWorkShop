@@ -41,6 +41,14 @@
 							</tr>
 							#end
 						</table>
+						
+						<div>
+							<img src="${staticRoot}/images/spacer.gif" width="1" height="14"
+								border="0" alt="">
+						</div>
+						
+						<a href="${appRoot}/payment"><input type="image" src="${staticRoot}/images/but_buy.gif" width="55"
+									height="23"/></a>
 						<div>
 							<img src="${staticRoot}/images/spacer.gif" width="1" height="14"
 								border="0" alt="">
