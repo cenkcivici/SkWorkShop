@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Orders
+	</ui:define>
+
+	<ui:define name="formBody">
+
+		<br />
+		<br />
+
+		<p:dataTable var="order" value="#{ordersView.all}" paginator="true"
+			paginatorPosition="bottom">
+
+			<p:column headerText="Order Date">
+
+				<h:outputText value="#{order.orderDate}">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Cost">
+				#{order.shoppingCart.totalCost}
+			</p:column>
+
+			<p:column headerText="Shopping Cart Details">
+				<p:commandButton value="Cart Details"
+					oncomplete="shoppingCartDetailVar.show();" process="@this"
+					update=":form:shoppingCartDetailPanel">
+					<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
+						value="#{order}" />
+				</p:commandButton>
+			</p:column>
+			<p:column headerText="Payment Details">
+				<p:commandButton value="Payment Details"
+					oncomplete="paymentDetailVar.show();" process="@this"
+					update=":form:paymentDetailPanel">
+					<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
+						value="#{order}" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+		<br />
+
+		<p:dialog header="Shopping Cart Details" modal="true"
+			widgetVar="shoppingCartDetailVar">
+			<p:outputPanel id="shoppingCartDetailPanel">
+				<p:outputPanel rendered="#{not empty ordersView.selectedOrder}">
+					<p:dataTable var="item"
+						value="#{sk:toList(ordersView.selectedOrder.shoppingCart.items)}">
+						<p:column headerText="Quantity">
+						#{item.quantity}
+						</p:column>
+						<p:column headerText="Product">
+							#{item.product.title}
+						</p:column>
+						<p:column headerText="Price">
+						#{item.product.price}
+						</p:column>
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:outputPanel>
+
+			<br />
+			<p:commandButton value="close"
+				onclick="shoppingCartDetailVar.hide();return false;" />
+
+		</p:dialog>
+
+		<p:dialog header="Payment Details" modal="true"
+			widgetVar="paymentDetailVar">
+			<p:outputPanel id="paymentDetailPanel">
+				<p:outputPanel rendered="#{not empty ordersView.selectedOrder}">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Owner :" />
+					 #{ordersView.selectedOrder.paymentMethod.owner}					
+					<h:outputLabel value="Card Number :" /> 
+					#{ordersView.selectedOrder.paymentMethod.cardNumber}					
+					<h:outputLabel value="CVC :" />
+					#{ordersView.selectedOrder.paymentMethod.cvc}					
+					<h:outputLabel value="Month / Year :" /> 
+					#{ordersView.selectedOrder.paymentMethod.month} / #{ordersView.selectedOrder.paymentMethod.year}					
+				</h:panelGrid>
+				</p:outputPanel>
+			</p:outputPanel>
+			
+			<br />
+			<p:commandButton value="close"
+				onclick="paymentDetailVar.hide();return false;" />
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
