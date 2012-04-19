@@ -52,7 +52,7 @@
 	<classpathentry exported="true" kind="lib" path="common/commons-beanutils-1.8.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="admin/primefaces-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/spymemcached-2.8.1.jar"/>
-	<classpathentry kind="lib" path="common/selenium-java-2.21.0.jar"/>
+	<classpathentry kind="lib" path="common/commons-validator-1.4.0.jar"/>
 	<classpathentry kind="lib" path="common/apache-mime4j-0.6.jar"/>
 	<classpathentry kind="lib" path="common/bsh-1.3.0.jar"/>
 	<classpathentry kind="lib" path="common/commons-codec-1.6.jar"/>
@@ -76,6 +76,7 @@
 	<classpathentry kind="lib" path="common/operadriver-v0.11.jar"/>
 	<classpathentry kind="lib" path="common/protobuf-java-2.4.1.jar"/>
 	<classpathentry kind="lib" path="common/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="common/selenium-java-2.21.0.jar"/>
 	<classpathentry kind="lib" path="common/serializer-2.7.1.jar"/>
 	<classpathentry kind="lib" path="common/testng-6.0.1-nobsh-noguice.jar"/>
 	<classpathentry kind="lib" path="common/webbit-0.4.6-full.jar"/>

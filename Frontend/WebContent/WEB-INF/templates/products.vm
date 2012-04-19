@@ -41,6 +41,11 @@
 											src="${staticRoot}/images/but_info.gif" width="53"
 											height="23" border="0" alt=""></a>
 									</div>
+									<form method="post"
+											action="${appRoot}/cart/add/${product.url}">
+											<input type="image" src="${staticRoot}/images/but_buy.gif"
+												width="55" height="23" />
+										</form>
 								</td>
 							</tr>
 						</table>
