@@ -21,14 +21,24 @@ public class EncryptionServiceTest {
 	}
 	
 	@Test
-	public void shouldEncryptPlainText() throws Exception{
+	public void shouldEncryptPlainText() {
 		String cipherText = encryptionService.encrypt(PLAIN_TEXT);
 		assertThat(cipherText, equalTo(CIPHER_TEXT));
 	}
 	
 	@Test
-	public void shoudDecryptCipherText() throws Exception{
+	public void shoudDecryptCipherText() {
 		String plainText = encryptionService.decrypt(CIPHER_TEXT);
 		assertThat(plainText, equalTo(PLAIN_TEXT));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowExceptionIfPlainTextNull(){
+		encryptionService.encrypt(null);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowExceptionIfCipherTextNull(){
+		encryptionService.decrypt(null);
 	}
 }

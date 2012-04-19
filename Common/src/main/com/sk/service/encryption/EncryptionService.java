@@ -20,22 +20,38 @@ public class EncryptionService {
 	private static final String ALGORITHM = "DESede";
 	private static final String TRANSFORMATION = "DESede/CBC/PKCS5Padding";
 
-	public String encrypt(String plainText) throws Exception {
+	public String encrypt(String plainText){
 
-		Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
+		if(plainText == null)
+			throw new IllegalArgumentException("Plain text should not be null");
+		
+		try{
+			Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
+	
+			byte[] input = plainText.getBytes("UTF-8");
+			byte[] encrypted = cipher.doFinal(input);
+			return new String(Hex.encodeHex(encrypted)).toUpperCase();
+	
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
 
-		byte[] input = plainText.getBytes("UTF-8");
-		byte[] encrypted = cipher.doFinal(input);
-
-		return new String(Hex.encodeHex(encrypted)).toUpperCase();
 	}
 
-	public String decrypt(String cipherText) throws Exception{
+	public String decrypt(String cipherText) {
 
-		Cipher cipher = getCipher(Cipher.DECRYPT_MODE);
-
-		byte[] decrypted = cipher.doFinal(Hex.decodeHex(cipherText.toCharArray()));
-		return new String(decrypted, "UTF-8");
+		if(cipherText == null)
+			throw new IllegalArgumentException("Cipher text should not be null");
+		
+		try{
+			Cipher cipher = getCipher(Cipher.DECRYPT_MODE);
+	
+			byte[] decrypted = cipher.doFinal(Hex.decodeHex(cipherText.toCharArray()));
+			return new String(decrypted, "UTF-8");
+	
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Cipher getCipher(int cipherMode) throws Exception {
