@@ -75,7 +75,7 @@ public class CategoryFormViewTest {
 	}
 	
 	@Test
-	public void shoukdStayOnTheSamePage() {
+	public void shouldStayOnTheSamePage() {
 		view.init();
 		
 		when(categoryService.save(view.getCategory())).thenReturn(view.getCategory());
