@@ -52,36 +52,37 @@
 	<classpathentry exported="true" kind="lib" path="common/commons-beanutils-1.8.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="admin/primefaces-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="common/spymemcached-2.8.1.jar"/>
-	<classpathentry kind="lib" path="common/commons-validator-1.4.0.jar"/>
-	<classpathentry kind="lib" path="common/apache-mime4j-0.6.jar"/>
-	<classpathentry kind="lib" path="common/bsh-1.3.0.jar"/>
-	<classpathentry kind="lib" path="common/commons-codec-1.6.jar"/>
-	<classpathentry kind="lib" path="common/commons-exec-1.1.jar"/>
-	<classpathentry kind="lib" path="common/commons-io-2.0.1.jar"/>
-	<classpathentry kind="lib" path="common/commons-jxpath-1.3.jar"/>
-	<classpathentry kind="lib" path="common/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="common/cssparser-0.9.5.jar"/>
-	<classpathentry kind="lib" path="common/guava-11.0.1.jar"/>
-	<classpathentry kind="lib" path="common/htmlunit-2.9.jar"/>
-	<classpathentry kind="lib" path="common/htmlunit-core-js-2.9.jar"/>
-	<classpathentry kind="lib" path="common/httpclient-4.1.3.jar"/>
-	<classpathentry kind="lib" path="common/httpcore-4.1.3.jar"/>
-	<classpathentry kind="lib" path="common/httpmime-4.1.3.jar"/>
-	<classpathentry kind="lib" path="common/ini4j-0.5.2.jar"/>
-	<classpathentry kind="lib" path="common/jcommander-1.13.jar"/>
-	<classpathentry kind="lib" path="common/jna-3.4.0.jar"/>
-	<classpathentry kind="lib" path="common/jna-platform-3.4.0.jar"/>
-	<classpathentry kind="lib" path="common/json-20080701.jar"/>
-	<classpathentry kind="lib" path="common/nekohtml-1.9.15.jar"/>
-	<classpathentry kind="lib" path="common/operadriver-v0.11.jar"/>
-	<classpathentry kind="lib" path="common/protobuf-java-2.4.1.jar"/>
-	<classpathentry kind="lib" path="common/sac-1.3.jar"/>
-	<classpathentry kind="lib" path="common/selenium-java-2.21.0.jar"/>
-	<classpathentry kind="lib" path="common/serializer-2.7.1.jar"/>
-	<classpathentry kind="lib" path="common/testng-6.0.1-nobsh-noguice.jar"/>
-	<classpathentry kind="lib" path="common/webbit-0.4.6-full.jar"/>
-	<classpathentry kind="lib" path="common/xalan-2.7.1.jar"/>
-	<classpathentry kind="lib" path="common/xercesImpl-2.9.1.jar"/>
-	<classpathentry kind="lib" path="common/xml-apis-1.3.04.jar"/>
+	<classpathentry exported="true" kind="lib" path="common/commons-validator-1.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="common/commons-io-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="common/commons-lang-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/apache-mime4j-0.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/bsh-1.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/commons-codec-1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/commons-exec-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/commons-jxpath-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/cssparser-0.9.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/guava-11.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/htmlunit-2.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/htmlunit-core-js-2.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/httpclient-4.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/httpcore-4.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/httpmime-4.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/ini4j-0.5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/jcommander-1.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/jna-3.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/jna-platform-3.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/json-20080701.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/nekohtml-1.9.15.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/operadriver-v0.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/protobuf-java-2.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/sac-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/selenium-java-2.21.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/serializer-2.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/testng-6.0.1-nobsh-noguice.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/webbit-0.4.6-full.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/xalan-2.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/xercesImpl-2.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="buildonly/xml-apis-1.3.04.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
