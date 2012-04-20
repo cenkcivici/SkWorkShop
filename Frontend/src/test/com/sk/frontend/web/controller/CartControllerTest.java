@@ -17,11 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.sk.domain.Product;
+import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.service.CacheService;
 import com.sk.service.ProductService;
+import com.sk.service.ShopperService;
 import com.sk.util.builder.ProductBuilder;
+import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
 
 
@@ -32,11 +35,12 @@ public class CartControllerTest {
 	private MockHttpServletRequest request = new MockHttpServletRequest();
 	@Mock private ProductService productService;
 	@Mock private CacheService cacheService;
+	@Mock private ShopperService shopperService;
 	
 	
 	@Before
 	public void init(){
-		cartController = new CartController(productService, cacheService);
+		cartController = new CartController(productService, cacheService, shopperService);
 		cartController.setAppRoot("appRoot");
 	}
 	
@@ -118,4 +122,16 @@ public class CartControllerTest {
 		verify(cacheService).put("1234", cart, ShoppingCartInterceptor.SEVENDAYS);
 	}
 
+	@Test
+	public void shouldShowPaymentInfoPage(){
+		
+		Shopper shopper = new ShopperBuilder().build();
+		when(shopperService.getStubShopper()).thenReturn(shopper);
+		
+		ModelAndView mav = cartController.redirectToPayment();
+		Shopper currentShopper = (Shopper)mav.getModelMap().get("currentShopper");
+		
+		assertThat(mav.getViewName(), equalTo("paymentInfo"));
+		assertThat(currentShopper, equalTo(shopper));
+	}
 }

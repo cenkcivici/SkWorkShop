@@ -18,6 +18,7 @@
 			<div id="cartContent">
 				#parse("cartContent.vm")
 			</div>
+			
 		</td>
 	</tr>
 </table>

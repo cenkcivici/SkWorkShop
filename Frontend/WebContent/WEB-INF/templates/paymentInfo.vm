@@ -1,0 +1,4 @@
+#@page()
+<center>Ode bakalim: ${currentShopper.email}</center>
+
+#end

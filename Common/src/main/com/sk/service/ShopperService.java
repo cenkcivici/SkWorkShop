@@ -1,13 +1,17 @@
 package com.sk.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sk.domain.Shopper;
 import com.sk.domain.dao.ShopperDao;
 import com.sk.service.encryption.EncryptionService;
 
+@Service
 public class ShopperService {
 
-	private EncryptionService encryptionService;
-	private ShopperDao shopperDao;
+	@Autowired private EncryptionService encryptionService;
+	@Autowired private ShopperDao shopperDao;
 
 	public void encryptAndsaveCardInfo(Shopper shopper, String cardNo, String cvc) {
 		

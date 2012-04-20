@@ -11,7 +11,9 @@ import javax.crypto.spec.IvParameterSpec;
 
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EncryptionService {
 
 	@Value("${shared.key}")

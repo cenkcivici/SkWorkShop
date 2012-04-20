@@ -31,6 +31,18 @@
 					<td>Total:</td>
 					<td colspan="4">$cart.totalCost</td>
 				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>
+						<form method="post"	action="${appRoot}/cart/buy">
+							<input type="image" src="${staticRoot}/images/but_buy.gif"
+								width="55" height="23" />
+						</form>
+					</td>
+				</tr>
 			</table>
 			#else
 				No items in shopping cart.
