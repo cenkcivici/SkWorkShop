@@ -24,8 +24,9 @@ public class EncryptionService {
 
 	public String encrypt(String plainText){
 
-		if(plainText == null)
+		if(plainText == null){
 			throw new IllegalArgumentException("Plain text should not be null");
+		}
 		
 		try{
 			Cipher cipher = getCipher(Cipher.ENCRYPT_MODE);
@@ -42,8 +43,9 @@ public class EncryptionService {
 
 	public String decrypt(String cipherText) {
 
-		if(cipherText == null)
+		if(cipherText == null){
 			throw new IllegalArgumentException("Cipher text should not be null");
+		}
 		
 		try{
 			Cipher cipher = getCipher(Cipher.DECRYPT_MODE);
@@ -56,24 +58,28 @@ public class EncryptionService {
 		}
 	}
 
-	private Cipher getCipher(int cipherMode) throws Exception {
+	private Cipher getCipher(int cipherMode) {
 		
-		final MessageDigest md = MessageDigest.getInstance("md5");
-		final byte[] digestOfPassword = md.digest(sharedKey.getBytes("utf-8"));
-
-		byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
-		for (int j = 0, k = 16; j < 8;) {
-            keyBytes[k++] = keyBytes[j++];
+		try{
+			final MessageDigest md = MessageDigest.getInstance("md5");
+			final byte[] digestOfPassword = md.digest(sharedKey.getBytes("utf-8"));
+	
+			byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
+			for (int j = 0, k = 16; j < 8;) {
+	            keyBytes[k++] = keyBytes[j++];
+			}
+			
+			DESedeKeySpec keySpec = new DESedeKeySpec(keyBytes);
+			SecretKey key = SecretKeyFactory.getInstance(ALGORITHM).generateSecret(keySpec);
+			IvParameterSpec iv = new IvParameterSpec(new byte[8]);
+			
+			Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+			cipher.init(cipherMode, key, iv);
+			
+			return cipher;
+		}catch(Exception e){
+			throw new RuntimeException(e);
 		}
-		
-		DESedeKeySpec keySpec = new DESedeKeySpec(keyBytes);
-		SecretKey key = SecretKeyFactory.getInstance(ALGORITHM).generateSecret(keySpec);
-		IvParameterSpec iv = new IvParameterSpec(new byte[8]);
-		
-		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-		cipher.init(cipherMode, key, iv);
-		
-		return cipher;
 	}
 
 	public void setSharedKey(String sharedKey) {
