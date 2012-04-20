@@ -7,7 +7,7 @@ import com.sk.domain.Shopper;
 public class ShopperBuilder extends BaseBuilder<Shopper, ShopperBuilder>{
 
 	private String email = RandomStringUtils.random(10);
-	private String name = RandomStringUtils.random(20);
+	private String name = "default";
 	private String encryptedCardNo;
 	private String encryptedCVC;
 	
