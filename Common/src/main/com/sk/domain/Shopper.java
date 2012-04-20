@@ -34,16 +34,20 @@ public class Shopper extends BaseEntity{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Shopper other = (Shopper) obj;
 		if (email == null) {
-			if (other.email != null)
+			if (other.email != null){
 				return false;
+			}
 		} else if (!email.equals(other.email))
 			return false;
 		return true;
