@@ -1,0 +1,18 @@
+<table id="cartSummaryTable" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="${staticRoot}/images/sc.gif" width="40" height="34"
+			border="0" alt=""></td>
+		<td><a href="#" class="top11"><b>Shopping<br> Cart
+			</b></a></td>
+	</tr>
+	<tr>
+		<td colspan="2"><img src="${staticRoot}/images/spacer.gif"
+			width="1" height="8" border="0" alt=""></td>
+	</tr>
+	<tr>
+		<td colspan="2"><div class="top11">
+				now in your cart <span class="or11"><b><a
+						href="${appRoot}/cart/show">${cart.count} items</a></b></span>
+			</div></td>
+	</tr>
+</table>

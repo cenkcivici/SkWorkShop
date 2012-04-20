@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.TableGenerator;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.proxy.HibernateProxyHelper;
 
@@ -69,6 +70,6 @@ public abstract class BaseEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + "_" + getId();
+		return new ToStringBuilder(this).append("id", id).toString();
 	}
 }

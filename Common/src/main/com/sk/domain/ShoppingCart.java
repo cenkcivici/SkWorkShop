@@ -61,4 +61,12 @@ public class ShoppingCart extends BaseEntity {
 		}
 	}
 
+	public void removeProduct(Product product) {
+		ProductWithQuantity itemForProduct = getItemForProduct(product);
+		
+		if (itemForProduct != null) {
+			items.remove(itemForProduct);
+		}
+	}
+
 }

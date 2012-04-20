@@ -1,0 +1,68 @@
+<table  id="cartContentTable" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td style="background: url(${staticRoot}/images/c_left.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+		<td width="428" align="center">
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="12"
+					border="0" alt="">
+			</div>
+			#if ($cart.items.size() > 0)
+			<table border="0" cellpadding="5" cellspacing="5">
+				<tr>
+					<td>Product Name</td>
+					<td>Price</td>
+					<td>Quantity</td>
+					<td>Cost</td>
+					<td>Delete?</td>
+				</tr>
+				#foreach($item in $cart.items)
+				<tr>
+					<td>$item.product.title</td>
+					<td>$item.product.price</td>
+					<td>$item.quantity</td>
+					<td>$item.cost</td>
+					<td><img class="deleteCartItem"
+						src="${staticRoot}/images/delete_icon.png" id="$item.product.url" /></td>
+				</tr>
+				#end
+				<tr>
+					<td>Total:</td>
+					<td colspan="4">$cart.totalCost</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>
+						<form method="post"	action="${appRoot}/cart/buy">
+							<input type="image" src="${staticRoot}/images/but_buy.gif"
+								width="55" height="23" />
+						</form>
+					</td>
+				</tr>
+			</table>
+			#else
+				No items in shopping cart.
+			#end
+			<div>
+				<img src="${staticRoot}/images/spacer.gif" width="1" height="14"
+					border="0" alt="">
+			</div>
+		</td>
+		<td style="background: url(${staticRoot}/images/c_right.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+	</tr>
+	<tr>
+		<td><img src="${staticRoot}/images/c4.gif" width="5" height="5"
+			border="0" alt=""></td>
+		<td style="background: url(${staticRoot}/images/c_bot.gif)"><img
+			src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+			alt=""></td>
+		<td><img src="${staticRoot}/images/c3.gif" width="5" height="5"
+			border="0" alt=""></td>
+	</tr>
+</table>
