@@ -141,7 +141,6 @@ public class PaymentControllerTest {
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setAttribute("cart", shoppingCart);
-		request.setParameter("saveCardInfo", "0");
 
 		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request);
 

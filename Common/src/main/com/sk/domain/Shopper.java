@@ -18,10 +18,10 @@ public class Shopper extends BaseEntity{
 	@Column(length=255)
 	private String name;
 	
-	@Column(length=60)
+	@Column(length=20)
 	private String encryptedCVC;
 	
-	@Column(length=20)
+	@Column(length=60)
 	private String encryptedCardNo;
 
 	@Override

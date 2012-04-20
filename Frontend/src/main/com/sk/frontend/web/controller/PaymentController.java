@@ -105,7 +105,7 @@ public class PaymentController {
 			return getPaymentMAV(payment);
 		}
 
-		if(request.getParameter("saveCardInfo").equals("1")){
+		if(request.getParameter("saveCardInfo") != null && request.getParameter("saveCardInfo").equals("1")){
 			Shopper shopper = shopperService.getStubShopper();
 			shopperService.encryptAndsaveCardInfo(shopper, payment.getCardNumber(), payment.getCvc());
 		}
