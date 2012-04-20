@@ -97,9 +97,8 @@ public class PaymentControllerTest {
 
 		Map<String, String> creditCardTypes = controller.getCreditCardTypes();
 		assertThat(creditCardTypes.keySet().contains(CreditCardType.VISA.name()), equalTo(true));
-		assertThat(creditCardTypes.keySet().contains(CreditCardType.AMERICAN_EXPRESS.name()), equalTo(true));
 		assertThat(creditCardTypes.keySet().contains(CreditCardType.MASTERCARD.name()), equalTo(true));
-		assertThat(creditCardTypes.keySet().size(), equalTo(3));
+		assertThat(creditCardTypes.keySet().size(), equalTo(2));
 
 	}
 
