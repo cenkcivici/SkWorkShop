@@ -20,9 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
+import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.validator.CreditCardValidator;
 import com.sk.service.OrderService;
+import com.sk.service.ShopperService;
+import com.sk.service.encryption.EncryptionService;
 
 @Controller
 @RequestMapping("/payment")
@@ -33,12 +36,27 @@ public class PaymentController {
 		binder.setValidator(new CreditCardValidator());
 	}
 
-	@Autowired
-	private OrderService orderService;
+	@Autowired private OrderService orderService;
+	@Autowired private ShopperService shopperService;
+	@Autowired private EncryptionService encryptionService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView show() {
-		return getPaymentMAV(new CreditCardPaymentMethod());
+		
+		Shopper shopper = shopperService.getStubShopper();
+		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
+		
+		Boolean showSaveCheck = Boolean.TRUE;
+		if(shopper.getEncryptedCardNo() != null){
+			showSaveCheck = Boolean.FALSE;
+			payment.setOwner(shopper.getName());
+			payment.setCardNumber(encryptionService.decrypt(shopper.getEncryptedCardNo()));
+			payment.setCvc(encryptionService.decrypt(shopper.getEncryptedCVC()));
+		}
+	
+		ModelAndView mav = getPaymentMAV(payment);
+		mav.addObject("showSaveCheck", showSaveCheck);
+		return mav;
 	}
 
 	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
@@ -87,6 +105,11 @@ public class PaymentController {
 			return getPaymentMAV(payment);
 		}
 
+		if(request.getParameter("saveCardInfo").equals("1")){
+			Shopper shopper = shopperService.getStubShopper();
+			shopperService.encryptAndsaveCardInfo(shopper, payment.getCardNumber(), payment.getCvc());
+		}
+		
 		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
 		orderService.createOrder(shoppingCart,payment);
 
@@ -95,6 +118,14 @@ public class PaymentController {
 
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
+	}
+
+	public void setShopperService(ShopperService shopperService) {
+		this.shopperService = shopperService;
+	}
+
+	public void setEncryptionService(EncryptionService encryptionService) {
+		this.encryptionService = encryptionService;
 	}
 
 }

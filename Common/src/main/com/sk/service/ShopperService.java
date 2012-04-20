@@ -37,6 +37,7 @@ public class ShopperService {
 		if(stubShopper == null){
 			Shopper shopper = new Shopper();
 			shopper.setEmail("default@default.com");
+			shopper.setName("Default Shopper");
 			stubShopper = shopperDao.persist(shopper);
 		}
 		return stubShopper;

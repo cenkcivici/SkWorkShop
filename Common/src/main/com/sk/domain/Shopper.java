@@ -14,6 +14,9 @@ public class Shopper extends BaseEntity{
 
 	@Column(length=150)
 	private String email;
+
+	@Column(length=255)
+	private String name;
 	
 	@Column(length=60)
 	private String encryptedCVC;
@@ -74,5 +77,13 @@ public class Shopper extends BaseEntity{
 
 	public void setEncryptedCardNo(String encryptedCardNo) {
 		this.encryptedCardNo = encryptedCardNo;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

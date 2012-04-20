@@ -13,13 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.sk.domain.Product;
-import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.frontend.web.util.CookieUtils;
 import com.sk.service.CacheService;
 import com.sk.service.ProductService;
-import com.sk.service.ShopperService;
 
 @Controller
 @RequestMapping("/cart")
@@ -32,15 +30,13 @@ public class CartController {
 
 	@Autowired private ProductService productService;
 	@Autowired private CacheService cacheService;
-	@Autowired private ShopperService shopperService;
 
 	public CartController() {
 	}
 
-	public CartController(ProductService productService, CacheService cacheService, ShopperService shopperService) {
+	public CartController(ProductService productService, CacheService cacheService) {
 		this.productService = productService;
 		this.cacheService = cacheService;
-		this.shopperService = shopperService;
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
@@ -82,14 +78,6 @@ public class CartController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/buy")
-	public ModelAndView redirectToPayment() {
-		ModelAndView mav = new ModelAndView("paymentInfo");
-		Shopper currentShopper = shopperService.getStubShopper();
-		mav.addObject("currentShopper", currentShopper);
-		return mav;
-	}
-	
 	public void setAppRoot(String appRoot) {
 		this.appRoot = appRoot;
 	}
