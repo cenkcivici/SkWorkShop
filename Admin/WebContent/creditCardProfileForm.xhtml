@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Credit Cart Profile Form
+	</ui:define>
+
+	<ui:define name="formBody">
+
+		<h:panelGrid columns="2">
+			<h:outputLabel for="vendor" value="Vendor" />
+			<p:inputText id="vendor" style="width:200px;" required="true"
+				value="#{creditCardProfileFormView.creditCardProfile.vendor}">
+				<f:validateLength maximum="150" />
+			</p:inputText>
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputLabel value="Installment Plan" />
+			<p:outputPanel id="installmentPlanTablePanel" layout="block">
+				<p:dataTable var="installmentPlan"
+					value="#{creditCardProfileFormView.creditCardProfile.installmentPlans}"
+					paginator="true" paginatorPosition="bottom">
+
+					<f:facet name="header">
+						<p:commandButton value="Add New Plan"
+							update=":form:installmentPlanDialogPanel"
+							oncomplete="installmentPlanDialog.show();" process="@this" />
+					</f:facet>
+
+					<p:column headerText="Months" sortBy="#{installmentPlan.months}">
+						<h:outputText value="#{installmentPlan.months}" />
+					</p:column>
+
+					<p:column headerText="Rate"
+						sortBy="#{installmentPlan.interestRate}">
+					<h:outputText value="#{installmentPlan.interestRate}"/>
+				</p:column>
+
+				</p:dataTable>
+			</p:outputPanel>
+
+		</h:panelGrid>
+
+		<p:commandButton value="Save" ajax="false"
+			action="#{creditCardProfileFormView.save}" />
+		<p:commandButton value="Apply" process="@form" update="@form"
+			action="#{creditCardProfileFormView.apply}" />
+		<p:commandButton value="Cancel"
+			action="creditCardProfilesfaces-redirect=true" ajax="false"
+			immediate="true" />
+
+		<p:dialog header="Installment plan" id="installmentPlanDialogComp"
+			widgetVar="installmentPlanDialog" resizable="false">
+			<p:outputPanel id="installmentPlanDialogPanel">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="nofmonths" value="Months" />
+					<p:inputText id="nofmonths" required="true" style="width:200px;"
+						value="#{creditCardProfileFormView.installmentPlan.months}">
+					</p:inputText>
+
+					<h:outputLabel for="rate" value="Interest Rate" />
+					<p:inputText id="rate" required="true" style="width:200px;"
+						value="#{creditCardProfileFormView.installmentPlan.interestRate}">
+					</p:inputText>
+
+				</h:panelGrid>
+				<p:commandButton value="Save"
+					process="@this installmentPlanDialogPanel"
+					update="installmentPlanTablePanel installmentPlanDialogPanel"
+					style="float:left;"
+					actionListener="#{creditCardProfileFormView.addInstallmentPlan}">
+				</p:commandButton>
+			</p:outputPanel>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
