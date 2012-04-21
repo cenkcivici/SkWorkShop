@@ -23,6 +23,8 @@ import com.sk.domain.CreditCardType;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.validator.CreditCardValidator;
 import com.sk.service.OrderService;
+import com.sk.service.payment.VPOSResponse;
+import com.sk.service.payment.garanti.GarantiVPOSService;
 
 @Controller
 @RequestMapping("/payment")
@@ -35,6 +37,9 @@ public class PaymentController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private GarantiVPOSService garantiVPOSService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView show() {
@@ -87,10 +92,17 @@ public class PaymentController {
 			return getPaymentMAV(payment);
 		}
 
-		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
-		orderService.createOrder(shoppingCart,payment);
+		VPOSResponse response = garantiVPOSService.makePayment(payment);
+		if (response.isSuccessful()) {
+			ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
+			orderService.createOrder(shoppingCart, payment);
+			return new ModelAndView("confirm");
+		} else {
+			ModelAndView modelAndView = getPaymentMAV(payment);
+			modelAndView.addObject("paymentFailed", true);
+			return modelAndView;
+		}
 
-		return new ModelAndView("confirm");
 	}
 
 	public void setOrderService(OrderService orderService) {
