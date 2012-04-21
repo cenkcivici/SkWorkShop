@@ -14,11 +14,14 @@ public class Shopper extends BaseEntity{
 
 	@Column(length=150)
 	private String email;
-	
-	@Column(length=60)
-	private String encryptedCVC;
+
+	@Column(length=255)
+	private String name;
 	
 	@Column(length=20)
+	private String encryptedCVC;
+	
+	@Column(length=60)
 	private String encryptedCardNo;
 
 	@Override
@@ -31,16 +34,20 @@ public class Shopper extends BaseEntity{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Shopper other = (Shopper) obj;
 		if (email == null) {
-			if (other.email != null)
+			if (other.email != null){
 				return false;
+			}
 		} else if (!email.equals(other.email))
 			return false;
 		return true;
@@ -74,5 +81,13 @@ public class Shopper extends BaseEntity{
 
 	public void setEncryptedCardNo(String encryptedCardNo) {
 		this.encryptedCardNo = encryptedCardNo;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

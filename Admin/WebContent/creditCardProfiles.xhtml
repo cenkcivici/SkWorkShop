@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Credit Card Profiles
+	</ui:define>
+
+	<ui:define name="formBody">
+
+		<p:dataTable var="creditCardProfile"
+			value="#{creditCardProfilesView.all}" paginator="true"
+			paginatorPosition="bottom">
+
+			<f:facet name="header">
+				<p:commandButton style="float:left;" action="creditCardProfileForm?faces-redirect=true"
+					process="@this" ajax="false" immediate="true" value="New Credit Card Profile" />
+			</f:facet>
+
+			<p:column headerText="Name">
+				#{creditCardProfile.vendor}
+			</p:column>
+
+			<p:column headerText="Edit">
+				<p:commandButton action="creditCardProfileForm?faces-redirect=true" process="@this"
+					ajax="false" immediate="true" value="Edit">
+					<f:setPropertyActionListener target="#{flash.creditCardProfile}"
+						value="#{creditCardProfile}" />
+				</p:commandButton>
+			</p:column>
+			<p:column headerText="Delete">
+				<p:commandButton
+					action="#{creditCardProfilesView.deleteCreditCardProfile(creditCardProfile)}"
+					process="@this" update="@form" value="Delete" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+		<br />
+
+	</ui:define>
+
+</ui:composition>

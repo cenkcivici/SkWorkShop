@@ -17,10 +17,10 @@ public class ShopperDaoTest extends BaseIntegration{
 	
 	@Test
 	public void shouldFindByEmail(){
-		Shopper persistShopper = new ShopperBuilder().email("default@default.com").persist(getSession());
+		Shopper persistShopper = new ShopperBuilder().email("deneme@default.com").persist(getSession());
 		flushAndClear();
 
-		Shopper found = shopperDao.findByEmail("default@default.com");
+		Shopper found = shopperDao.findByEmail("deneme@default.com");
 		
 		assertThat(found, equalTo(persistShopper));
 	}

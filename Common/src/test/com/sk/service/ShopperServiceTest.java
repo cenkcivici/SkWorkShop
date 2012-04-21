@@ -65,5 +65,6 @@ public class ShopperServiceTest {
 		ArgumentCaptor<Shopper> argument = ArgumentCaptor.forClass(Shopper.class);
 		verify(shopperDao).persist(argument.capture());
 		assertThat(argument.getValue().getEmail(), equalTo("default@default.com"));
+		assertThat(argument.getValue().getName(), equalTo("Default Shopper"));
 	}
 }

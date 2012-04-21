@@ -20,11 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
+import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.validator.CreditCardValidator;
 import com.sk.service.OrderService;
 import com.sk.service.payment.VPOSResponse;
 import com.sk.service.payment.garanti.GarantiVPOSService;
+import com.sk.service.ShopperService;
+import com.sk.service.encryption.EncryptionService;
 
 @Controller
 @RequestMapping("/payment")
@@ -40,10 +43,28 @@ public class PaymentController {
 
 	@Autowired
 	private GarantiVPOSService garantiVPOSService;
+	@Autowired
+	private ShopperService shopperService;
+	@Autowired
+	private EncryptionService encryptionService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView show() {
-		return getPaymentMAV(new CreditCardPaymentMethod());
+
+		Shopper shopper = shopperService.getStubShopper();
+		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
+
+		Boolean showSaveCheck = Boolean.TRUE;
+		if (shopper.getEncryptedCardNo() != null) {
+			showSaveCheck = Boolean.FALSE;
+			payment.setOwner(shopper.getName());
+			payment.setCardNumber(encryptionService.decrypt(shopper.getEncryptedCardNo()));
+			payment.setCvc(encryptionService.decrypt(shopper.getEncryptedCVC()));
+		}
+
+		ModelAndView mav = getPaymentMAV(payment);
+		mav.addObject("showSaveCheck", showSaveCheck);
+		return mav;
 	}
 
 	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
@@ -94,19 +115,40 @@ public class PaymentController {
 
 		VPOSResponse response = garantiVPOSService.makePayment(payment);
 		if (response.isSuccessful()) {
-			ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
-			orderService.createOrder(shoppingCart, payment);
-			return new ModelAndView("confirm");
+			return createOrder(payment, request);
 		} else {
-			ModelAndView modelAndView = getPaymentMAV(payment);
-			modelAndView.addObject("paymentFailed", true);
-			return modelAndView;
+			return showError(payment);
 		}
 
 	}
 
+	protected ModelAndView showError(CreditCardPaymentMethod payment) {
+		ModelAndView modelAndView = getPaymentMAV(payment);
+		modelAndView.addObject("paymentFailed", true);
+		return modelAndView;
+	}
+
+	protected ModelAndView createOrder(CreditCardPaymentMethod payment, HttpServletRequest request) {
+		if (request.getParameter("saveCardInfo") != null && request.getParameter("saveCardInfo").equals("1")) {
+			Shopper shopper = shopperService.getStubShopper();
+			shopperService.encryptAndsaveCardInfo(shopper, payment.getCardNumber(), payment.getCvc());
+		}
+
+		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
+		orderService.createOrder(shoppingCart, payment);
+		return new ModelAndView("confirm");
+	}
+
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
+	}
+
+	public void setShopperService(ShopperService shopperService) {
+		this.shopperService = shopperService;
+	}
+
+	public void setEncryptionService(EncryptionService encryptionService) {
+		this.encryptionService = encryptionService;
 	}
 
 }
