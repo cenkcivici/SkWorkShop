@@ -26,6 +26,7 @@ public class CategoriesIT {
 	
 	@Test
 	public void shouldShowCategoryForm(){
+		
 		webDriver.get("http://localhost:8080/Admin/categoryForm.xhtml");
 		WebElement saveSpan = webDriver.findElement(By.id("save")).findElement(By.tagName("span"));
 		assertEquals("Save", saveSpan.getText());
