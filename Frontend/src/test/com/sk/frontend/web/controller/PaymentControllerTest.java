@@ -22,6 +22,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
@@ -29,6 +30,10 @@ import com.sk.domain.ShoppingCart;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.encryption.EncryptionService;
+import com.sk.service.payment.ResponseStatus;
+import com.sk.service.payment.VPOSResponse;
+import com.sk.service.payment.garanti.GarantiVPOSService;
+import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
 import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
@@ -42,6 +47,7 @@ public class PaymentControllerTest {
 	@Mock private BindingResult bindingResult;
 	@Mock private ShopperService shopperService;
 	@Mock private EncryptionService encryptionService;
+	@Mock private GarantiVPOSService garantiVPOSService;
 
 	@Before
 	public void before() {
@@ -49,6 +55,7 @@ public class PaymentControllerTest {
 		controller.setOrderService(orderService);
 		controller.setShopperService(shopperService);
 		controller.setEncryptionService(encryptionService);
+		controller.setGarantiVPOSService(garantiVPOSService);
 	}
 
 	@Test
@@ -63,33 +70,44 @@ public class PaymentControllerTest {
 	}
 	
 	@Test
-	public void shouldSetCardNoAndCVCIfExists(){
-		Shopper shopper = new ShopperBuilder().name("Default Shopper").cardNo("ABCDABCD").cvc("ZXC").build();
+	public void shouldSetCardInfoIfExists(){
+		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
+		Shopper shopper = new ShopperBuilder().creditCard(encryptedCard).build();
+		
 		when(shopperService.getStubShopper()).thenReturn(shopper);
+		when(encryptionService.decrypt("ZAQXSW")).thenReturn("Shopper");
 		when(encryptionService.decrypt("ABCDABCD")).thenReturn("12341234");
 		when(encryptionService.decrypt("ZXC")).thenReturn("003");
+		when(encryptionService.decrypt("CVB")).thenReturn("06");
+		when(encryptionService.decrypt("VBN")).thenReturn("12");
 		
 		ModelAndView mav = controller.show();
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod)mav.getModelMap().get("payment");
 
-		assertThat(payment.getOwner(), equalTo("Default Shopper"));
+		assertThat(payment.getOwner(), equalTo("Shopper"));
 		assertThat(payment.getCardNumber(), equalTo("12341234"));
 		assertThat(payment.getCvc(), equalTo("003"));
+		assertThat(payment.getMonth(), equalTo("06"));
+		assertThat(payment.getYear(), equalTo("12"));
+		assertThat(payment.getCreditCardType(), equalTo(CreditCardType.VISA));
 		assertFalse((Boolean)mav.getModelMap().get("showSaveCheck"));
 	}
 	
 	@Test
-	public void shouldNotCardInfoSetIfNotExists(){
-		Shopper shopper = new ShopperBuilder().name("Default Shopper").build();
+	public void shouldNotSetCardInfoIfNotExists(){
+		Shopper shopper = new ShopperBuilder().build();
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 		
 		ModelAndView mav = controller.show();
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod)mav.getModelMap().get("payment");
+		payment.setCardNumber(null); //TODO for easier testing'mis
 		
+		assertTrue((Boolean)mav.getModelMap().get("showSaveCheck"));
 		assertNull(payment.getOwner());
 		assertNull(payment.getCardNumber());
 		assertNull(payment.getCvc());
-		assertTrue((Boolean)mav.getModelMap().get("showSaveCheck"));
+		assertNull(payment.getMonth());
+		assertNull(payment.getYear());
 	}
 	
 	@Test
@@ -136,12 +154,15 @@ public class PaymentControllerTest {
 	@Test
 	public void shoulCallOrderServiceIfCardIsValid() {
 		when(bindingResult.hasErrors()).thenReturn(false);
-
+		
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setAttribute("cart", shoppingCart);
-
+		
+		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
+		when(garantiVPOSService.makePayment(cardPaymentMethod)).thenReturn(response);
+		
 		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request);
 
 		verify(orderService).createOrder(shoppingCart, cardPaymentMethod);
@@ -155,13 +176,19 @@ public class PaymentControllerTest {
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setParameter("saveCardInfo", "1");
-		when(bindingResult.hasErrors()).thenReturn(false);
 		
-		Shopper shopper = new ShopperBuilder().name("Default Shopper").build();
+		Shopper shopper = new ShopperBuilder().build();
+		CreditCard card = new CreditCardBuilder().owner(cardPaymentMethod.getOwner()).cardNumber(cardPaymentMethod.getCardNumber())
+							   .cvc(cardPaymentMethod.getCvc()).month(cardPaymentMethod.getMonth()).year(cardPaymentMethod.getYear())
+							   .cardType(cardPaymentMethod.getCreditCardType()).build();
+		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
+
+		when(garantiVPOSService.makePayment(cardPaymentMethod)).thenReturn(response);
+		when(bindingResult.hasErrors()).thenReturn(false);
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 		
 		controller.submit(cardPaymentMethod, bindingResult, request);
 		
-		verify(shopperService).encryptAndsaveCardInfo(shopper, cardPaymentMethod.getCardNumber(), cardPaymentMethod.getCvc());
+		verify(shopperService).encryptAndsaveCardInfo(shopper, card);
 	}
 }

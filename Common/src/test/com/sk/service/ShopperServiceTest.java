@@ -2,6 +2,7 @@ package com.sk.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,9 +13,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.sk.domain.CreditCard;
+import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
 import com.sk.domain.dao.ShopperDao;
 import com.sk.service.encryption.EncryptionService;
+import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.ShopperBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,13 +39,18 @@ public class ShopperServiceTest {
 	public void shouldSaveCreditCardInfo(){
 		
 		Shopper shopper = new ShopperBuilder().build();
+		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
+		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
+		
+		when(encryptionService.encrypt("Shopper")).thenReturn("ZAQXSW");
 		when(encryptionService.encrypt("12341234")).thenReturn("ABCDABCD");
 		when(encryptionService.encrypt("003")).thenReturn("ZXC");
+		when(encryptionService.encrypt("06")).thenReturn("CVB");
+		when(encryptionService.encrypt("12")).thenReturn("VBN");
 		
-		shopperService.encryptAndsaveCardInfo(shopper, "12341234", "003");
+		shopperService.encryptAndsaveCardInfo(shopper, card);
 
-		assertThat(shopper.getEncryptedCardNo(), equalTo("ABCDABCD"));
-		assertThat(shopper.getEncryptedCVC(), equalTo("ZXC"));
+		assertThat(shopper.getCreditCardList(), hasItem(encryptedCard));
 		verify(shopperDao).persist(shopper);
 	}
 	

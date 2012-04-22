@@ -3,6 +3,7 @@ package com.sk.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sk.domain.CreditCard;
 import com.sk.domain.Shopper;
 import com.sk.domain.dao.ShopperDao;
 import com.sk.service.encryption.EncryptionService;
@@ -13,14 +14,17 @@ public class ShopperService {
 	@Autowired private EncryptionService encryptionService;
 	@Autowired private ShopperDao shopperDao;
 
-	public void encryptAndsaveCardInfo(Shopper shopper, String cardNo, String cvc) {
+	public void encryptAndsaveCardInfo(Shopper shopper, CreditCard card) {
 		
-		String encryptedCardNo = encryptionService.encrypt(cardNo);
-		String encryptedCVC = encryptionService.encrypt(cvc);
+		CreditCard encryptCard = new CreditCard();
+		encryptCard.setOwner(encryptionService.encrypt(card.getOwner()));
+		encryptCard.setCardNumber(encryptionService.encrypt(card.getCardNumber()));
+		encryptCard.setCvc(encryptionService.encrypt(card.getCvc()));
+		encryptCard.setMonth(encryptionService.encrypt(card.getMonth()));
+		encryptCard.setYear(encryptionService.encrypt(card.getYear()));
+		encryptCard.setCreditCardType(card.getCreditCardType());
 		
-		shopper.setEncryptedCardNo(encryptedCardNo);
-		shopper.setEncryptedCVC(encryptedCVC);
-		
+		shopper.addCreditCard(encryptCard);
 		shopperDao.persist(shopper);
 	}
 

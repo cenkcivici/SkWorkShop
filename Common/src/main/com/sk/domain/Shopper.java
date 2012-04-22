@@ -1,7 +1,12 @@
 package com.sk.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -18,12 +23,9 @@ public class Shopper extends BaseEntity{
 	@Column(length=255)
 	private String name;
 	
-	@Column(length=20)
-	private String encryptedCVC;
+	@OneToMany(cascade={CascadeType.ALL,CascadeType.MERGE})
+	private Set<CreditCard> creditCardList = new HashSet<CreditCard>();
 	
-	@Column(length=60)
-	private String encryptedCardNo;
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,22 +69,6 @@ public class Shopper extends BaseEntity{
 		this.email = email;
 	}
 
-	public String getEncryptedCVC() {
-		return encryptedCVC;
-	}
-
-	public void setEncryptedCVC(String encryptedCVC) {
-		this.encryptedCVC = encryptedCVC;
-	}
-
-	public String getEncryptedCardNo() {
-		return encryptedCardNo;
-	}
-
-	public void setEncryptedCardNo(String encryptedCardNo) {
-		this.encryptedCardNo = encryptedCardNo;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -90,4 +76,18 @@ public class Shopper extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Set<CreditCard> getCreditCardList() {
+		return creditCardList;
+	}
+	
+	public void setCreditCardList(Set<CreditCard> creditCardList) {
+		this.creditCardList = creditCardList;
+	}
+
+	public void addCreditCard(CreditCard creditCard) {
+		creditCardList.add(creditCard);
+	}
+
+	
 }

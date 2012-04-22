@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
@@ -55,11 +56,16 @@ public class PaymentController {
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
 
 		Boolean showSaveCheck = Boolean.TRUE;
-		if (shopper.getEncryptedCardNo() != null) {
+		if (!shopper.getCreditCardList().isEmpty()) {
 			showSaveCheck = Boolean.FALSE;
-			payment.setOwner(shopper.getName());
-			payment.setCardNumber(encryptionService.decrypt(shopper.getEncryptedCardNo()));
-			payment.setCvc(encryptionService.decrypt(shopper.getEncryptedCVC()));
+			
+			CreditCard encryptCard = shopper.getCreditCardList().iterator().next();
+			payment.setOwner(encryptionService.decrypt(encryptCard.getOwner()));
+			payment.setCardNumber(encryptionService.decrypt(encryptCard.getCardNumber()));
+			payment.setCvc(encryptionService.decrypt(encryptCard.getCvc()));
+			payment.setMonth(encryptionService.decrypt(encryptCard.getMonth()));
+			payment.setYear(encryptionService.decrypt(encryptCard.getYear()));
+			payment.setCreditCardType(encryptCard.getCreditCardType());
 		}
 
 		ModelAndView mav = getPaymentMAV(payment);
@@ -110,7 +116,9 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView submit(@Validated @ModelAttribute("payment") CreditCardPaymentMethod payment, BindingResult binder, HttpServletRequest request) {
 		if (binder.hasErrors()) {
-			return getPaymentMAV(payment);
+			ModelAndView mav = getPaymentMAV(payment);
+			mav.addObject("showSaveCheck", true);
+			return mav;
 		}
 
 		VPOSResponse response = garantiVPOSService.makePayment(payment);
@@ -131,7 +139,15 @@ public class PaymentController {
 	protected ModelAndView createOrder(CreditCardPaymentMethod payment, HttpServletRequest request) {
 		if (request.getParameter("saveCardInfo") != null && request.getParameter("saveCardInfo").equals("1")) {
 			Shopper shopper = shopperService.getStubShopper();
-			shopperService.encryptAndsaveCardInfo(shopper, payment.getCardNumber(), payment.getCvc());
+			
+			CreditCard card = new CreditCard();
+			card.setOwner(payment.getOwner());
+			card.setCardNumber(payment.getCardNumber());
+			card.setCvc(payment.getCvc());
+			card.setMonth(payment.getMonth());
+			card.setYear(payment.getYear());
+			card.setCreditCardType(payment.getCreditCardType());
+			shopperService.encryptAndsaveCardInfo(shopper, card);
 		}
 
 		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
@@ -149,6 +165,10 @@ public class PaymentController {
 
 	public void setEncryptionService(EncryptionService encryptionService) {
 		this.encryptionService = encryptionService;
+	}
+
+	public void setGarantiVPOSService(GarantiVPOSService garantiVPOSService) {
+		this.garantiVPOSService = garantiVPOSService;
 	}
 
 }
