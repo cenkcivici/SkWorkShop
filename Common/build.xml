@@ -51,7 +51,7 @@
 			<classpath path="${prod.classes.dir}" />
 		</javac>
 	</target>
-
+	
 	<target name="run-unit-tests" depends="init,compile-prod,compile-test">
 		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
 			<jvmarg value="-XX:MaxPermSize=512m" />
@@ -69,7 +69,7 @@
 			</batchtest>
 		</junit>
 	</target>
-
+	
 	<target name="dist" depends="run-unit-tests">
 		<jar destfile="${jar.file}">
 			<fileset dir="${prod.classes.dir}" />

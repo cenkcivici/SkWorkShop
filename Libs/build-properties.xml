@@ -3,6 +3,7 @@
 	<property name="build.dir" location="build" />
 	<property name="prod.src.dir" location="src/main" />
 	<property name="test.src.dir" location="src/test" />
+	<property name="functest.src.dir" location="src/functest" />
 	<property name="web.dir" location="WebContent" />
 	<property name="webinf.dir" location="WebContent/WEB-INF" />
 	<property name="webinf.classes.dir" location="WebContent/WEB-INF/classes" />

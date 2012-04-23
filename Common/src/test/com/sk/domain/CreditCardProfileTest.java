@@ -3,7 +3,6 @@ package com.sk.domain;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.apache.commons.lang.NumberUtils;
 import org.junit.Test;
 
 import com.sk.util.builder.CreditCardProfileBuilder;

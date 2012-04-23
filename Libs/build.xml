@@ -16,4 +16,9 @@
 		<ant antfile="../Admin/build.xml" target="admin-dist" inheritall="false" />
 		<ant antfile="../Frontend/build.xml" target="frontend-dist" inheritall="false" />
 	</target>
+	
+	<target name="run-func-tests">
+		<ant antfile="../Admin/build.xml" target="run-func-tests" inheritall="false" />
+		<ant antfile="../Frontend/build.xml" target="run-func-tests" inheritall="false" />
+	</target>
 </project>

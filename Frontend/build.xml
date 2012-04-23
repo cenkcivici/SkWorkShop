@@ -82,6 +82,20 @@
 			<classpath refid="common.classpath" />
 		</javac>
 	</target>
+	
+	<target name="compile-functest">
+		<copy todir="${test.classes.dir}">
+			<fileset dir="${functest.src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+		<javac srcdir="${functest.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="utf8">
+			<compilerarg value="-Xlint:unchecked" />
+			<classpath refid="frontend.test.classpath" />
+		</javac>
+	</target>
 
 	<target name="run-unit-tests" depends="compile-prod,compile-test">
 		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
@@ -95,6 +109,23 @@
 			<batchtest todir="${build.dir}/testreport">
 				<fileset dir="${test.classes.dir}">
 					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="run-func-tests" depends="compile-functest">
+		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
+			<jvmarg value="-XX:MaxPermSize=512m" />
+			<classpath>
+				<pathelement location="${test.classes.dir}" />
+				<path refid="frontend.test.classpath" />
+			</classpath>
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<batchtest todir="${build.dir}/testreport">
+				<fileset dir="${test.classes.dir}">
+					<include name="**/*IT.class" />
 				</fileset>
 			</batchtest>
 		</junit>
