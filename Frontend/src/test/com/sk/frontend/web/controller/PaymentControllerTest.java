@@ -1,5 +1,9 @@
 package com.sk.frontend.web.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,16 +66,62 @@ public class PaymentControllerTest {
 
 		ModelAndView mav = controller.getPaymentMAV(null);
 		assertThat(mav.getModelMap().containsKey("payment"), equalTo(true));
-		assertThat(mav.getModelMap().containsKey("years"), equalTo(true));
-		assertThat(mav.getModelMap().containsKey("months"), equalTo(true));
-		assertThat(mav.getModelMap().containsKey("creditCardTypes"), equalTo(true));
 		
-		verify(cardPopulatorHelper).getYears();
-		verify(cardPopulatorHelper).getMonths();
-		verify(cardPopulatorHelper).getCreditCardTypes();
+	}
+	
+	@Test
+	public void shouldSetYearsWhileCreatingModel(){
+		Map<String,String> years = new HashMap<String,String>();
+		years.put("2012", "2012");
+		years.put("2013", "2013");
+		years.put("2014", "2014");
+		
+		when(cardPopulatorHelper.getYears()).thenReturn(years);
+		ModelAndView mav = controller.getPaymentMAV(null);
+		assertThat(mav.getModelMap().containsKey("years"), equalTo(true));
+		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("years");
+		assertThat(fromModel.containsKey("2012"), equalTo(true));
+		assertThat(fromModel.containsKey("2013"), equalTo(true));
+		assertThat(fromModel.containsKey("2014"), equalTo(true));
+		assertThat(fromModel.keySet().size(), equalTo(3));
+		
+	}
+	
+	@Test
+	public void shouldSetMonthsWhileCreatingModel(){
+		Map<String,String> months = new HashMap<String,String>();
+		months.put("01", "01");
+		months.put("02", "02");
+		months.put("03", "03");
+		months.put("04", "04");
+		
+		when(cardPopulatorHelper.getMonths()).thenReturn(months);
+		ModelAndView mav = controller.getPaymentMAV(null);
+		assertThat(mav.getModelMap().containsKey("months"), equalTo(true));
+		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("months");
+		assertThat(fromModel.containsKey("01"), equalTo(true));
+		assertThat(fromModel.containsKey("02"), equalTo(true));
+		assertThat(fromModel.containsKey("03"), equalTo(true));
+		assertThat(fromModel.containsKey("04"), equalTo(true));
+		assertThat(fromModel.keySet().size(), equalTo(4));
+	}
+	
+	@Test
+	public void shouldSetCreditCardTypesWhileCreatingModel(){
+		Map<String,String> creditCardTypes = new HashMap<String,String>();
+		creditCardTypes.put(CreditCardType.MASTERCARD.name(), CreditCardType.MASTERCARD.name());
+		creditCardTypes.put(CreditCardType.VISA.name(), CreditCardType.VISA.name());
+		
+		when(cardPopulatorHelper.getCreditCardTypes()).thenReturn(creditCardTypes);
+		ModelAndView mav = controller.getPaymentMAV(null);
+		assertThat(mav.getModelMap().containsKey("creditCardTypes"), equalTo(true));
+		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("creditCardTypes");
+		assertThat(fromModel.containsKey(CreditCardType.MASTERCARD.name()), equalTo(true));
+		assertThat(fromModel.containsKey(CreditCardType.VISA.name()), equalTo(true));
+		assertThat(fromModel.keySet().size(), equalTo(2));
 
 	}
-
+	
 	@Test
 	public void shouldSetCardInfoIfExists() {
 		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
