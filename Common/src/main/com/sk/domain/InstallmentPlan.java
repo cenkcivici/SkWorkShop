@@ -8,7 +8,7 @@ import org.hibernate.Hibernate;
 
 @Entity
 @Table(name = "installmentPlan")
-public class InstallmentPlan extends BaseEntity {
+public class InstallmentPlan extends BaseEntity implements Comparable<InstallmentPlan> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -59,5 +59,13 @@ public class InstallmentPlan extends BaseEntity {
 		if (months != other.months)
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(InstallmentPlan toCompare) {
+		if (getMonths() == toCompare.getMonths()) {
+			return 0;
+		}
+		return getMonths() > toCompare.getMonths() ? 1 : -1;
 	}
 }
