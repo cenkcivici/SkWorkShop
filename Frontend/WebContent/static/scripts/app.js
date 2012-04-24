@@ -49,3 +49,47 @@ function ShoppingCartService() {
 				success: callback});
 	};
 }
+
+function PaymentController(view, service) {
+	var instance = this;
+	instance.view = view;
+	instance.service = service;
+
+	this.start = function() {
+		instance.view.init(instance);
+	};
+	
+	this.displayPaymentPlan = function(creditCardNumber,callback) {
+		instance.service.getInstallmentPlan(creditCardNumber,callback);
+	}
+};
+
+function PaymentView() {
+	var instance = this;
+
+	this.init = function(controller) {
+		instance.controller = controller;
+		$('#creditCard\\.cardNumber').blur(instance.viewPaymentPlan);
+	};
+	
+	this.viewPaymentPlan = function() {
+		var creditCardNumber = $('#creditCard\\.cardNumber').val();
+		instance.controller.displayPaymentPlan(creditCardNumber,instance.updatePaymentPlan);
+	};
+	
+	this.updatePaymentPlan = function(html) {
+		$('#availablePlans').html(html);
+	}
+};
+
+function PaymentService() {
+	var instance = this;
+
+	this.getInstallmentPlan = function(creditCardNumber,callback) {
+		$.ajax ({
+				url:appRoot + "/installmentplan/show",
+				data: {'creditCardNumber' : creditCardNumber},
+				type:'post',
+				success: callback});
+	};
+}

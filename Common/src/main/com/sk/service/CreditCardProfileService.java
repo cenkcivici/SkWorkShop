@@ -3,6 +3,7 @@ package com.sk.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ public class CreditCardProfileService {
 
 	@Autowired
 	private CreditCardProfileDao creditCardProfileDao;
-	
-	
+
 	public List<CreditCardProfile> getAll() {
 		return creditCardProfileDao.getAll();
 	}
@@ -40,23 +40,36 @@ public class CreditCardProfileService {
 	}
 
 	public Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsFor(ShoppingCart cart) {
-		double total = cart.getTotalCost();
-		
+		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsMap = new TreeMap<CreditCardProfile, Map<InstallmentPlan, Double>>();
 		List<CreditCardProfile> allProfiles = creditCardProfileDao.getAll();
-		Map<CreditCardProfile,Map<InstallmentPlan, Double>> paymentsMap = new HashMap<CreditCardProfile, Map<InstallmentPlan,Double>>();
-		
+
 		for (CreditCardProfile eachCardProfile : allProfiles) {
-			Map<InstallmentPlan,Double> planMap = new TreeMap<InstallmentPlan, Double>();
-			paymentsMap.put(eachCardProfile, planMap);
-			for (InstallmentPlan eachInstallmentPlan : eachCardProfile.getInstallmentPlans()) {
-				double monthlyPayment = eachCardProfile.monthlyPaymentOf(total, eachInstallmentPlan.getMonths());
-				planMap.put(eachInstallmentPlan, monthlyPayment);
+			populatePlansFor(cart.getTotalCost(), paymentsMap, eachCardProfile);
+		}
+
+		return paymentsMap;
+	}
+
+	public Entry<CreditCardProfile, Map<InstallmentPlan, Double>> availablePlanFor(String creditCardNo, ShoppingCart cart) {
+		
+		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsMap = paymentsFor(cart);
+		
+		for (Entry<CreditCardProfile,Map<InstallmentPlan, Double>> eachEntry : paymentsMap.entrySet()) {
+			if (eachEntry.getKey().issuerOf(creditCardNo)) {
+				return eachEntry;
 			}
 		}
 		
-		return paymentsMap;
+		return null;
 	}
-	
-	
+
+	private void populatePlansFor(double total, Map<CreditCardProfile, Map<InstallmentPlan, Double>> availablePaymentsMap, CreditCardProfile creditCardProfile) {
+		Map<InstallmentPlan, Double> planMap = new TreeMap<InstallmentPlan, Double>();
+		for (InstallmentPlan eachInstallmentPlan : creditCardProfile.getInstallmentPlans()) {
+			double monthlyPayment = creditCardProfile.monthlyPaymentOf(total, eachInstallmentPlan.getMonths());
+			planMap.put(eachInstallmentPlan, monthlyPayment);
+		}
+		availablePaymentsMap.put(creditCardProfile, planMap);
+	}
 
 }

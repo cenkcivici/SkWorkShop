@@ -20,7 +20,7 @@ public class CreditCardProfileDaoTest extends BaseIntegration {
 	@Test
 	public void shouldPersist() {
 		InstallmentPlan installmentPlan = new InstallmentPlanBuilder().months(2).interestRate(5d).build();
-		CreditCardProfile creditCardProfile = new CreditCardProfileBuilder().vendor("Vendor").installmentPlans(installmentPlan).build();
+		CreditCardProfile creditCardProfile = new CreditCardProfileBuilder().vendor("Vendor").installmentPlans(installmentPlan).bin("121212").build();
 		
 		CreditCardProfile persisted = dao.persist(creditCardProfile);
 		
@@ -30,6 +30,7 @@ public class CreditCardProfileDaoTest extends BaseIntegration {
 		
 		assertThat(fromDb.getVendor(), equalTo("Vendor"));
 		assertThat(fromDb.getInstallmentPlans().size(),equalTo(1));
+		assertThat(fromDb.getBinDigits(),equalTo("121212"));
 		
 		InstallmentPlan plan = fromDb.getInstallmentPlans().iterator().next();
 		
