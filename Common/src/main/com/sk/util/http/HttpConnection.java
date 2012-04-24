@@ -46,4 +46,9 @@ public class HttpConnection {
 		}
 	}
 
+	public void addHeader(String key, String value) {
+		httpPost.addHeader(key,value);
+		
+	}
+
 }
