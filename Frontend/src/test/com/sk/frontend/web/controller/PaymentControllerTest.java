@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.http.HttpRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -161,7 +162,7 @@ public class PaymentControllerTest {
 		request.setAttribute("cart", shoppingCart);
 		
 		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
-		when(garantiVPOSService.makePayment(cardPaymentMethod)).thenReturn(response);
+		when(garantiVPOSService.makePayment(cardPaymentMethod,shoppingCart.getTotalCost())).thenReturn(response);
 		
 		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request);
 
@@ -175,6 +176,8 @@ public class PaymentControllerTest {
 		
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
 		MockHttpServletRequest request = new MockHttpServletRequest();
+		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
+		request.setAttribute("cart", shoppingCart);
 		request.setParameter("saveCardInfo", "1");
 		
 		Shopper shopper = new ShopperBuilder().build();
@@ -183,7 +186,7 @@ public class PaymentControllerTest {
 							   .cardType(cardPaymentMethod.getCreditCardType()).build();
 		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
 
-		when(garantiVPOSService.makePayment(cardPaymentMethod)).thenReturn(response);
+		when(garantiVPOSService.makePayment(cardPaymentMethod,shoppingCart.getTotalCost())).thenReturn(response);
 		when(bindingResult.hasErrors()).thenReturn(false);
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 		

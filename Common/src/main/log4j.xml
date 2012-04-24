@@ -16,6 +16,10 @@
 	<category name="org.springframework">
 		<priority value="debug" />
 	</category>
+	
+	<category name="httpclient.wire">
+		<priority value="debug" />
+	</category>
 
 	<root>
 		<priority value="error" />

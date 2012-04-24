@@ -121,7 +121,8 @@ public class PaymentController {
 			return mav;
 		}
 
-		VPOSResponse response = garantiVPOSService.makePayment(payment);
+		ShoppingCart cart = getShoppingCart(request);
+		VPOSResponse response = garantiVPOSService.makePayment(payment,cart.getTotalCost());
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
@@ -150,9 +151,13 @@ public class PaymentController {
 			shopperService.encryptAndsaveCardInfo(shopper, card);
 		}
 
-		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
+		ShoppingCart shoppingCart = getShoppingCart(request);
 		orderService.createOrder(shoppingCart, payment);
 		return new ModelAndView("confirm");
+	}
+
+	protected ShoppingCart getShoppingCart(HttpServletRequest request) {
+		return (ShoppingCart) request.getAttribute("cart");
 	}
 
 	public void setOrderService(OrderService orderService) {
