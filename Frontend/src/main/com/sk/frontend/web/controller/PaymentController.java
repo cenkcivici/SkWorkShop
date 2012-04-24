@@ -25,30 +25,31 @@ import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.validator.CreditCardValidator;
 import com.sk.service.OrderService;
+import com.sk.service.ShopperService;
 import com.sk.service.payment.VPOSResponse;
 import com.sk.service.payment.garanti.GarantiVPOSService;
-import com.sk.service.ShopperService;
-import com.sk.service.encryption.EncryptionService;
 
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
+
 
 	@InitBinder
 	public void init(WebDataBinder binder) {
 		binder.setValidator(new CreditCardValidator());
 	}
 
-	@Autowired
 	private OrderService orderService;
-
-	@Autowired
 	private GarantiVPOSService garantiVPOSService;
-	@Autowired
 	private ShopperService shopperService;
-	@Autowired
-	private EncryptionService encryptionService;
 
+	@Autowired
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService) {
+		this.orderService = orderService;
+		this.shopperService = shopperService;
+		this.garantiVPOSService = garantiVPOSService;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView show() {
 
@@ -56,21 +57,28 @@ public class PaymentController {
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
 
 		Boolean showSaveCheck = Boolean.TRUE;
-		if (!shopper.getCreditCardList().isEmpty()) {
+		if (hasAnyCreditCardInfo(shopper)) {
 			showSaveCheck = Boolean.FALSE;
 			
-			CreditCard encryptCard = shopper.getCreditCardList().iterator().next();
-			payment.setOwner(encryptionService.decrypt(encryptCard.getOwner()));
-			payment.setCardNumber(encryptionService.decrypt(encryptCard.getCardNumber()));
-			payment.setCvc(encryptionService.decrypt(encryptCard.getCvc()));
-			payment.setMonth(encryptionService.decrypt(encryptCard.getMonth()));
-			payment.setYear(encryptionService.decrypt(encryptCard.getYear()));
-			payment.setCreditCardType(encryptCard.getCreditCardType());
+			CreditCard encryptedCard = shopper.getCreditCardList().iterator().next();
+			CreditCard card = shopperService.decryptCreditCardInfo(encryptedCard);
+			
+			//TODO CreditCArdPAymentMethod icine CreditCard gommece
+			payment.setOwner(card.getOwner());
+			payment.setCardNumber(card.getCardNumber());
+			payment.setCvc(card.getCvc());
+			payment.setMonth(card.getMonth());
+			payment.setYear(card.getYear());
+			payment.setCreditCardType(encryptedCard.getCreditCardType());
 		}
 
 		ModelAndView mav = getPaymentMAV(payment);
 		mav.addObject("showSaveCheck", showSaveCheck);
 		return mav;
+	}
+
+	private boolean hasAnyCreditCardInfo(Shopper shopper) {
+		return !shopper.getCreditCardList().isEmpty();
 	}
 
 	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
@@ -153,22 +161,6 @@ public class PaymentController {
 		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
 		orderService.createOrder(shoppingCart, payment);
 		return new ModelAndView("confirm");
-	}
-
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
-
-	public void setShopperService(ShopperService shopperService) {
-		this.shopperService = shopperService;
-	}
-
-	public void setEncryptionService(EncryptionService encryptionService) {
-		this.encryptionService = encryptionService;
-	}
-
-	public void setGarantiVPOSService(GarantiVPOSService garantiVPOSService) {
-		this.garantiVPOSService = garantiVPOSService;
 	}
 
 }

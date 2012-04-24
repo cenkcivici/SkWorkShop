@@ -28,12 +28,13 @@ public class CartController {
 	@Value("${app.root}")
 	private String appRoot;
 
-	@Autowired private ProductService productService;
-	@Autowired private CacheService cacheService;
+	private ProductService productService;
+	private CacheService cacheService;
 
 	public CartController() {
 	}
 
+	@Autowired
 	public CartController(ProductService productService, CacheService cacheService) {
 		this.productService = productService;
 		this.cacheService = cacheService;
