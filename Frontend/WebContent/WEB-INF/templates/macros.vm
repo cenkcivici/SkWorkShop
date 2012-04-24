@@ -8,7 +8,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <link href="${staticRoot}/css/style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${staticRoot}/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="${staticRoot}/scripts/jquery.js"></script>
 <script type="text/javascript" src="${staticRoot}/scripts/app.js"></script>
 <script type="text/javascript">
 	var staticRoot = '${staticRoot}';

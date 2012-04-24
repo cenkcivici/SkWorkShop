@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sk.domain.Category;
+import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.Order;
 import com.sk.domain.PaymentMethod;
@@ -15,6 +16,7 @@ import com.sk.domain.ProductWithQuantity;
 import com.sk.domain.ShoppingCart;
 import com.sk.util.BaseIntegration;
 import com.sk.util.builder.CategoryBuilder;
+import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
 import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ProductBuilder;
@@ -41,7 +43,8 @@ public class OrderDaoTest extends BaseIntegration {
 		ProductWithQuantity productWithQuantity1 = new ProductWithQuantityBuilder().product(product1).quantity(1).build();
 		ProductWithQuantity productWithQuantity2 = new ProductWithQuantityBuilder().product(product2).quantity(2).build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().items(productWithQuantity1, productWithQuantity2).build();
-		PaymentMethod creditCardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCardNumber("1234567890123456").build(); 
+		CreditCard creditCard = new CreditCardBuilder().cardNumber("1234567890123456").build();
+		PaymentMethod creditCardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(creditCard).build(); 
 
 		Order toPersist = new OrderBuilder().shoppingCart(shoppingCart).paymentMethod(creditCardPaymentMethod).orderDate(now).build();
 
@@ -55,7 +58,8 @@ public class OrderDaoTest extends BaseIntegration {
 
 		assertThat(fromDb.getShoppingCart().getItems().size(), equalTo(2));
 		assertThat(fromDb.getShoppingCart().getItems(), equalTo(toPersist.getShoppingCart().getItems()));
-		assertThat(((CreditCardPaymentMethod)fromDb.getPaymentMethod()).getCardNumber(), equalTo("1234567890123456"));
+		
+		assertThat(((CreditCardPaymentMethod)fromDb.getPaymentMethod()).getCreditCard().getCardNumber(), equalTo("1234567890123456"));
 
 	}
 

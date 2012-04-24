@@ -18,7 +18,7 @@ public class CreditCard extends BaseEntity{
 	private String owner;
 	
 	@Column(length=60)
-	private String cardNumber;
+	private String cardNumber = "4539992043491562"; // for testing
 	
 	@Column(length=25)
 	private String cvc;
@@ -78,6 +78,10 @@ public class CreditCard extends BaseEntity{
 
 	public void setCreditCardType(CreditCardType creditCardType) {
 		this.creditCardType = creditCardType;
+	}
+	
+	public String getExpireDate() {
+		return getMonth() + getYear();
 	}
 	
 	@Override
