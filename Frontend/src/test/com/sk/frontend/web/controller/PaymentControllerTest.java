@@ -30,7 +30,6 @@ import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
-import com.sk.service.encryption.EncryptionService;
 import com.sk.service.payment.ResponseStatus;
 import com.sk.service.payment.VPOSResponse;
 import com.sk.service.payment.garanti.GarantiVPOSService;
@@ -47,16 +46,11 @@ public class PaymentControllerTest {
 	@Mock private OrderService orderService;
 	@Mock private BindingResult bindingResult;
 	@Mock private ShopperService shopperService;
-	@Mock private EncryptionService encryptionService;
 	@Mock private GarantiVPOSService garantiVPOSService;
 
 	@Before
 	public void before() {
-		controller = new PaymentController();
-		controller.setOrderService(orderService);
-		controller.setShopperService(shopperService);
-		controller.setEncryptionService(encryptionService);
-		controller.setGarantiVPOSService(garantiVPOSService);
+		controller = new PaymentController(orderService, shopperService, garantiVPOSService);
 	}
 
 	@Test
@@ -72,15 +66,12 @@ public class PaymentControllerTest {
 	
 	@Test
 	public void shouldSetCardInfoIfExists(){
+		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
 		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
 		Shopper shopper = new ShopperBuilder().creditCard(encryptedCard).build();
 		
 		when(shopperService.getStubShopper()).thenReturn(shopper);
-		when(encryptionService.decrypt("ZAQXSW")).thenReturn("Shopper");
-		when(encryptionService.decrypt("ABCDABCD")).thenReturn("12341234");
-		when(encryptionService.decrypt("ZXC")).thenReturn("003");
-		when(encryptionService.decrypt("CVB")).thenReturn("06");
-		when(encryptionService.decrypt("VBN")).thenReturn("12");
+		when(shopperService.decryptCreditCardInfo(encryptedCard)).thenReturn(card);
 		
 		ModelAndView mav = controller.show();
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod)mav.getModelMap().get("payment");

@@ -37,9 +37,9 @@
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>
-						<form method="get" action="${appRoot}/payment">
-							<input type="image" src="${staticRoot}/images/but_buy.gif"
-								width="55" height="23" />
+						<a href="${appRoot}/payment">
+							<img src="${staticRoot}/images/but_buy.gif" width="55" height="23" />
+						</a>
 						</form>
 					</td>
 				</tr>

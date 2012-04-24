@@ -30,9 +30,7 @@ public class ShopperServiceTest {
 	
 	@Before
 	public void init(){
-		shopperService = new ShopperService();
-		shopperService.setEncryptionService(encryptionService);
-		shopperService.setShopperDao(shopperDao);
+		shopperService = new ShopperService(encryptionService, shopperDao);
 	}
 	
 	@Test
@@ -52,6 +50,22 @@ public class ShopperServiceTest {
 
 		assertThat(shopper.getCreditCardList(), hasItem(encryptedCard));
 		verify(shopperDao).persist(shopper);
+	}
+	
+	@Test
+	public void shouldDecryptCreditCardInfo(){
+		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
+		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
+		
+		when(encryptionService.decrypt("ZAQXSW")).thenReturn("Shopper");
+		when(encryptionService.decrypt("ABCDABCD")).thenReturn("12341234");
+		when(encryptionService.decrypt("ZXC")).thenReturn("003");
+		when(encryptionService.decrypt("CVB")).thenReturn("06");
+		when(encryptionService.decrypt("VBN")).thenReturn("12");
+		
+		CreditCard decryptCard = shopperService.decryptCreditCardInfo(encryptedCard);
+		
+		assertThat(decryptCard, equalTo(card));
 	}
 	
 	@Test

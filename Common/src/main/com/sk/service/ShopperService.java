@@ -11,31 +11,42 @@ import com.sk.service.encryption.EncryptionService;
 @Service
 public class ShopperService {
 
-	@Autowired private EncryptionService encryptionService;
-	@Autowired private ShopperDao shopperDao;
+	private EncryptionService encryptionService;
+	private ShopperDao shopperDao;
 
-	public void encryptAndsaveCardInfo(Shopper shopper, CreditCard card) {
-		
-		CreditCard encryptCard = new CreditCard();
-		encryptCard.setOwner(encryptionService.encrypt(card.getOwner()));
-		encryptCard.setCardNumber(encryptionService.encrypt(card.getCardNumber()));
-		encryptCard.setCvc(encryptionService.encrypt(card.getCvc()));
-		encryptCard.setMonth(encryptionService.encrypt(card.getMonth()));
-		encryptCard.setYear(encryptionService.encrypt(card.getYear()));
-		encryptCard.setCreditCardType(card.getCreditCardType());
-		
-		shopper.addCreditCard(encryptCard);
-		shopperDao.persist(shopper);
-	}
-
-	public void setEncryptionService(EncryptionService encryptionService) {
+	public ShopperService(){}
+	
+	@Autowired
+	public ShopperService(EncryptionService encryptionService, ShopperDao shopperDao) {
 		this.encryptionService = encryptionService;
-	}
-
-	public void setShopperDao(ShopperDao shopperDao) {
 		this.shopperDao = shopperDao;
 	}
 
+	public void encryptAndsaveCardInfo(Shopper shopper, CreditCard card) {
+		
+		CreditCard encryptedCard = new CreditCard();
+		encryptedCard.setOwner(encryptionService.encrypt(card.getOwner()));
+		encryptedCard.setCardNumber(encryptionService.encrypt(card.getCardNumber()));
+		encryptedCard.setCvc(encryptionService.encrypt(card.getCvc()));
+		encryptedCard.setMonth(encryptionService.encrypt(card.getMonth()));
+		encryptedCard.setYear(encryptionService.encrypt(card.getYear()));
+		encryptedCard.setCreditCardType(card.getCreditCardType());
+		
+		shopper.addCreditCard(encryptedCard);
+		shopperDao.persist(shopper);
+	}
+
+	public CreditCard decryptCreditCardInfo(CreditCard encryptedCard) {
+		CreditCard card = new CreditCard();
+		card.setOwner(encryptionService.decrypt(encryptedCard.getOwner()));
+		card.setCardNumber(encryptionService.decrypt(encryptedCard.getCardNumber()));
+		card.setCvc(encryptionService.decrypt(encryptedCard.getCvc()));
+		card.setMonth(encryptionService.decrypt(encryptedCard.getMonth()));
+		card.setYear(encryptionService.decrypt(encryptedCard.getYear()));
+		card.setCreditCardType(encryptedCard.getCreditCardType());
+		return card;
+	}
+	
 	public Shopper getStubShopper() {
 		Shopper stubShopper = shopperDao.findByEmail("default@default.com");
 		if(stubShopper == null){
