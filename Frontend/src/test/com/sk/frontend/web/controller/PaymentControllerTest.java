@@ -1,8 +1,16 @@
 package com.sk.frontend.web.controller;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +27,8 @@ import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
+import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
+import com.sk.service.CreditCardProfileService;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.payment.ResponseStatus;
@@ -28,17 +38,6 @@ import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
 import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentControllerTest {
@@ -55,16 +54,23 @@ public class PaymentControllerTest {
 	private GarantiVPOSService garantiVPOSService;
 	@Mock
 	private CreditCardPopulatorHelper cardPopulatorHelper;
+	@Mock
+	private CreditCardProfileService creditCardProfileService;
+	
+	private MockHttpServletRequest request = new MockHttpServletRequest();
+
+	private ShoppingCart cart = new ShoppingCartBuilder().build();
 
 	@Before
 	public void before() {
-		controller = new PaymentController(orderService, shopperService, garantiVPOSService,cardPopulatorHelper);
+		request.setAttribute(ShoppingCartInterceptor.CART, cart);
+		controller = new PaymentController(orderService, shopperService, garantiVPOSService,cardPopulatorHelper,creditCardProfileService);
 	}
 
 	@Test
 	public void shouldCreateModelForPayment() {
 
-		ModelAndView mav = controller.getPaymentMAV(null);
+		ModelAndView mav = controller.getPaymentMAV(null,request);
 		assertThat(mav.getModelMap().containsKey("payment"), equalTo(true));
 		
 	}
@@ -74,16 +80,14 @@ public class PaymentControllerTest {
 		Map<String,String> years = new HashMap<String,String>();
 		years.put("2012", "2012");
 		years.put("2013", "2013");
-		years.put("2014", "2014");
 		
 		when(cardPopulatorHelper.getYears()).thenReturn(years);
-		ModelAndView mav = controller.getPaymentMAV(null);
+		ModelAndView mav = controller.getPaymentMAV(null,request);
 		assertThat(mav.getModelMap().containsKey("years"), equalTo(true));
 		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("years");
 		assertThat(fromModel.containsKey("2012"), equalTo(true));
 		assertThat(fromModel.containsKey("2013"), equalTo(true));
-		assertThat(fromModel.containsKey("2014"), equalTo(true));
-		assertThat(fromModel.keySet().size(), equalTo(3));
+		assertThat(fromModel.keySet().size(), equalTo(2));
 		
 	}
 	
@@ -92,18 +96,15 @@ public class PaymentControllerTest {
 		Map<String,String> months = new HashMap<String,String>();
 		months.put("01", "01");
 		months.put("02", "02");
-		months.put("03", "03");
-		months.put("04", "04");
 		
 		when(cardPopulatorHelper.getMonths()).thenReturn(months);
-		ModelAndView mav = controller.getPaymentMAV(null);
+		
+		ModelAndView mav = controller.getPaymentMAV(null,request);
 		assertThat(mav.getModelMap().containsKey("months"), equalTo(true));
 		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("months");
 		assertThat(fromModel.containsKey("01"), equalTo(true));
 		assertThat(fromModel.containsKey("02"), equalTo(true));
-		assertThat(fromModel.containsKey("03"), equalTo(true));
-		assertThat(fromModel.containsKey("04"), equalTo(true));
-		assertThat(fromModel.keySet().size(), equalTo(4));
+		assertThat(fromModel.keySet().size(), equalTo(2));
 	}
 	
 	@Test
@@ -113,7 +114,7 @@ public class PaymentControllerTest {
 		creditCardTypes.put(CreditCardType.VISA.name(), CreditCardType.VISA.name());
 		
 		when(cardPopulatorHelper.getCreditCardTypes()).thenReturn(creditCardTypes);
-		ModelAndView mav = controller.getPaymentMAV(null);
+		ModelAndView mav = controller.getPaymentMAV(null,request);
 		assertThat(mav.getModelMap().containsKey("creditCardTypes"), equalTo(true));
 		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("creditCardTypes");
 		assertThat(fromModel.containsKey(CreditCardType.MASTERCARD.name()), equalTo(true));
@@ -131,7 +132,7 @@ public class PaymentControllerTest {
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 		when(shopperService.decryptCreditCardInfo(encryptedCard)).thenReturn(card);
 
-		ModelAndView mav = controller.show();
+		ModelAndView mav = controller.show(request);
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod) mav.getModelMap().get("payment");
 
 		assertThat(payment.getCreditCard().getOwner(), equalTo("Shopper"));
@@ -148,7 +149,7 @@ public class PaymentControllerTest {
 		Shopper shopper = new ShopperBuilder().build();
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 
-		ModelAndView mav = controller.show();
+		ModelAndView mav = controller.show(request);
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod) mav.getModelMap().get("payment");
 		assertNull(payment.getCreditCard());
 		assertTrue((Boolean) mav.getModelMap().get("showSaveCheck"));
@@ -157,7 +158,7 @@ public class PaymentControllerTest {
 	@Test
 	public void shouldNotCallOrderServiceIfCreditCardIsNotValid() {
 		when(bindingResult.hasErrors()).thenReturn(true);
-		controller.submit(null, bindingResult, null);
+		controller.submit(null, bindingResult, request);
 		verifyZeroInteractions(orderService);
 		verify(bindingResult).hasErrors();
 	}

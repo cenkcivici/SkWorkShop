@@ -19,7 +19,9 @@ import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
+import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.frontend.web.validator.CreditCardValidator;
+import com.sk.service.CreditCardProfileService;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.payment.VPOSResponse;
@@ -38,17 +40,19 @@ public class PaymentController {
 	private GarantiVPOSService garantiVPOSService;
 	private ShopperService shopperService;
 	private CreditCardPopulatorHelper cardPopulatorHelper;
+	private CreditCardProfileService creditCardProfileService;
 
 	@Autowired
-	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper) {
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper,CreditCardProfileService creditCardProfileService) {
 		this.orderService = orderService;
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
 		this.cardPopulatorHelper = cardPopulatorHelper;
+		this.creditCardProfileService = creditCardProfileService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView show() {
+	public ModelAndView show(HttpServletRequest request) {
 
 		Shopper shopper = shopperService.getStubShopper();
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
@@ -63,18 +67,21 @@ public class PaymentController {
 			payment.setCreditCard(card);
 		}
 
-		ModelAndView mav = getPaymentMAV(payment);
+		ModelAndView mav = getPaymentMAV(payment,request);
 		mav.addObject("showSaveCheck", showSaveCheck);
 		return mav;
 	}
 
-	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
+	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("payment");
 
 		mav.addObject("payment", creditCardPaymentMethod);
 		mav.addObject("creditCardTypes", cardPopulatorHelper.getCreditCardTypes());
 		mav.addObject("months", cardPopulatorHelper.getMonths());
 		mav.addObject("years", cardPopulatorHelper.getYears());
+		
+		ShoppingCart cart = (ShoppingCart) request.getAttribute(ShoppingCartInterceptor.CART);
+		mav.addObject("paymentPlan",creditCardProfileService.paymentsFor(cart));
 
 		return mav;
 	}
@@ -82,7 +89,7 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView submit(@Validated @ModelAttribute("payment") CreditCardPaymentMethod payment, BindingResult binder, HttpServletRequest request) {
 		if (binder.hasErrors()) {
-			ModelAndView mav = getPaymentMAV(payment);
+			ModelAndView mav = getPaymentMAV(payment,request);
 			mav.addObject("showSaveCheck", true);
 			return mav;
 		}
@@ -92,13 +99,13 @@ public class PaymentController {
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
-			return showError(payment);
+			return showError(payment,request);
 		}
 
 	}
 
-	protected ModelAndView showError(CreditCardPaymentMethod payment) {
-		ModelAndView modelAndView = getPaymentMAV(payment);
+	protected ModelAndView showError(CreditCardPaymentMethod payment,HttpServletRequest request) {
+		ModelAndView modelAndView = getPaymentMAV(payment,request);
 		modelAndView.addObject("paymentFailed", true);
 		return modelAndView;
 	}
@@ -120,16 +127,5 @@ public class PaymentController {
 		return (ShoppingCart) request.getAttribute("cart");
 	}
 
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
-
-	public void setShopperService(ShopperService shopperService) {
-		this.shopperService = shopperService;
-	}
-
-	public void setGarantiVPOSService(GarantiVPOSService garantiVPOSService) {
-		this.garantiVPOSService = garantiVPOSService;
-	}
 
 }
