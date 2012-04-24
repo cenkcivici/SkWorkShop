@@ -12,16 +12,13 @@ import com.sk.domain.dao.CategoryDao;
 @Service
 public class CategoryService {
 	
-	@Autowired
 	private CategoryDao categoryDao;
-	
-	@Autowired
 	private UrlGeneratorService urlGeneratorService;
 
 	public CategoryService() {}
 	
+	@Autowired
 	public CategoryService(CategoryDao categoryDao, UrlGeneratorService urlGeneratorService) {
-		super();
 		this.categoryDao = categoryDao;
 		this.urlGeneratorService = urlGeneratorService;
 	}
