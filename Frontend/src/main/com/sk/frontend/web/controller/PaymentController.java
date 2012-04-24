@@ -33,7 +33,6 @@ import com.sk.service.payment.garanti.GarantiVPOSService;
 @RequestMapping("/payment")
 public class PaymentController {
 
-
 	@InitBinder
 	public void init(WebDataBinder binder) {
 		binder.setValidator(new CreditCardValidator());
@@ -49,7 +48,7 @@ public class PaymentController {
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView show() {
 
@@ -59,17 +58,11 @@ public class PaymentController {
 		Boolean showSaveCheck = Boolean.TRUE;
 		if (hasAnyCreditCardInfo(shopper)) {
 			showSaveCheck = Boolean.FALSE;
-			
+
 			CreditCard encryptedCard = shopper.getCreditCardList().iterator().next();
 			CreditCard card = shopperService.decryptCreditCardInfo(encryptedCard);
-			
-			//TODO CreditCArdPAymentMethod icine CreditCard gommece
-			payment.setOwner(card.getOwner());
-			payment.setCardNumber(card.getCardNumber());
-			payment.setCvc(card.getCvc());
-			payment.setMonth(card.getMonth());
-			payment.setYear(card.getYear());
-			payment.setCreditCardType(encryptedCard.getCreditCardType());
+
+			payment.setCreditCard(card);
 		}
 
 		ModelAndView mav = getPaymentMAV(payment);
@@ -130,7 +123,7 @@ public class PaymentController {
 		}
 
 		ShoppingCart cart = getShoppingCart(request);
-		VPOSResponse response = garantiVPOSService.makePayment(payment,cart.getTotalCost());
+		VPOSResponse response = garantiVPOSService.makePayment(payment, cart.getTotalCost());
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
@@ -148,14 +141,8 @@ public class PaymentController {
 	protected ModelAndView createOrder(CreditCardPaymentMethod payment, HttpServletRequest request) {
 		if (request.getParameter("saveCardInfo") != null && request.getParameter("saveCardInfo").equals("1")) {
 			Shopper shopper = shopperService.getStubShopper();
-			
-			CreditCard card = new CreditCard();
-			card.setOwner(payment.getOwner());
-			card.setCardNumber(payment.getCardNumber());
-			card.setCvc(payment.getCvc());
-			card.setMonth(payment.getMonth());
-			card.setYear(payment.getYear());
-			card.setCreditCardType(payment.getCreditCardType());
+
+			CreditCard card = payment.getCreditCard();
 			shopperService.encryptAndsaveCardInfo(shopper, card);
 		}
 

@@ -84,13 +84,13 @@
 				<p:outputPanel rendered="#{not empty ordersView.selectedOrder}">
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Owner :" />
-					 #{ordersView.selectedOrder.paymentMethod.owner}					
+					 #{ordersView.selectedOrder.paymentMethod.creditCard.owner}					
 					<h:outputLabel value="Card Number :" /> 
-					#{ordersView.selectedOrder.paymentMethod.cardNumber}					
+					#{ordersView.selectedOrder.paymentMethod.creditCard.cardNumber}					
 					<h:outputLabel value="CVC :" />
-					#{ordersView.selectedOrder.paymentMethod.cvc}					
+					#{ordersView.selectedOrder.paymentMethod.creditCard.cvc}					
 					<h:outputLabel value="Month / Year :" /> 
-					#{ordersView.selectedOrder.paymentMethod.month} / #{ordersView.selectedOrder.paymentMethod.year}					
+					#{ordersView.selectedOrder.paymentMethod.creditCard.month} / #{ordersView.selectedOrder.paymentMethod.creditCard.year}					
 				</h:panelGrid>
 				</p:outputPanel>
 			</p:outputPanel>
