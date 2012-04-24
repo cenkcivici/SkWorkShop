@@ -1,10 +1,5 @@
 package com.sk.frontend.web.controller;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
-import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
+import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
 import com.sk.frontend.web.validator.CreditCardValidator;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
@@ -41,12 +36,14 @@ public class PaymentController {
 	private OrderService orderService;
 	private GarantiVPOSService garantiVPOSService;
 	private ShopperService shopperService;
+	private CreditCardPopulatorHelper cardPopulatorHelper;
 
 	@Autowired
-	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService) {
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper) {
 		this.orderService = orderService;
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
+		this.cardPopulatorHelper = cardPopulatorHelper;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -78,40 +75,11 @@ public class PaymentController {
 		ModelAndView mav = new ModelAndView("payment");
 
 		mav.addObject("payment", creditCardPaymentMethod);
-		mav.addObject("creditCardTypes", getCreditCardTypes());
-		mav.addObject("months", getMonths());
-		mav.addObject("years", getYears());
+		mav.addObject("creditCardTypes", cardPopulatorHelper.getCreditCardTypes());
+		mav.addObject("months", cardPopulatorHelper.getMonths());
+		mav.addObject("years", cardPopulatorHelper.getYears());
 
 		return mav;
-	}
-
-	protected Map<String, String> getCreditCardTypes() {
-		Map<String, String> creditCardTypes = new HashMap<String, String>();
-		for (CreditCardType creditCardType : CreditCardType.values()) {
-			creditCardTypes.put(creditCardType.name(), creditCardType.getName());
-		}
-		return creditCardTypes;
-	}
-
-	protected Map<String, String> getMonths() {
-		Map<String, String> months = new TreeMap<String, String>();
-		for (int i = 1; i < 13; i++) {
-			if (i < 10) {
-				months.put("0" + i, "0" + i);
-			} else {
-				months.put("" + i, "" + i);
-			}
-		}
-		return months;
-	}
-
-	protected Map<String, String> getYears() {
-		Map<String, String> years = new TreeMap<String, String>();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		for (int year = currentYear; year < currentYear + 12; year++) {
-			years.put("" + year, "" + year);
-		}
-		return years;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

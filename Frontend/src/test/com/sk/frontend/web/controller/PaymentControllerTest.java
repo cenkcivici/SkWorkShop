@@ -1,9 +1,5 @@
 package com.sk.frontend.web.controller;
 
-import java.util.Calendar;
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +14,7 @@ import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
+import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.payment.ResponseStatus;
@@ -52,10 +49,12 @@ public class PaymentControllerTest {
 	private ShopperService shopperService;
 	@Mock
 	private GarantiVPOSService garantiVPOSService;
+	@Mock
+	private CreditCardPopulatorHelper cardPopulatorHelper;
 
 	@Before
 	public void before() {
-		controller = new PaymentController(orderService, shopperService, garantiVPOSService);
+		controller = new PaymentController(orderService, shopperService, garantiVPOSService,cardPopulatorHelper);
 	}
 
 	@Test
@@ -66,6 +65,10 @@ public class PaymentControllerTest {
 		assertThat(mav.getModelMap().containsKey("years"), equalTo(true));
 		assertThat(mav.getModelMap().containsKey("months"), equalTo(true));
 		assertThat(mav.getModelMap().containsKey("creditCardTypes"), equalTo(true));
+		
+		verify(cardPopulatorHelper).getYears();
+		verify(cardPopulatorHelper).getMonths();
+		verify(cardPopulatorHelper).getCreditCardTypes();
 
 	}
 
@@ -99,39 +102,6 @@ public class PaymentControllerTest {
 		CreditCardPaymentMethod payment = (CreditCardPaymentMethod) mav.getModelMap().get("payment");
 		assertNull(payment.getCreditCard());
 		assertTrue((Boolean) mav.getModelMap().get("showSaveCheck"));
-	}
-
-	@Test
-	public void shouldCreateCreditCardTypes() {
-
-		Map<String, String> creditCardTypes = controller.getCreditCardTypes();
-		assertThat(creditCardTypes.keySet().contains(CreditCardType.VISA.name()), equalTo(true));
-		assertThat(creditCardTypes.keySet().contains(CreditCardType.MASTERCARD.name()), equalTo(true));
-		assertThat(creditCardTypes.keySet().size(), equalTo(2));
-
-	}
-
-	@Test
-	public void shouldCreateYears() {
-
-		TreeMap<String, String> years = (TreeMap<String, String>) controller.getYears();
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-		assertThat(years.keySet().size(), equalTo(12));
-		assertThat(years.firstKey(), equalTo("" + currentYear));
-		assertThat(years.lastKey(), equalTo("" + (currentYear + 11)));
-
-	}
-
-	@Test
-	public void shouldCreateMonths() {
-
-		TreeMap<String, String> manths = (TreeMap<String, String>) controller.getMonths();
-
-		assertThat(manths.keySet().size(), equalTo(12));
-		assertThat(manths.firstKey(), equalTo("01"));
-		assertThat(manths.lastKey(), equalTo("12"));
-
 	}
 
 	@Test
