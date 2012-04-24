@@ -1,0 +1,25 @@
+<tr>
+	<td>Credit Card Payment Plan</td>
+	<td>&nbsp;</td>
+</tr>
+#foreach($plan in $paymentPlan.keySet())
+<tr>
+	<td>$plan.vendor</td>
+	<td>
+		<table>
+			<tr>
+				<td>Months</td>
+				<td>Payment</td>
+				<td>Interest rate</td>
+			</tr>
+			#foreach($paymentByMonth in $paymentPlan.get($plan).keySet())
+			<tr>
+				<td>$paymentByMonth.months</td>
+				<td>$paymentPlan.get($plan).get($paymentByMonth)</td>
+				<td>$paymentByMonth.interestRate</td>
+			</tr>
+			#end
+		</table>
+	</td>
+</tr>
+#end

@@ -20,10 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
+import com.sk.domain.CreditCardProfile;
 import com.sk.domain.CreditCardType;
+import com.sk.domain.InstallmentPlan;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
+import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.frontend.web.validator.CreditCardValidator;
+import com.sk.service.CreditCardProfileService;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.payment.VPOSResponse;
@@ -33,25 +37,27 @@ import com.sk.service.payment.garanti.GarantiVPOSService;
 @RequestMapping("/payment")
 public class PaymentController {
 
+	private OrderService orderService;
+	private GarantiVPOSService garantiVPOSService;
+	private ShopperService shopperService;
+	private CreditCardProfileService creditCardProfileService;
+	
 
 	@InitBinder
 	public void init(WebDataBinder binder) {
 		binder.setValidator(new CreditCardValidator());
 	}
 
-	private OrderService orderService;
-	private GarantiVPOSService garantiVPOSService;
-	private ShopperService shopperService;
-
 	@Autowired
-	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService) {
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService,CreditCardProfileService creditCardProfileService) {
 		this.orderService = orderService;
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
+		this.creditCardProfileService = creditCardProfileService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView show() {
+	public ModelAndView show(HttpServletRequest request) {
 
 		Shopper shopper = shopperService.getStubShopper();
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
@@ -72,7 +78,7 @@ public class PaymentController {
 			payment.setCreditCardType(encryptedCard.getCreditCardType());
 		}
 
-		ModelAndView mav = getPaymentMAV(payment);
+		ModelAndView mav = getPaymentMAV(payment,request);
 		mav.addObject("showSaveCheck", showSaveCheck);
 		return mav;
 	}
@@ -81,13 +87,17 @@ public class PaymentController {
 		return !shopper.getCreditCardList().isEmpty();
 	}
 
-	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
+	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("payment");
 
 		mav.addObject("payment", creditCardPaymentMethod);
 		mav.addObject("creditCardTypes", getCreditCardTypes());
 		mav.addObject("months", getMonths());
 		mav.addObject("years", getYears());
+		
+		ShoppingCart cart = (ShoppingCart) request.getAttribute(ShoppingCartInterceptor.CART);
+		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentPlan = creditCardProfileService.paymentsFor(cart);
+		mav.addObject("paymentPlan",paymentPlan);
 
 		return mav;
 	}
@@ -124,7 +134,7 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView submit(@Validated @ModelAttribute("payment") CreditCardPaymentMethod payment, BindingResult binder, HttpServletRequest request) {
 		if (binder.hasErrors()) {
-			ModelAndView mav = getPaymentMAV(payment);
+			ModelAndView mav = getPaymentMAV(payment,request);
 			mav.addObject("showSaveCheck", true);
 			return mav;
 		}
@@ -133,13 +143,13 @@ public class PaymentController {
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
-			return showError(payment);
+			return showError(payment,request);
 		}
 
 	}
 
-	protected ModelAndView showError(CreditCardPaymentMethod payment) {
-		ModelAndView modelAndView = getPaymentMAV(payment);
+	protected ModelAndView showError(CreditCardPaymentMethod payment,HttpServletRequest request) {
+		ModelAndView modelAndView = getPaymentMAV(payment,request);
 		modelAndView.addObject("paymentFailed", true);
 		return modelAndView;
 	}
@@ -159,6 +169,7 @@ public class PaymentController {
 		}
 
 		ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("cart");
+	
 		orderService.createOrder(shoppingCart, payment);
 		return new ModelAndView("confirm");
 	}
