@@ -11,9 +11,9 @@ public class HttpConnectionFactory {
 	public HttpConnection createConnection(String uri) {
 		
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpRequestBase =  new HttpPost(uri);
+		HttpPost httpPost =  new HttpPost(uri);
 		
-		return new HttpConnection(httpClient, httpRequestBase);
+		return new HttpConnection(httpClient, httpPost);
 	}
 
 }

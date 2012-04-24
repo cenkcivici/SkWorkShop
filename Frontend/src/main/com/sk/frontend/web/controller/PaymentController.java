@@ -2,6 +2,7 @@ package com.sk.frontend.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -53,7 +54,7 @@ public class PaymentController {
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
 
 		Boolean showSaveCheck = Boolean.TRUE;
-		if (hasAnyCreditCardInfo(shopper)) {
+		if (shopper.hasAnyCreditCardInfo()) {
 			showSaveCheck = Boolean.FALSE;
 
 			CreditCard encryptedCard = shopper.getCreditCardList().iterator().next();
@@ -65,10 +66,6 @@ public class PaymentController {
 		ModelAndView mav = getPaymentMAV(payment);
 		mav.addObject("showSaveCheck", showSaveCheck);
 		return mav;
-	}
-
-	private boolean hasAnyCreditCardInfo(Shopper shopper) {
-		return !shopper.getCreditCardList().isEmpty();
 	}
 
 	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
@@ -107,7 +104,7 @@ public class PaymentController {
 	}
 
 	protected ModelAndView createOrder(CreditCardPaymentMethod payment, HttpServletRequest request) {
-		if (request.getParameter("saveCardInfo") != null && request.getParameter("saveCardInfo").equals("1")) {
+		if (StringUtils.equals(request.getParameter("saveCardInfo"), "1") ) {
 			Shopper shopper = shopperService.getStubShopper();
 
 			CreditCard card = payment.getCreditCard();
