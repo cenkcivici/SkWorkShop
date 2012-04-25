@@ -19,6 +19,12 @@
 				value="#{creditCardProfileFormView.creditCardProfile.vendor}">
 				<f:validateLength maximum="150" />
 			</p:inputText>
+			<h:outputLabel for="binDigits" value="Bin Digits" />
+			
+			<p:inputText id="binDigits" style="width:200px;" required="true" maxlength="6"
+				value="#{creditCardProfileFormView.creditCardProfile.binDigits}">
+				<f:validateLength maximum="6" minimum="6" />
+			</p:inputText>
 			<h:outputText value="" />
 			<h:outputText value="" />
 			<h:outputLabel value="Installment Plan" />

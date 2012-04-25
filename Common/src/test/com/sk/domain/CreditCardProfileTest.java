@@ -56,6 +56,13 @@ public class CreditCardProfileTest {
 		
 		cardProfile.monthlyPaymentOf(100d,3);
 	}
+	
+	@Test
+	public void shouldBeIssuerWhenBinDigitsMatch() {
+		CreditCardProfile cardProfile = new CreditCardProfileBuilder().bin("121212").build();
+		
+		assertThat(cardProfile.issuerOf("121212121212121212"),equalTo(true));
+	}
 
 
 }

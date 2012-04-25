@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="credit_card_profile")
-public class CreditCardProfile extends BaseEntity {
+public class CreditCardProfile extends BaseEntity implements Comparable<CreditCardProfile> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,6 +20,17 @@ public class CreditCardProfile extends BaseEntity {
 	
 	@OneToMany(cascade={CascadeType.ALL,CascadeType.MERGE})
 	private List<InstallmentPlan> installmentPlans = new ArrayList<InstallmentPlan>();
+	
+	@Basic
+	private String binDigits;
+
+	public String getBinDigits() {
+		return binDigits;
+	}
+
+	public void setBinDigits(String binDigits) {
+		this.binDigits = binDigits;
+	}
 
 	public String getVendor() {
 		return vendor;
@@ -42,7 +53,7 @@ public class CreditCardProfile extends BaseEntity {
 	}
 	
 	public void deleteInstallmentPlan(InstallmentPlan installmentPlan) {
-		installmentPlans.remove(installmentPlan);
+		installmentPlans.remove(installmentPlan);	
 	}
 
 	public double monthlyPaymentOf(double amount, int months) {
@@ -51,11 +62,7 @@ public class CreditCardProfile extends BaseEntity {
 		if (planToUse == null) {
 			throw new IllegalArgumentException("Missing installment plan for" + months);
 		} 
-		
-		amount += amount * (planToUse.getInterestRate() / 100);
-		double payment =  amount / (months * 1d);
-		return (Math.round(payment*100))/100d;
-
+		return planToUse.paymentFor(amount);
 	}
 
 	private InstallmentPlan findInstallmentPlanFor(int months) {
@@ -65,6 +72,15 @@ public class CreditCardProfile extends BaseEntity {
 			}
 		}
 		return null;
+	}
+
+	public boolean issuerOf(String creditCardNo) {
+		return creditCardNo.startsWith(binDigits);
+	}
+
+	@Override
+	public int compareTo(CreditCardProfile toCompare) {
+		return vendor.compareTo(toCompare.vendor);
 	}
 	
 

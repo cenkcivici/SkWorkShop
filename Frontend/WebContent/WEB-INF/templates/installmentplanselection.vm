@@ -1,0 +1,26 @@
+<table>
+<tr>
+	<td>Select Payment Plan</td>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td>$paymentEntry.getKey().vendor</td>
+	<td>
+		<table>
+			<tr>
+				<td>Months</td>
+				<td>Payment</td>
+				<td>Interest rate</td>
+			</tr>
+			#foreach ($paymentByMonth in $paymentEntry.getValue().keySet())
+			<tr>
+				<td><input type="radio" name="selectPlan" value="$paymentByMonth.id">$paymentByMonth.months</input></td>
+				<td>$paymentEntry.getValue().get($paymentByMonth)</td>
+				<td>$paymentByMonth.interestRate</td>
+			</tr>
+			#end
+		</table>
+	</td>
+</tr>
+</table>

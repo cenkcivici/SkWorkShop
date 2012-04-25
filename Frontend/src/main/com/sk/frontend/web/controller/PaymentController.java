@@ -16,10 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
+import com.sk.domain.InstallmentPlan;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
+import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.frontend.web.validator.CreditCardValidator;
+import com.sk.service.CreditCardProfileService;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
 import com.sk.service.payment.VPOSResponse;
@@ -29,26 +32,29 @@ import com.sk.service.payment.garanti.GarantiVPOSService;
 @RequestMapping("/payment")
 public class PaymentController {
 
+	
+	private OrderService orderService;
+	private GarantiVPOSService garantiVPOSService;
+	private ShopperService shopperService;
+	private CreditCardPopulatorHelper cardPopulatorHelper;
+	private CreditCardProfileService creditCardProfileService;
+
 	@InitBinder
 	public void init(WebDataBinder binder) {
 		binder.setValidator(new CreditCardValidator());
 	}
 
-	private OrderService orderService;
-	private GarantiVPOSService garantiVPOSService;
-	private ShopperService shopperService;
-	private CreditCardPopulatorHelper cardPopulatorHelper;
-
 	@Autowired
-	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper) {
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper,CreditCardProfileService creditCardProfileService) {
 		this.orderService = orderService;
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
 		this.cardPopulatorHelper = cardPopulatorHelper;
+		this.creditCardProfileService = creditCardProfileService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView show() {
+	public ModelAndView show(HttpServletRequest request) {
 
 		Shopper shopper = shopperService.getStubShopper();
 		CreditCardPaymentMethod payment = new CreditCardPaymentMethod();
@@ -63,18 +69,21 @@ public class PaymentController {
 			payment.setCreditCard(card);
 		}
 
-		ModelAndView mav = getPaymentMAV(payment);
+		ModelAndView mav = getPaymentMAV(payment,request);
 		mav.addObject("showSaveCheck", showSaveCheck);
 		return mav;
 	}
 
-	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod) {
+	protected ModelAndView getPaymentMAV(CreditCardPaymentMethod creditCardPaymentMethod,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("payment");
 
 		mav.addObject("payment", creditCardPaymentMethod);
 		mav.addObject("creditCardTypes", cardPopulatorHelper.getCreditCardTypes());
 		mav.addObject("months", cardPopulatorHelper.getMonths());
 		mav.addObject("years", cardPopulatorHelper.getYears());
+		
+		ShoppingCart cart = (ShoppingCart) request.getAttribute(ShoppingCartInterceptor.CART);
+		mav.addObject("paymentPlan",creditCardProfileService.paymentsFor(cart));
 
 		return mav;
 	}
@@ -82,23 +91,33 @@ public class PaymentController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView submit(@Validated @ModelAttribute("payment") CreditCardPaymentMethod payment, BindingResult binder, HttpServletRequest request) {
 		if (binder.hasErrors()) {
-			ModelAndView mav = getPaymentMAV(payment);
+			ModelAndView mav = getPaymentMAV(payment,request);
 			mav.addObject("showSaveCheck", true);
 			return mav;
 		}
+		
+		initializeInstallmentPlan(payment, request);
 
 		ShoppingCart cart = getShoppingCart(request);
 		VPOSResponse response = garantiVPOSService.makePayment(payment, cart.getTotalCost());
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
-			return showError(payment,response);
+			return showError(payment,response,request);
 		}
 
 	}
 
-	protected ModelAndView showError(CreditCardPaymentMethod payment, VPOSResponse response) {
-		ModelAndView modelAndView = getPaymentMAV(payment);
+	private void initializeInstallmentPlan(CreditCardPaymentMethod payment, HttpServletRequest request) {
+		String selectPlan = request.getParameter("selectPlan");
+		if (StringUtils.isNotEmpty(selectPlan) && StringUtils.isNumeric(selectPlan)) {
+			InstallmentPlan installmentPlan = creditCardProfileService.findInstallmentById(Long.parseLong(selectPlan));
+			payment.setInstallmentPlan(installmentPlan);
+		}
+	}
+
+	protected ModelAndView showError(CreditCardPaymentMethod payment,VPOSResponse response,HttpServletRequest request) {
+		ModelAndView modelAndView = getPaymentMAV(payment,request);
 		modelAndView.addObject("errorOccured", true);
 		modelAndView.addObject("errorMessage", response.getInfoText());
 		modelAndView.addObject("errorMessageDetail", response.getDetailMessage());
@@ -122,16 +141,5 @@ public class PaymentController {
 		return (ShoppingCart) request.getAttribute("cart");
 	}
 
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
-
-	public void setShopperService(ShopperService shopperService) {
-		this.shopperService = shopperService;
-	}
-
-	public void setGarantiVPOSService(GarantiVPOSService garantiVPOSService) {
-		this.garantiVPOSService = garantiVPOSService;
-	}
 
 }

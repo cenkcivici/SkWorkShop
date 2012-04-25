@@ -17,6 +17,7 @@ public class InstallmentPlan extends BaseEntity implements Comparable<Installmen
 
 	@Basic
 	private double interestRate;
+	
 
 	public int getMonths() {
 		return months;
@@ -33,6 +34,8 @@ public class InstallmentPlan extends BaseEntity implements Comparable<Installmen
 	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -67,5 +70,11 @@ public class InstallmentPlan extends BaseEntity implements Comparable<Installmen
 			return 0;
 		}
 		return getMonths() > toCompare.getMonths() ? 1 : -1;
+	}
+
+	public double paymentFor(double amount) {
+		double finalAmount = amount +  amount * (getInterestRate() / 100);
+		double payment =  finalAmount / (months * 1d);
+		return (Math.round(payment*100))/100d;
 	}
 }

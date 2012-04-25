@@ -13,6 +13,7 @@ public class CreditCardProfileBuilder extends BaseBuilder<CreditCardProfile,Cred
 	
 	private String vendor = RandomStringUtils.randomAlphabetic(10);
 	private List<InstallmentPlan> installmentPlans = new ArrayList<InstallmentPlan>();
+	private String binDigits = "121212";
 	
 	public CreditCardProfileBuilder vendor(String vendor) {
 		this.vendor = vendor;
@@ -30,7 +31,13 @@ public class CreditCardProfileBuilder extends BaseBuilder<CreditCardProfile,Cred
 		CreditCardProfile profile = new CreditCardProfile();
 		profile.setVendor(vendor);
 		profile.setInstallmentPlans(installmentPlans);
+		profile.setBinDigits(binDigits);
 		return profile;
+	}
+
+	public CreditCardProfileBuilder bin(String binDigits) {
+		this.binDigits = binDigits;
+		return this;
 	}
 
 }
