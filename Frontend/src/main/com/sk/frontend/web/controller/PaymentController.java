@@ -92,14 +92,16 @@ public class PaymentController {
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
-			return showError(payment);
+			return showError(payment,response);
 		}
 
 	}
 
-	protected ModelAndView showError(CreditCardPaymentMethod payment) {
+	protected ModelAndView showError(CreditCardPaymentMethod payment, VPOSResponse response) {
 		ModelAndView modelAndView = getPaymentMAV(payment);
-		modelAndView.addObject("paymentFailed", true);
+		modelAndView.addObject("errorOccured", true);
+		modelAndView.addObject("errorMessage", response.getInfoText());
+		modelAndView.addObject("errorMessageDetail", response.getDetailMessage());
 		return modelAndView;
 	}
 
