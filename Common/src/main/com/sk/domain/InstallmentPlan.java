@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.hibernate.Hibernate;
 
 @Entity
-@Table(name = "installmentPlan")
+@Table(name = "installment_plan")
 public class InstallmentPlan extends BaseEntity implements Comparable<InstallmentPlan> {
 
 	private static final long serialVersionUID = 1L;

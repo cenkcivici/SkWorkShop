@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="creditCardProfile")
+@Table(name="credit_card_profile")
 public class CreditCardProfile extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
