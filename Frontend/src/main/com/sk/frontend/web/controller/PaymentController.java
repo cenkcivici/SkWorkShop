@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
+import com.sk.domain.InstallmentPlan;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
@@ -31,16 +32,17 @@ import com.sk.service.payment.garanti.GarantiVPOSService;
 @RequestMapping("/payment")
 public class PaymentController {
 
-	@InitBinder
-	public void init(WebDataBinder binder) {
-		binder.setValidator(new CreditCardValidator());
-	}
-
+	
 	private OrderService orderService;
 	private GarantiVPOSService garantiVPOSService;
 	private ShopperService shopperService;
 	private CreditCardPopulatorHelper cardPopulatorHelper;
 	private CreditCardProfileService creditCardProfileService;
+
+	@InitBinder
+	public void init(WebDataBinder binder) {
+		binder.setValidator(new CreditCardValidator());
+	}
 
 	@Autowired
 	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper,CreditCardProfileService creditCardProfileService) {
@@ -93,6 +95,8 @@ public class PaymentController {
 			mav.addObject("showSaveCheck", true);
 			return mav;
 		}
+		
+		initializeInstallmentPlan(payment, request);
 
 		ShoppingCart cart = getShoppingCart(request);
 		VPOSResponse response = garantiVPOSService.makePayment(payment, cart.getTotalCost());
@@ -102,6 +106,14 @@ public class PaymentController {
 			return showError(payment,request);
 		}
 
+	}
+
+	private void initializeInstallmentPlan(CreditCardPaymentMethod payment, HttpServletRequest request) {
+		String selectPlan = request.getParameter("selectPlan");
+		if (StringUtils.isNotEmpty(selectPlan) && StringUtils.isNumeric(selectPlan)) {
+			InstallmentPlan installmentPlan = creditCardProfileService.findInstallmentById(Long.parseLong(selectPlan));
+			payment.setInstallmentPlan(installmentPlan);
+		}
 	}
 
 	protected ModelAndView showError(CreditCardPaymentMethod payment,HttpServletRequest request) {

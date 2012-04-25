@@ -62,11 +62,7 @@ public class CreditCardProfile extends BaseEntity implements Comparable<CreditCa
 		if (planToUse == null) {
 			throw new IllegalArgumentException("Missing installment plan for" + months);
 		} 
-		
-		amount += amount * (planToUse.getInterestRate() / 100);
-		double payment =  amount / (months * 1d);
-		return (Math.round(payment*100))/100d;
-
+		return planToUse.paymentFor(amount);
 	}
 
 	private InstallmentPlan findInstallmentPlanFor(int months) {

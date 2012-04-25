@@ -1,6 +1,5 @@
 package com.sk.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,12 +13,26 @@ import com.sk.domain.CreditCardProfile;
 import com.sk.domain.InstallmentPlan;
 import com.sk.domain.ShoppingCart;
 import com.sk.domain.dao.CreditCardProfileDao;
+import com.sk.domain.dao.InstallmentPlanDao;
 
 @Service
 public class CreditCardProfileService {
 
 	@Autowired
 	private CreditCardProfileDao creditCardProfileDao;
+	
+	@Autowired
+	private InstallmentPlanDao installmentPlanDao;
+
+	public CreditCardProfileService() {
+		
+	}
+	
+	
+	public CreditCardProfileService(CreditCardProfileDao creditCardProfileDao, InstallmentPlanDao installmentPlanDao) {
+		this.creditCardProfileDao = creditCardProfileDao;
+		this.installmentPlanDao = installmentPlanDao;
+	}
 
 	public List<CreditCardProfile> getAll() {
 		return creditCardProfileDao.getAll();
@@ -38,7 +51,11 @@ public class CreditCardProfileService {
 	public CreditCardProfile attach(CreditCardProfile creditCardProfile) {
 		return creditCardProfileDao.get(creditCardProfile.getId());
 	}
-
+	
+	public InstallmentPlan findInstallmentById(Long id) {
+		return installmentPlanDao.get(id);
+	}
+	
 	public Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsFor(ShoppingCart cart) {
 		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsMap = new TreeMap<CreditCardProfile, Map<InstallmentPlan, Double>>();
 		List<CreditCardProfile> allProfiles = creditCardProfileDao.getAll();

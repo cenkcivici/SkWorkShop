@@ -1,5 +1,8 @@
 package com.sk.domain.dao;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sk.domain.Category;
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
+import com.sk.domain.InstallmentPlan;
 import com.sk.domain.Order;
 import com.sk.domain.PaymentMethod;
 import com.sk.domain.Product;
@@ -18,13 +22,12 @@ import com.sk.util.BaseIntegration;
 import com.sk.util.builder.CategoryBuilder;
 import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
+import com.sk.util.builder.CreditCardProfileBuilder;
+import com.sk.util.builder.InstallmentPlanBuilder;
 import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ProductBuilder;
 import com.sk.util.builder.ProductWithQuantityBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 public class OrderDaoTest extends BaseIntegration {
 
@@ -44,7 +47,12 @@ public class OrderDaoTest extends BaseIntegration {
 		ProductWithQuantity productWithQuantity2 = new ProductWithQuantityBuilder().product(product2).quantity(2).build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().items(productWithQuantity1, productWithQuantity2).build();
 		CreditCard creditCard = new CreditCardBuilder().cardNumber("1234567890123456").build();
-		PaymentMethod creditCardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(creditCard).build(); 
+		
+		InstallmentPlan installmentPlan = new InstallmentPlanBuilder().months(2).interestRate(5d).persist(getSession());
+		new CreditCardProfileBuilder().vendor("Vendor").installmentPlans(installmentPlan).bin("121212").persist(getSession());
+		
+		
+		PaymentMethod creditCardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(creditCard).installmentPlan(installmentPlan).build(); 
 
 		Order toPersist = new OrderBuilder().shoppingCart(shoppingCart).paymentMethod(creditCardPaymentMethod).orderDate(now).build();
 
@@ -58,8 +66,9 @@ public class OrderDaoTest extends BaseIntegration {
 
 		assertThat(fromDb.getShoppingCart().getItems().size(), equalTo(2));
 		assertThat(fromDb.getShoppingCart().getItems(), equalTo(toPersist.getShoppingCart().getItems()));
-		
-		assertThat(((CreditCardPaymentMethod)fromDb.getPaymentMethod()).getCreditCard().getCardNumber(), equalTo("1234567890123456"));
+		CreditCardPaymentMethod paymentMethod = (CreditCardPaymentMethod)fromDb.getPaymentMethod();
+		assertThat(paymentMethod.getCreditCard().getCardNumber(), equalTo("1234567890123456"));
+		assertThat(paymentMethod.getInstallmentPlan(), equalTo(installmentPlan));
 
 	}
 

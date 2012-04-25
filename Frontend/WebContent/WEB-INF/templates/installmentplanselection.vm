@@ -15,7 +15,7 @@
 			</tr>
 			#foreach ($paymentByMonth in $paymentEntry.getValue().keySet())
 			<tr>
-				<td><input type="radio" name="selectPlan">$paymentByMonth.months</input></td>
+				<td><input type="radio" name="selectPlan" value="$paymentByMonth.id">$paymentByMonth.months</input></td>
 				<td>$paymentEntry.getValue().get($paymentByMonth)</td>
 				<td>$paymentByMonth.interestRate</td>
 			</tr>
