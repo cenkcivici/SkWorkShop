@@ -3,8 +3,10 @@ package com.sk.domain;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="product_with_quantity")
 public class ProductWithQuantity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name="CreditCard")
+@Table(name="credit_card")
 public class CreditCard extends BaseEntity{
 
 	private static final long serialVersionUID = 3918351093213337323L;
