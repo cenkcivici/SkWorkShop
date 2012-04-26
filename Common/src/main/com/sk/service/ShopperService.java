@@ -24,20 +24,27 @@ public class ShopperService {
 
 	public void encryptAndsaveCardInfo(Shopper shopper, CreditCard card) {
 		
+		CreditCard encryptedCard = encryptCreditCardInfo(card);
+		
+		shopper.addCreditCard(encryptedCard);
+		shopperDao.persist(shopper);
+	}
+	
+	public CreditCard encryptCreditCardInfo(CreditCard card){
 		CreditCard encryptedCard = new CreditCard();
+		encryptedCard.setId(card.getId());
 		encryptedCard.setOwner(encryptionService.encrypt(card.getOwner()));
 		encryptedCard.setCardNumber(encryptionService.encrypt(card.getCardNumber()));
 		encryptedCard.setCvc(encryptionService.encrypt(card.getCvc()));
 		encryptedCard.setMonth(encryptionService.encrypt(card.getMonth()));
 		encryptedCard.setYear(encryptionService.encrypt(card.getYear()));
 		encryptedCard.setCreditCardType(card.getCreditCardType());
-		
-		shopper.addCreditCard(encryptedCard);
-		shopperDao.persist(shopper);
+		return encryptedCard;
 	}
 
 	public CreditCard decryptCreditCardInfo(CreditCard encryptedCard) {
 		CreditCard card = new CreditCard();
+		card.setId(encryptedCard.getId());
 		card.setOwner(encryptionService.decrypt(encryptedCard.getOwner()));
 		card.setCardNumber(encryptionService.decrypt(encryptedCard.getCardNumber()));
 		card.setCvc(encryptionService.decrypt(encryptedCard.getCvc()));

@@ -129,7 +129,9 @@ public class PaymentController {
 			CreditCard card = payment.getCreditCard();
 			shopperService.encryptAndsaveCardInfo(shopper, card);
 		}
-
+		
+		CreditCard usedCreditCard = shopperService.encryptCreditCardInfo(payment.getCreditCard());
+		payment.setCreditCard(usedCreditCard);
 		ShoppingCart shoppingCart = getShoppingCart(request);
 		orderService.createOrder(shoppingCart, payment);
 		return new ModelAndView("confirm");

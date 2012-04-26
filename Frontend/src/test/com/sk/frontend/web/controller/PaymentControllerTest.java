@@ -75,6 +75,7 @@ public class PaymentControllerTest {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSetYearsWhileCreatingModel(){
 		Map<String,String> years = new HashMap<String,String>();
@@ -91,6 +92,7 @@ public class PaymentControllerTest {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSetMonthsWhileCreatingModel(){
 		Map<String,String> months = new HashMap<String,String>();
@@ -107,6 +109,7 @@ public class PaymentControllerTest {
 		assertThat(fromModel.keySet().size(), equalTo(2));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSetCreditCardTypesWhileCreatingModel(){
 		Map<String,String> creditCardTypes = new HashMap<String,String>();
@@ -185,15 +188,15 @@ public class PaymentControllerTest {
 	@Test
 	public void shouldSaveCreditCardInfoIfSaveChecked() {
 
-		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
+		CreditCard card = new CreditCardBuilder().build();
+		Shopper shopper = new ShopperBuilder().creditCard(card).build();
+		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(card).build();
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
 		request.setAttribute("cart", shoppingCart);
 		request.setParameter("saveCardInfo", "1");
 
-		Shopper shopper = new ShopperBuilder().build();
-		CreditCard card = new CreditCardBuilder().owner(cardPaymentMethod.getCreditCard().getOwner()).cardNumber(cardPaymentMethod.getCreditCard().getCardNumber()).cvc(cardPaymentMethod.getCreditCard().getCvc()).month(cardPaymentMethod.getCreditCard().getMonth())
-				.year(cardPaymentMethod.getCreditCard().getYear()).cardType(cardPaymentMethod.getCreditCard().getCreditCardType()).build();
 		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
 
 		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(response);

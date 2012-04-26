@@ -46,7 +46,7 @@ public class OrderDaoTest extends BaseIntegration {
 		ProductWithQuantity productWithQuantity1 = new ProductWithQuantityBuilder().product(product1).quantity(1).build();
 		ProductWithQuantity productWithQuantity2 = new ProductWithQuantityBuilder().product(product2).quantity(2).build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().items(productWithQuantity1, productWithQuantity2).build();
-		CreditCard creditCard = new CreditCardBuilder().cardNumber("1234567890123456").build();
+		CreditCard creditCard = new CreditCardBuilder().id(-1L).cardNumber("1234567890123456").persist(getSession());
 		
 		InstallmentPlan installmentPlan = new InstallmentPlanBuilder().months(2).interestRate(5d).persist(getSession());
 		new CreditCardProfileBuilder().vendor("Vendor").installmentPlans(installmentPlan).bin("121212").persist(getSession());
