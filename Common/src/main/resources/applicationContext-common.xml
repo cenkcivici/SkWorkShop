@@ -23,7 +23,9 @@
 
 	<bean id="velocityVPOSEngine"
 		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="resourceLoaderPath"><value>classpath:/resources/template</value></property>
+		<property name="resourceLoaderPath">
+			<value>classpath:/resources/template</value>
+		</property>
 	</bean>
 
 
@@ -86,20 +88,24 @@
 		</property>
 	</bean>
 
-	<bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">
-		<property name="servers" value="${memcached.servers}" />
-		<property name="protocol" value="BINARY" />
-		<property name="transcoder">
-			<bean class="net.spy.memcached.transcoders.SerializingTranscoder">
-				<property name="compressionThreshold" value="1024" />
+	<bean id="memcachedClient" class="com.sk.service.memcache.MemcachedClientFactoryBean"
+		destroy-method="destroy">
+		<property name="memcachedClientFactoryBean">
+			<bean class="net.spy.memcached.spring.MemcachedClientFactoryBean">
+				<property name="servers" value="${memcached.servers}" />
+				<property name="protocol" value="BINARY" />
+				<property name="transcoder">
+					<bean class="net.spy.memcached.transcoders.SerializingTranscoder">
+						<property name="compressionThreshold" value="1024" />
+					</bean>
+				</property>
+				<property name="opTimeout" value="1000" />
+				<property name="timeoutExceptionThreshold" value="1998" />
+				<property name="locatorType" value="CONSISTENT" />
+				<property name="failureMode" value="Redistribute" />
+				<property name="useNagleAlgorithm" value="false" />
 			</bean>
 		</property>
-		<property name="opTimeout" value="1000" />
-		<property name="timeoutExceptionThreshold" value="1998" />
-		<property name="locatorType" value="CONSISTENT" />
-		<property name="failureMode" value="Redistribute" />
-		<property name="useNagleAlgorithm" value="false" />
 	</bean>
-
 
 </beans>
