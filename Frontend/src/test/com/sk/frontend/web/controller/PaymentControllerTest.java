@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,7 @@ import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
+import com.sk.frontend.service.ShoppingCartService;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
 import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.service.CreditCardProfileService;
@@ -56,15 +58,18 @@ public class PaymentControllerTest {
 	private CreditCardPopulatorHelper cardPopulatorHelper;
 	@Mock
 	private CreditCardProfileService creditCardProfileService;
+	@Mock
+	private ShoppingCartService cartService;
 	
 	private MockHttpServletRequest request = new MockHttpServletRequest();
+	private MockHttpServletResponse response = new MockHttpServletResponse();
 
 	private ShoppingCart cart = new ShoppingCartBuilder().build();
 
 	@Before
 	public void before() {
 		request.setAttribute(ShoppingCartInterceptor.CART, cart);
-		controller = new PaymentController(orderService, shopperService, garantiVPOSService,cardPopulatorHelper,creditCardProfileService);
+		controller = new PaymentController(orderService, shopperService, garantiVPOSService,cardPopulatorHelper,creditCardProfileService,cartService);
 	}
 
 	@Test
@@ -161,7 +166,7 @@ public class PaymentControllerTest {
 	@Test
 	public void shouldNotCallOrderServiceIfCreditCardIsNotValid() {
 		when(bindingResult.hasErrors()).thenReturn(true);
-		controller.submit(null, bindingResult, request);
+		controller.submit(null, bindingResult, request,response);
 		verifyZeroInteractions(orderService);
 		verify(bindingResult).hasErrors();
 	}
@@ -172,17 +177,16 @@ public class PaymentControllerTest {
 
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
-		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setAttribute("cart", shoppingCart);
 
-		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
-		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(response);
+		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
+		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(vposResponse);
 
-		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request);
+		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request,response);
 
 		verify(orderService).createOrder(shoppingCart, cardPaymentMethod);
 		verify(bindingResult).hasErrors();
-		assertThat(mav.getViewName(), equalTo("confirm"));
+		assertThat(mav.getViewName(), equalTo("redirect:orderSuccess"));
 	}
 
 	@Test
@@ -191,19 +195,17 @@ public class PaymentControllerTest {
 		CreditCard card = new CreditCardBuilder().build();
 		Shopper shopper = new ShopperBuilder().creditCard(card).build();
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(card).build();
-
-		MockHttpServletRequest request = new MockHttpServletRequest();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
 		request.setAttribute("cart", shoppingCart);
 		request.setParameter("saveCardInfo", "1");
 
-		VPOSResponse response = new VPOSResponse(ResponseStatus.SUCCESS);
+		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
 
-		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(response);
+		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(vposResponse);
 		when(bindingResult.hasErrors()).thenReturn(false);
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 
-		controller.submit(cardPaymentMethod, bindingResult, request);
+		controller.submit(cardPaymentMethod, bindingResult, request,response);
 
 		verify(shopperService).encryptAndsaveCardInfo(shopper, card);
 	}

@@ -2,6 +2,8 @@ package com.sk.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
+
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import net.spy.memcached.MemcachedClient;
 
@@ -38,4 +40,9 @@ public class CacheServiceTest {
 		assertThat(cachedElement, sameInstance((Object) element));
 	}
 
+	@Test
+	public void shouldDeleteFromMemcached(){
+		service.delete("key");
+		verify(cacheClient).delete("key");
+	}
 }
