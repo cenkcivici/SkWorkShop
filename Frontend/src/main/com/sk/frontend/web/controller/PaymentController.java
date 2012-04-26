@@ -103,7 +103,7 @@ public class PaymentController {
 		if (response.isSuccessful()) {
 			return createOrder(payment, request);
 		} else {
-			return showError(payment,request);
+			return showError(payment,response,request);
 		}
 
 	}
@@ -116,9 +116,11 @@ public class PaymentController {
 		}
 	}
 
-	protected ModelAndView showError(CreditCardPaymentMethod payment,HttpServletRequest request) {
+	protected ModelAndView showError(CreditCardPaymentMethod payment,VPOSResponse response,HttpServletRequest request) {
 		ModelAndView modelAndView = getPaymentMAV(payment,request);
-		modelAndView.addObject("paymentFailed", true);
+		modelAndView.addObject("errorOccured", true);
+		modelAndView.addObject("errorMessage", response.getInfoText());
+		modelAndView.addObject("errorMessageDetail", response.getDetailMessage());
 		return modelAndView;
 	}
 

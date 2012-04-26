@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name="Shopper")
+@Table(name="shopper")
 public class Shopper extends BaseEntity{
 
 	private static final long serialVersionUID = 2109249821813990338L;

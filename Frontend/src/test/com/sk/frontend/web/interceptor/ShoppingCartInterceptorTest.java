@@ -80,7 +80,7 @@ public class ShoppingCartInterceptorTest {
 
 		Cookie cookie = response.getCookie("cart");
 		assertThat(cookie.getValue(), equalTo("UNIQUE"));
-		assertThat(cookie.getMaxAge(), equalTo(ShoppingCartInterceptor.SEVENDAYS / 1000));
+		assertThat(cookie.getMaxAge(), equalTo(ShoppingCartInterceptor.SEVENDAYS ));
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class ShoppingCartInterceptorTest {
 
 		Cookie cookie = response.getCookie("cart");
 		assertThat(cookie.getValue(), equalTo("UNIQUE"));
-		assertThat(cookie.getMaxAge(), equalTo(ShoppingCartInterceptor.SEVENDAYS / 1000));
+		assertThat(cookie.getMaxAge(), equalTo(ShoppingCartInterceptor.SEVENDAYS));
 	}
 
 	@Test
