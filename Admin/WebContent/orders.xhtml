@@ -15,39 +15,51 @@
 
 		<br />
 		<br />
-
-		<p:dataTable var="order" value="#{ordersView.all}" paginator="true"
-			paginatorPosition="bottom">
-
-			<p:column headerText="Order Date">
-
-				<h:outputText value="#{order.orderDate}">
-					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-				</h:outputText>
-			</p:column>
-
-			<p:column headerText="Cost">
-				#{order.shoppingCart.totalCost}
-			</p:column>
-
-			<p:column headerText="Shopping Cart Details">
-				<p:commandButton value="Cart Details"
-					oncomplete="shoppingCartDetailVar.show();" process="@this"
-					update=":form:shoppingCartDetailPanel">
-					<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
-						value="#{order}" />
-				</p:commandButton>
-			</p:column>
-			<p:column headerText="Payment Details">
-				<p:commandButton value="Payment Details"
-					oncomplete="paymentDetailVar.show();" process="@this"
-					update=":form:paymentDetailPanel">
-					<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
-						value="#{order}" />
-				</p:commandButton>
-			</p:column>
-
-		</p:dataTable>
+		<p:outputPanel id="orderPanel">
+			<p:dataTable var="order" value="#{ordersView.all}" paginator="true"
+				paginatorPosition="bottom">
+	
+				<p:column headerText="Order Date">
+	
+					<h:outputText value="#{order.orderDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+				</p:column>
+	
+				<p:column headerText="Cost">
+					#{order.shoppingCart.totalCost}
+				</p:column>
+				
+				<p:column headerText="Order Status" filterBy="#{order.orderStatus}"  
+							filterOptions="#{ordersView.orderStatus}" filterMatchMode="exact">
+					<h:outputText value="#{order.orderStatus}"/>
+				</p:column>
+				<p:column headerText="Operations">
+					<p:menuButton value="Options" rendered="#{order.orderStatus == 'UNDERREVIEW'}">  
+				        <p:menuitem value="Reject" update=":form:orderPanel" action="#{ordersView.reject(order)}" />  
+				        <p:menuitem value="Complete" update=":form:orderPanel" action="#{ordersView.complete(order)}"/>  
+				    </p:menuButton>
+				</p:column>
+				
+				<p:column headerText="Shopping Cart Details">
+					<p:commandButton value="Cart Details"
+						oncomplete="shoppingCartDetailVar.show();" process="@this"
+						update=":form:shoppingCartDetailPanel">
+						<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
+							value="#{order}" />
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Payment Details">
+					<p:commandButton value="Payment Details"
+						oncomplete="paymentDetailVar.show();" process="@this"
+						update=":form:paymentDetailPanel">
+						<f:setPropertyActionListener target="#{ordersView.selectedOrder}"
+							value="#{order}" />
+					</p:commandButton>
+				</p:column>
+	
+			</p:dataTable>
+		</p:outputPanel>
 
 		<br />
 		<br />
