@@ -1,10 +1,8 @@
 package com.sk.domain.dao;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import com.sk.domain.Order;
 import com.sk.domain.PaymentMethod;
 import com.sk.domain.Product;
 import com.sk.domain.ProductWithQuantity;
+import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.util.BaseIntegration;
 import com.sk.util.builder.CategoryBuilder;
@@ -27,7 +26,12 @@ import com.sk.util.builder.InstallmentPlanBuilder;
 import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ProductBuilder;
 import com.sk.util.builder.ProductWithQuantityBuilder;
+import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 
 public class OrderDaoTest extends BaseIntegration {
 
@@ -70,6 +74,22 @@ public class OrderDaoTest extends BaseIntegration {
 		assertThat(paymentMethod.getCreditCard().getCardNumber(), equalTo("1234567890123456"));
 		assertThat(paymentMethod.getInstallmentPlan(), equalTo(installmentPlan));
 
+	}
+	
+	@Test
+	public void shouldFindByShopper(){
+		
+		Shopper shopper = new ShopperBuilder().persist(getSession());
+		
+		Order toPersist = new OrderBuilder().shopper(shopper).build();
+		toPersist = orderDao.persist(toPersist);
+		
+		flushAndClear();
+		
+		List<Order> fromDB = orderDao.findByShopper(shopper);
+		assertThat(fromDB,hasItem(toPersist));
+		
+		
 	}
 
 }

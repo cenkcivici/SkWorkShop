@@ -18,17 +18,14 @@ import com.sk.domain.dao.InstallmentPlanDao;
 @Service
 public class CreditCardProfileService {
 
-	@Autowired
 	private CreditCardProfileDao creditCardProfileDao;
 	
-	@Autowired
 	private InstallmentPlanDao installmentPlanDao;
 
 	public CreditCardProfileService() {
-		
 	}
 	
-	
+	@Autowired
 	public CreditCardProfileService(CreditCardProfileDao creditCardProfileDao, InstallmentPlanDao installmentPlanDao) {
 		this.creditCardProfileDao = creditCardProfileDao;
 		this.installmentPlanDao = installmentPlanDao;
