@@ -1,1 +1,1 @@
-#@page()<center>Your order is created</center>#end
+#@page()	<center>		<div id="ordersTable">			#parse("ordersContent.vm")		</div>	</center>		<script type="text/javascript">		var ordersService = new OrdersService();		var ordersView = new OrdersView();		var ordersController = new OrdersController(ordersView,ordersService);		ordersController.start();	</script>#end

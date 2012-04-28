@@ -35,7 +35,7 @@
 					<h:outputText value="#{order.orderStatus}"/>
 				</p:column>
 				<p:column headerText="Operations">
-					<p:menuButton value="Options" rendered="#{order.orderStatus == 'UNDERREVIEW'}">  
+					<p:menuButton value="Options" rendered="#{order.underReview or order.rejectRequested}">  
 				        <p:menuitem value="Reject" update=":form:orderPanel" action="#{ordersView.reject(order)}" />  
 				        <p:menuitem value="Complete" update=":form:orderPanel" action="#{ordersView.complete(order)}"/>  
 				    </p:menuButton>

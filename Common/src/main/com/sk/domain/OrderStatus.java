@@ -4,5 +4,6 @@ public enum OrderStatus {
 	
 	UNDERREVIEW,
 	REJECTED,
-	COMPLETED;
+	COMPLETED, 
+	REJECT_REQUESTED;
 }

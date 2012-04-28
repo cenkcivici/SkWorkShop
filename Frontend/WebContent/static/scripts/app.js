@@ -61,7 +61,7 @@ function PaymentController(view, service) {
 	
 	this.displayPaymentPlan = function(creditCardNumber,callback) {
 		instance.service.getInstallmentPlan(creditCardNumber,callback);
-	}
+	};
 };
 
 function PaymentView() {
@@ -79,7 +79,7 @@ function PaymentView() {
 	
 	this.updatePaymentPlan = function(html) {
 		$('#availablePlans').html(html);
-	}
+	};
 };
 
 function PaymentService() {
@@ -89,6 +89,52 @@ function PaymentService() {
 		$.ajax ({
 				url:appRoot + "/installmentplan/show",
 				data: {'creditCardNumber' : creditCardNumber},
+				type:'post',
+				success: callback});
+	};
+}
+
+
+function OrdersController(view, service) {
+	var instance = this;
+	instance.view = view;
+	instance.service = service;
+
+	this.start = function() {
+		instance.view.init(instance);
+	};
+	
+	this.rejectOrder = function(id) {
+		instance.service.rejectOrder(id, instance.view.updateOrders);
+	};
+};
+
+function OrdersView() {
+	var instance = this;
+
+	this.init = function(controller) {
+		instance.controller = controller;
+		$(document).on('click','.rejectOrder', instance.rejectClicked);
+		
+	};
+	
+	this.rejectClicked = function() {
+		var id = $(this).attr("id");
+		instance.controller.rejectOrder(id);
+	};
+
+	this.updateOrders = function(data) {
+		$('#ordersTable').html(data);
+	};
+
+}
+
+function OrdersService() {
+	var instance = this;
+	
+	this.rejectOrder = function(id, callback) {
+		$.ajax ({
+				url:appRoot + "/orders/reject/" + id,
 				type:'post',
 				success: callback});
 	};

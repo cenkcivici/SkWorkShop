@@ -15,4 +15,10 @@
 						href="${appRoot}/cart/show">${cart.count} items</a></b></span>
 			</div></td>
 	</tr>
+	<tr>
+		<td>
+			<br/>
+			Your previous orders are <a href="${appRoot}/orders">here</a>
+		<td>
+	</tr>
 </table>
