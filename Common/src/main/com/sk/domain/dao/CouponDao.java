@@ -1,5 +1,7 @@
 package com.sk.domain.dao;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.sk.domain.coupon.Coupon;
@@ -12,8 +14,8 @@ public class CouponDao extends GenericDao<Coupon>{
 	}
 
 	public Coupon findByCouponString(String couponString) {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria criteria = getSession().createCriteria(Coupon.class);
+		return (Coupon)criteria.add(Restrictions.eq("couponString", couponString)).uniqueResult();
 	}
 
 }
