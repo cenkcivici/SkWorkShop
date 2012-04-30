@@ -15,6 +15,8 @@ public class CouponService {
 	@Autowired
 	private CouponDao couponDao;
 	
+	public CouponService(){}
+	
 	public CouponService(CouponDao couponDao) {
 		this.couponDao = couponDao;
 	}
