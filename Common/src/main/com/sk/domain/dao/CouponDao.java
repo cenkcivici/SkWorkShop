@@ -1,5 +1,7 @@
 package com.sk.domain.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,11 @@ public class CouponDao extends GenericDao<Coupon>{
 	public Coupon findByCouponString(String couponString) {
 		Criteria criteria = getSession().createCriteria(Coupon.class);
 		return (Coupon)criteria.add(Restrictions.eq("couponString", couponString)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Coupon> List<T> getAllCoupons(Class<T> couponClass) {
+		return getSession().createCriteria(couponClass).list();
 	}
 
 }

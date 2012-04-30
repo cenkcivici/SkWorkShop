@@ -3,11 +3,10 @@ package com.sk.util.builder;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 
-import com.sk.domain.BaseEntity;
 import com.sk.domain.Shopper;
 import com.sk.domain.coupon.ShopperCoupon;
 
-public class ShopperCouponBuilder extends BaseBuilder<BaseEntity, ShopperCouponBuilder>{
+public class ShopperCouponBuilder extends BaseBuilder<ShopperCoupon, ShopperCouponBuilder>{
 
 	private String couponString = RandomStringUtils.randomAlphabetic(10);
 	private Double discountAmount = RandomUtils.nextDouble();
@@ -24,7 +23,7 @@ public class ShopperCouponBuilder extends BaseBuilder<BaseEntity, ShopperCouponB
 	}
 	
 	@Override
-	protected BaseEntity doBuild() {
+	protected ShopperCoupon doBuild() {
 		ShopperCoupon coupon = new ShopperCoupon();
 		coupon.setCouponString(couponString);
 		coupon.setDiscount(discountAmount);

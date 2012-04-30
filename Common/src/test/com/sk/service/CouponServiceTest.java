@@ -83,4 +83,10 @@ public class CouponServiceTest {
 		assertThat(shopperCoupons.get(0).getCouponString(), not(equalTo(couponString)));
 		
 	}
+	
+	@Test
+	public void shouldReturnAllShopperCoupons(){
+		couponService.getAllShopperCoupons();
+		verify(couponDao).getAllCoupons(ShopperCoupon.class);
+	}
 }

@@ -107,4 +107,10 @@ public class ShopperServiceTest {
 		assertThat(argument.getValue().getEmail(), equalTo("default@default.com"));
 		assertThat(argument.getValue().getName(), equalTo("Default Shopper"));
 	}
+	
+	@Test
+	public void shouldReturnAllShoppers(){
+		shopperService.getAllShoppers();
+		verify(shopperDao).getAll();
+	}
 }

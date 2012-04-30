@@ -1,5 +1,7 @@
 package com.sk.service;
 
+import java.util.List;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,10 @@ public class CouponService {
 		this.couponDao = couponDao;
 	}
 
+	public List<ShopperCoupon> getAllShopperCoupons(){
+		return couponDao.getAllCoupons(ShopperCoupon.class);
+	}
+	
 	public void createCouponForShopper(Shopper shopper, double discountAmount, int numberOfCoupons) {
 		
 		for (int i = 0; i < numberOfCoupons; i++) {
