@@ -1,7 +1,7 @@
 package com.sk.domain.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.List;
@@ -33,12 +33,11 @@ public class CouponDaoTest extends BaseIntegration{
 	@Test
 	public void shouldReturnGetAllShopperCoupons(){
 		Shopper shopper = new ShopperBuilder().persist(getSession());
-		new ShopperCouponBuilder().couponString("ASDFASDFAS").shopper(shopper).persist(getSession());
-		new ShopperCouponBuilder().couponString("ZXCVZXCVZX").shopper(shopper).persist(getSession());
+		ShopperCoupon coupon1 = new ShopperCouponBuilder().couponString("ASDFASDFAS").shopper(shopper).persist(getSession());
+		ShopperCoupon coupon2 = new ShopperCouponBuilder().couponString("ZXCVZXCVZX").shopper(shopper).persist(getSession());
 		
 		List<ShopperCoupon> allCoupons = couponDao.getAllCoupons(ShopperCoupon.class);
-		assertThat(allCoupons.size(), equalTo(2));
-		assertThat(allCoupons.get(0).getCouponString(), equalTo("ASDFASDFAS"));
-		assertThat(allCoupons.get(1).getShopper(), equalTo(shopper));
+		assertThat(allCoupons, hasItem(coupon1));
+		assertThat(allCoupons, hasItem(coupon2));
 	}
 }

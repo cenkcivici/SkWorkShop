@@ -40,6 +40,9 @@ public abstract class Coupon extends BaseEntity{
 	public Boolean isUsed() {
 		return used;
 	}
+	public Boolean getUsed() {
+		return used;
+	}
 	public void setUsed(Boolean used) {
 		this.used = used;
 	}

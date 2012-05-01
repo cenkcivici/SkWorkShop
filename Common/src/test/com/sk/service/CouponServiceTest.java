@@ -89,4 +89,5 @@ public class CouponServiceTest {
 		couponService.getAllShopperCoupons();
 		verify(couponDao).getAllCoupons(ShopperCoupon.class);
 	}
+	
 }

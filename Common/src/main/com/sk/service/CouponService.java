@@ -41,6 +41,10 @@ public class CouponService {
 			couponDao.persist(coupon);
 		}
 	}
+	
+	public void deleteCoupon(Coupon coupon) {
+		couponDao.delete(coupon);
+	}
 
 	private String prepareCouponString() {
 		String couponString;

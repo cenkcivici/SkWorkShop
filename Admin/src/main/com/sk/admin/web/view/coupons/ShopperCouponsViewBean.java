@@ -28,6 +28,37 @@ public class ShopperCouponsViewBean extends BaseView{
 	private List<Shopper> shoppers;
 	
 	private Shopper selectedShopper;
+	private Double discountAmount;
+	private Integer numberOfCoupons;
+
+	public void createCoupon(){
+		couponService.createCouponForShopper(selectedShopper, discountAmount, numberOfCoupons);
+		selectedShopper = null;
+		discountAmount = null;
+		numberOfCoupons = null;
+		coupons = null;
+	}
+	
+	public void delete(ShopperCoupon coupon) {
+		couponService.deleteCoupon(coupon);
+		coupons = null;
+	}
+	
+	public Double getDiscountAmount() {
+		return discountAmount;
+	}
+
+	public void setDiscountAmount(Double discountAmount) {
+		this.discountAmount = discountAmount;
+	}
+
+	public Integer getNumberOfCoupons() {
+		return numberOfCoupons;
+	}
+
+	public void setNumberOfCoupons(Integer numberOfCoupons) {
+		this.numberOfCoupons = numberOfCoupons;
+	}
 
 	public List<ShopperCoupon> getCoupons() {
 		if(coupons == null){
@@ -66,5 +97,5 @@ public class ShopperCouponsViewBean extends BaseView{
 	public void setShopperService(ShopperService shopperService) {
 		this.shopperService = shopperService;
 	}
-	
+
 }
