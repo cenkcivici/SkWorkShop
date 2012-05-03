@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sk.domain.CreditCard;
+import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.Shopper;
 import com.sk.domain.dao.ShopperDao;
 import com.sk.service.encryption.EncryptionService;
@@ -30,6 +31,10 @@ public class ShopperService {
 		
 		shopper.addCreditCard(encryptedCard);
 		shopperDao.persist(shopper);
+	}
+	
+	public void encryptCreditCardInfo(CreditCardPaymentMethod payment) {
+		payment.setCreditCard(encryptCreditCardInfo(payment.getCreditCard()));
 	}
 	
 	public CreditCard encryptCreditCardInfo(CreditCard card){

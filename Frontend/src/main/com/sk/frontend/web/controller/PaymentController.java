@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.InstallmentPlan;
+import com.sk.domain.Order;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.service.ShoppingCartService;
@@ -102,9 +103,10 @@ public class PaymentController {
 		initializeInstallmentPlan(payment, request);
 
 		ShoppingCart cart = getShoppingCart(request);
-		VPOSResponse vposResponse = garantiVPOSService.makePayment(payment, cart.getTotalCost());
+		Order order = orderService.createOrder(cart, payment);
+		VPOSResponse vposResponse = garantiVPOSService.makePayment(order);
 		if (vposResponse.isSuccessful()) {
-			return createOrder(payment, request, response);
+			return saveOrder(order, request, response);
 		} else {
 			return showError(payment, vposResponse, request);
 		}
@@ -127,7 +129,8 @@ public class PaymentController {
 		return modelAndView;
 	}
 
-	protected ModelAndView createOrder(CreditCardPaymentMethod payment, HttpServletRequest request, HttpServletResponse response) {
+	protected ModelAndView saveOrder(Order order, HttpServletRequest request, HttpServletResponse response) {
+		CreditCardPaymentMethod payment = (CreditCardPaymentMethod) order.getPaymentMethod();
 		if (StringUtils.equals(request.getParameter("saveCardInfo"), "1")) {
 			Shopper shopper = shopperService.getStubShopper();
 
@@ -135,10 +138,8 @@ public class PaymentController {
 			shopperService.encryptAndsaveCardInfo(shopper, card);
 		}
 
-		CreditCard usedCreditCard = shopperService.encryptCreditCardInfo(payment.getCreditCard());
-		payment.setCreditCard(usedCreditCard);
-		ShoppingCart shoppingCart = getShoppingCart(request);
-		orderService.createOrder(shoppingCart, payment);
+		shopperService.encryptCreditCardInfo(payment);
+		orderService.save(order);
 
 		shoppingCartService.deleteShoppingCart(request, response);
 
