@@ -103,5 +103,17 @@
 	<session-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
+	
+		
+	<!--  for testing -->
+	<servlet>
+		<servlet-name>vposServlet</servlet-name>
+		<servlet-class>com.sk.admin.web.vpos.VPOSServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>vposServlet</servlet-name>
+		<url-pattern>/vposServlet</url-pattern>
+	</servlet-mapping>
 
 </web-app>

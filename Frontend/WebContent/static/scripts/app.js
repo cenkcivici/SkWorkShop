@@ -104,8 +104,8 @@ function OrdersController(view, service) {
 		instance.view.init(instance);
 	};
 	
-	this.rejectOrder = function(id) {
-		instance.service.rejectOrder(id, instance.view.updateOrders);
+	this.refundOrder = function(id) {
+		instance.service.refundOrder(id, instance.view.updateOrders);
 	};
 };
 
@@ -114,13 +114,13 @@ function OrdersView() {
 
 	this.init = function(controller) {
 		instance.controller = controller;
-		$(document).on('click','.rejectOrder', instance.rejectClicked);
+		$(document).on('click','.refundOrder', instance.refundClicked);
 		
 	};
 	
-	this.rejectClicked = function() {
+	this.refundClicked = function() {
 		var id = $(this).attr("id");
-		instance.controller.rejectOrder(id);
+		instance.controller.refundOrder(id);
 	};
 
 	this.updateOrders = function(data) {
@@ -132,9 +132,9 @@ function OrdersView() {
 function OrdersService() {
 	var instance = this;
 	
-	this.rejectOrder = function(id, callback) {
+	this.refundOrder = function(id, callback) {
 		$.ajax ({
-				url:appRoot + "/orders/reject/" + id,
+				url:appRoot + "/orders/refund/" + id,
 				type:'post',
 				success: callback});
 	};

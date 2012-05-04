@@ -40,16 +40,16 @@ public class OrdersController {
 		return orderService.getAllByShopper(shopperService.getStubShopper());
 	}
 
-	@RequestMapping(value = "/reject/{id}", method = RequestMethod.POST)
-	public ModelAndView rejectOrder(@PathVariable Long id) {
+	@RequestMapping(value = "/refund/{id}", method = RequestMethod.POST)
+	public ModelAndView refundOrder(@PathVariable Long id) {
 		Order foundOrder = orderService.findById(id);
 
-		foundOrder.setOrderStatus(OrderStatus.REJECT_REQUESTED);
+		foundOrder.setOrderStatus(OrderStatus.REFUND_REQUESTED);
 		orderService.save(foundOrder);
 
 		ModelAndView mav = new ModelAndView("ordersContent");
 		mav.addObject("orders", getOrdersByShopper());
-		mav.addObject("orderRejectionMessage", "Your order reject request is sent!");
+		mav.addObject("orderRefundMessage", "Your order refund request is sent!");
 		return mav;
 	}
 
