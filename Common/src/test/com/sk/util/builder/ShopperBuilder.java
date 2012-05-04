@@ -10,7 +10,7 @@ import com.sk.domain.Shopper;
 
 public class ShopperBuilder extends BaseBuilder<Shopper, ShopperBuilder>{
 
-	private String email = RandomStringUtils.random(10);
+	private String email = RandomStringUtils.randomAlphabetic(10);
 	private String name = "default";
 	private Set<CreditCard> creditCardList = new HashSet<CreditCard>();
 	

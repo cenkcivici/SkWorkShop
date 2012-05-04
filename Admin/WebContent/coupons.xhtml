@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sk="http://www.prime.com.tr/sk"
+	xmlns:skc="http://java.sun.com/jsf/composite/sk"
+	template="decorator/adminTemplate.xhtml">
+
+	<ui:define name="title">
+		Coupons
+	</ui:define>
+
+	<ui:define name="formBody">
+		
+		<p:tabView id="tabView" orientation="left">
+		    <p:tab title="Shopper Coupons">
+		        <p:commandButton value="Add Shopper Coupon" type="button" onclick="shopperCouponDialog.show()"/>
+		        
+		        <p:outputPanel id="shopperCouponPanel">
+			        <p:dataTable value="#{shopperCouponsViewBean.coupons}" var="coupon" paginator="true" rows="10" paginatorAlwaysVisible="false">
+			        	
+			        	<p:column headerText="Coupon String">
+			        		<h:outputText value="#{coupon.couponString}"/>
+			        	</p:column>
+			        	
+			        	<p:column headerText="User">
+			        		<h:outputText value="#{coupon.shopper.name}"/>
+			        	</p:column>
+			        	
+			        	<p:column headerText="Discount Amount">
+			        		<h:outputText value="#{coupon.discount}"/>
+			        	</p:column>
+			        	
+			        	<p:column headerText="Is Used">
+			        		<h:outputText value="#{coupon.used}"/>
+			        	</p:column>
+			        	
+			        	<p:column headerText="Delete">
+			        		<p:commandButton value="Delete" action="#{shopperCouponsViewBean.delete(coupon)}" process="@this" update=":form:tabView:shopperCouponPanel"/>
+			        	</p:column>
+			        </p:dataTable>
+		        </p:outputPanel>
+		    </p:tab>
+		</p:tabView>
+		
+		<p:dialog modal="true" widgetVar="shopperCouponDialog">
+			<p:panelGrid id="inputPanel" columns="2">
+				<h:outputText value="Shopper"/>
+				<p:selectOneMenu value="#{shopperCouponsViewBean.selectedShopper}">
+					<f:selectItems value="#{shopperCouponsViewBean.shoppers}" var="shopper" itemValue="#{shopper}" itemLabel="#{shopper.name}"/>
+				</p:selectOneMenu>
+				
+				<h:outputText value="Discount Amount"/>
+				<p:inputText value="#{shopperCouponsViewBean.discountAmount}" required="true">
+					<f:convertNumber maxFractionDigits="2"/>
+				</p:inputText>				
+				<h:outputText value="Number Of Coupons"/>
+				<p:inputText value="#{shopperCouponsViewBean.numberOfCoupons}" required="true">
+					<f:convertNumber integerOnly="true"/>
+				</p:inputText>
+				
+				<p:spacer/>
+				<p:commandButton value="Create Coupons" action="#{shopperCouponsViewBean.createCoupon}"
+								 process=":form:inputPanel" update=":form:inputPanel :form:tabView:shopperCouponPanel"
+								 oncomplete="shopperCouponDialog.hide()"/>
+			</p:panelGrid>
+		</p:dialog>
+		
+	</ui:define>
+	
+</ui:composition>

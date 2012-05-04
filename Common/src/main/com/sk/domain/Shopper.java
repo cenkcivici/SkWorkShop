@@ -25,7 +25,7 @@ public class Shopper extends BaseEntity{
 	
 	@OneToMany(cascade={CascadeType.ALL,CascadeType.MERGE})
 	private Set<CreditCard> creditCardList = new HashSet<CreditCard>();
-	
+
 	public boolean hasAnyCreditCardInfo() {
 		return !creditCardList.isEmpty();
 	}

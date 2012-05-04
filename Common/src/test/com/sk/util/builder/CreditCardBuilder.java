@@ -1,7 +1,5 @@
 package com.sk.util.builder;
 
-import java.util.Random;
-
 import org.apache.commons.lang.RandomStringUtils;
 
 import com.sk.domain.CreditCard;
@@ -14,7 +12,7 @@ public class CreditCardBuilder extends BaseBuilder<CreditCard, CreditCardBuilder
 	private String cvc = RandomStringUtils.randomNumeric(3);
 	private String month = RandomStringUtils.randomNumeric(2);
 	private String year = RandomStringUtils.randomNumeric(2);
-	private CreditCardType creditCardType = CreditCardType.values()[new Random().nextInt(2)];
+	private CreditCardType creditCardType = RandomEnumBuilder.randomEnum(CreditCardType.class);
 	
 	public CreditCardBuilder owner(String owner){
 		this.owner = owner;

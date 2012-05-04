@@ -53,6 +53,23 @@ public class ShopperServiceTest {
 	}
 	
 	@Test
+	public void shouldEncryptCreditCardInfo(){
+		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
+		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
+		
+		when(encryptionService.encrypt("Shopper")).thenReturn("ZAQXSW");
+		when(encryptionService.encrypt("12341234")).thenReturn("ABCDABCD");
+		when(encryptionService.encrypt("003")).thenReturn("ZXC");
+		when(encryptionService.encrypt("06")).thenReturn("CVB");
+		when(encryptionService.encrypt("12")).thenReturn("VBN");
+		
+		
+		CreditCard resultCard = shopperService.encryptCreditCardInfo(card);
+		
+		assertThat(resultCard, equalTo(encryptedCard));
+	}
+	
+	@Test
 	public void shouldDecryptCreditCardInfo(){
 		CreditCard card = new CreditCardBuilder().owner("Shopper").cardNumber("12341234").cvc("003").month("06").year("12").cardType(CreditCardType.VISA).build();
 		CreditCard encryptedCard = new CreditCardBuilder().owner("ZAQXSW").cardNumber("ABCDABCD").cvc("ZXC").month("CVB").year("VBN").cardType(CreditCardType.VISA).build();
@@ -63,9 +80,9 @@ public class ShopperServiceTest {
 		when(encryptionService.decrypt("CVB")).thenReturn("06");
 		when(encryptionService.decrypt("VBN")).thenReturn("12");
 		
-		CreditCard decryptCard = shopperService.decryptCreditCardInfo(encryptedCard);
+		CreditCard resultCard = shopperService.decryptCreditCardInfo(encryptedCard);
 		
-		assertThat(decryptCard, equalTo(card));
+		assertThat(resultCard, equalTo(card));
 	}
 	
 	@Test
@@ -89,5 +106,11 @@ public class ShopperServiceTest {
 		verify(shopperDao).persist(argument.capture());
 		assertThat(argument.getValue().getEmail(), equalTo("default@default.com"));
 		assertThat(argument.getValue().getName(), equalTo("Default Shopper"));
+	}
+	
+	@Test
+	public void shouldReturnAllShoppers(){
+		shopperService.getAllShoppers();
+		verify(shopperDao).getAll();
 	}
 }

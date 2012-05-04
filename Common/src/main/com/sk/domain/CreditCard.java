@@ -18,16 +18,16 @@ public class CreditCard extends BaseEntity{
 	private String owner;
 	
 	@Column(length=60)
-	private String cardNumber = "4539992043491562"; // for testing
+	private String cardNumber = "5331690000149028"; // for testing
 	
 	@Column(length=25)
-	private String cvc;
+	private String cvc = "583";
 	
 	@Column(length=25)
-	private String month;
+	private String month = "12";
 	
 	@Column(length=25)
-	private String year;
+	private String year = "2013";
 
 	@Enumerated(EnumType.STRING)
 	private CreditCardType creditCardType;
@@ -99,14 +99,7 @@ public class CreditCard extends BaseEntity{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ ((cardNumber == null) ? 0 : cardNumber.hashCode());
-		result = prime * result
-				+ ((creditCardType == null) ? 0 : creditCardType.hashCode());
-		result = prime * result + ((cvc == null) ? 0 : cvc.hashCode());
-		result = prime * result + ((month == null) ? 0 : month.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + ((year == null) ? 0 : year.hashCode());
+		result = prime * result	+ ((cardNumber == null) ? 0 : cardNumber.hashCode());
 		return result;
 	}
 
@@ -119,42 +112,10 @@ public class CreditCard extends BaseEntity{
 			return false;
 		}
 		CreditCard other = (CreditCard) obj;
-		if (cardNumber == null) {
-			if (other.cardNumber != null){
-				return false;
-			}
-		} else if (!cardNumber.equals(other.cardNumber)){
+		if (cardNumber == null && other.cardNumber != null) {
 			return false;
 		}
-		if (creditCardType != other.creditCardType){
-			return false;
-		}
-		if (cvc == null) {
-			if (other.cvc != null){
-				return false;
-			}
-		} else if (!cvc.equals(other.cvc)){
-			return false;
-		}
-		if (month == null) {
-			if (other.month != null){
-				return false;
-			}
-		} else if (!month.equals(other.month)){
-			return false;
-		}
-		if (owner == null) {
-			if (other.owner != null){
-				return false;
-			}
-		} else if (!owner.equals(other.owner)){
-			return false;
-		}
-		if (year == null) {
-			if (other.year != null){
-				return false;
-			}
-		} else if (!year.equals(other.year)){
+		if (cardNumber != null && !cardNumber.equals(other.cardNumber)){
 			return false;
 		}
 		return true;

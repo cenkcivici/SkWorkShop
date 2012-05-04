@@ -9,6 +9,8 @@ import org.apache.http.params.HttpParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.sk.service.util.WebClientWrapper;
+
 @Component
 public class HttpConnectionFactory {
 	
@@ -25,6 +27,7 @@ public class HttpConnectionFactory {
 		HttpConnectionParams.setSoTimeout(httpParams, socketTimeoutMillis);
 		
 		HttpClient httpClient = new DefaultHttpClient(httpParams);
+		httpClient = WebClientWrapper.wrapClient(httpClient);
 		HttpPost httpPost =  new HttpPost(uri);
 		
 		return new HttpConnection(httpClient, httpPost);

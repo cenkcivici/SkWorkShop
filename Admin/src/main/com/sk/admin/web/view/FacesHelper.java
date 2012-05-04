@@ -2,6 +2,8 @@ package com.sk.admin.web.view;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -12,6 +14,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.model.SelectItem;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -146,6 +149,15 @@ public class FacesHelper implements Serializable {
 	public String getServletContextPath() {
 		ServletContext servletContext = (ServletContext) getExternalContext().getContext();
 		return servletContext.getRealPath("/");
+	}
+	
+	public List<SelectItem> toSelectItemListFromEnum(Class<? extends Enum<?>> enumType) {
+		List<SelectItem> enumSelectItem = new ArrayList<SelectItem>();
+		for(Enum<?> eachEnum : enumType.getEnumConstants()){
+			SelectItem selectItem = new SelectItem(eachEnum, eachEnum.name());
+			enumSelectItem.add(selectItem);
+		}
+		return enumSelectItem;
 	}
 
 }
