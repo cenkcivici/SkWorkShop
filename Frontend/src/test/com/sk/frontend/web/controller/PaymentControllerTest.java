@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sk.domain.CreditCard;
 import com.sk.domain.CreditCardPaymentMethod;
 import com.sk.domain.CreditCardType;
+import com.sk.domain.Order;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.frontend.service.ShoppingCartService;
@@ -38,6 +39,7 @@ import com.sk.service.payment.VPOSResponse;
 import com.sk.service.payment.garanti.GarantiVPOSService;
 import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
+import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
 
@@ -180,8 +182,11 @@ public class PaymentControllerTest {
 		request.setAttribute("cart", shoppingCart);
 
 		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
-		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(vposResponse);
-
+		
+		Order order = new OrderBuilder().paymentMethod(cardPaymentMethod).shoppingCart(shoppingCart).build();
+		when(orderService.createOrder(shoppingCart,cardPaymentMethod)).thenReturn(order);
+		when(garantiVPOSService.makePayment(order)).thenReturn(vposResponse);
+		
 		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request,response);
 
 		verify(orderService).createOrder(shoppingCart, cardPaymentMethod);
@@ -201,7 +206,9 @@ public class PaymentControllerTest {
 
 		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
 
-		when(garantiVPOSService.makePayment(cardPaymentMethod, shoppingCart.getTotalCost())).thenReturn(vposResponse);
+		Order order = new OrderBuilder().paymentMethod(cardPaymentMethod).shoppingCart(shoppingCart).build();
+		when(orderService.createOrder(shoppingCart,cardPaymentMethod)).thenReturn(order);
+		when(garantiVPOSService.makePayment(order)).thenReturn(vposResponse);
 		when(bindingResult.hasErrors()).thenReturn(false);
 		when(shopperService.getStubShopper()).thenReturn(shopper);
 

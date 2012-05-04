@@ -145,6 +145,11 @@ public class FacesHelper implements Serializable {
 				null, messageText);
 		getFacesContext().addMessage("", message);
 	}
+	public void addErrorMessage(String messageText) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				null, messageText);
+		getFacesContext().addMessage("", message);
+	}
 
 	public String getServletContextPath() {
 		ServletContext servletContext = (ServletContext) getExternalContext().getContext();
