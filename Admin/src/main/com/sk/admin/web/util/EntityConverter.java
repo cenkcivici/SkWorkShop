@@ -13,6 +13,7 @@ import com.sk.domain.dao.BaseEntityDao;
 public class EntityConverter implements Converter {
 
 	
+	
 	private BaseEntityDao baseEntityDao;
 
 	@SuppressWarnings("unused")
