@@ -57,7 +57,7 @@ public class CartController {
 		ShoppingCart cart = (ShoppingCart) request.getAttribute(CART);
 
 		cart.addProduct(foundProduct);
-		Cookie cookie = CookieUtils.getCookieByName(request, CART);
+		Cookie cookie = null;CookieUtils.getCookieByName(request, CART);
 		cacheService.put(cookie.getValue(), cart, ShoppingCartInterceptor.SEVENDAYS);
 
 		RedirectView view = new RedirectView(appRoot + "/cart/show");
