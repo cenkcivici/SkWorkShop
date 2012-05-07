@@ -26,49 +26,13 @@
 		</p:tabView>
 		
 		<p:dialog modal="true" widgetVar="shopperCouponDialog">
-			<p:panelGrid id="inputShopperPanel" columns="2">
-				<h:outputText value="Shopper"/>
-				<p:selectOneMenu value="#{shopperCouponsViewBean.selectedShopper}">
-					<f:selectItems value="#{shopperCouponsViewBean.couponHolders}" var="couponHolder" itemValue="#{couponHolder}" itemLabel="#{couponHolder.name}"/>
-				</p:selectOneMenu>
-				
-				<h:outputText value="Discount Amount"/>
-				<p:inputText value="#{shopperCouponsViewBean.discountAmount}" required="true">
-					<f:convertNumber maxFractionDigits="2"/>
-				</p:inputText>				
-				<h:outputText value="Number Of Coupons"/>
-				<p:inputText value="#{shopperCouponsViewBean.numberOfCoupons}" required="true">
-					<f:convertNumber integerOnly="true"/>
-				</p:inputText>
-				
-				<p:spacer/>
-				<p:commandButton value="Create Coupons" action="#{shopperCouponsViewBean.createCoupon}"
-								 process=":form:inputShopperPanel" update=":form:inputShopperPanel :form:tabView:shopperTable:shopperCouponPanel"
-								 oncomplete="shopperCouponDialog.hide()"/>
-			</p:panelGrid>
+			<skc:couponInputPanel couponHolderLabel="Shopper" couponBean="#{shopperCouponsViewBean}"
+									selectedCouponHolder="#{shopperCouponsViewBean.selectedShopper}" update=":form:tabView:shopperTable:shopperCouponPanel" dialogWidgetVar="shopperCouponDialog"/>
 		</p:dialog>
 		
 		<p:dialog modal="true" widgetVar="categoryCouponDialog">
-			<p:panelGrid id="inputCategoryPanel" columns="2">
-				<h:outputText value="Shopper"/>
-				<p:selectOneMenu value="#{categoryCouponsViewBean.selectedCategory}">
-					<f:selectItems value="#{categoryCouponsViewBean.couponHolders}" var="couponHolder" itemValue="#{couponHolder}" itemLabel="#{couponHolder.name}"/>
-				</p:selectOneMenu>
-				
-				<h:outputText value="Discount Amount"/>
-				<p:inputText value="#{categoryCouponsViewBean.discountAmount}" required="true">
-					<f:convertNumber maxFractionDigits="2"/>
-				</p:inputText>				
-				<h:outputText value="Number Of Coupons"/>
-				<p:inputText value="#{categoryCouponsViewBean.numberOfCoupons}" required="true">
-					<f:convertNumber integerOnly="true"/>
-				</p:inputText>
-				
-				<p:spacer/>
-				<p:commandButton value="Create Coupons" action="#{categoryCouponsViewBean.createCoupon}"
-								 process=":form:inputCategoryPanel" update=":form:inputCategoryPanel :form:tabView:categoryTable:categoryCouponPanel"
-								 oncomplete="categoryCouponDialog.hide()"/>
-			</p:panelGrid>
+			<skc:couponInputPanel couponHolderLabel="Category" couponBean="#{categoryCouponsViewBean}"
+									selectedCouponHolder="#{categoryCouponsViewBean.selectedCategory}" update=":form:tabView:categoryTable:categoryCouponPanel" dialogWidgetVar="categoryCouponDialog"/>
 		</p:dialog>
 		
 	</ui:define>

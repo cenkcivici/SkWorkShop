@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+
+    
+    <composite:interface>
+    	<composite:attribute name="couponHolderLabel"/>
+    	<composite:attribute name="couponBean" required="true"/>
+    	<composite:attribute name="selectedCouponHolder"/>
+    	<composite:attribute name="update"/>
+    	<composite:attribute name="dialogWidgetVar"/>
+    </composite:interface>
+    
+    <composite:implementation>
+    	<p:panelGrid id="inputPanel" columns="2">
+			<h:outputText value="#{cc.attrs.couponHolderLabel}"/>
+			<p:selectOneMenu value="#{cc.attrs.selectedCouponHolder}" converter="entityConverter">
+				<f:selectItems value="#{cc.attrs.couponBean.couponHolders}" var="couponHolder" itemValue="#{couponHolder}" itemLabel="#{couponHolder.name}"/>
+			</p:selectOneMenu>
+			
+			<h:outputLabel value="Discount Amount" for="inputAmount"/>
+			<p:inputText id="inputAmount" value="#{cc.attrs.couponBean.discountAmount}" required="true" label="Discount Amount">
+				<f:convertNumber maxFractionDigits="2"/>
+			</p:inputText>				
+			<h:outputLabel value="Number Of Coupons" for="inputNumber"/>
+			<p:inputText id="inputNumber" value="#{cc.attrs.couponBean.numberOfCoupons}" required="true" label="Number Of Coupons">
+				<f:convertNumber integerOnly="true"/>
+			</p:inputText>
+			
+			<p:spacer/>
+			<p:commandButton value="Create Coupons" action="#{cc.attrs.couponBean.createCoupon}"
+							 process="inputPanel" update="inputPanel #{cc.attrs.update}"
+							 oncomplete="handleDialog_#{cc.attrs.couponHolderLabel}(xhr, status, args)"/>
+		</p:panelGrid>
+		
+		<script type="text/javascript">
+			function handleDialog_#{cc.attrs.couponHolderLabel}(xhr, status, args){
+				if(!args.validationFailed) {  
+		            #{cc.attrs.dialogWidgetVar}.hide();  
+		        }  
+			}
+		</script>
+    </composite:implementation>
+</ui:composition>
