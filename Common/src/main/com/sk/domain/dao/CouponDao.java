@@ -15,9 +15,10 @@ public class CouponDao extends GenericDao<Coupon>{
 		super(Coupon.class);
 	}
 
-	public Coupon findByCouponString(String couponString) {
-		Criteria criteria = getSession().createCriteria(Coupon.class);
-		return (Coupon)criteria.add(Restrictions.eq("couponString", couponString)).uniqueResult();
+	@SuppressWarnings("unchecked")
+	public <T extends Coupon> T findByCouponString(String couponString, Class<T> couponClass) {
+		Criteria criteria = getSession().createCriteria(couponClass);
+		return (T) criteria.add(Restrictions.eq("couponString", couponString)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")

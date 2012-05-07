@@ -18,6 +18,9 @@ import com.sk.domain.BaseEntity;
 public abstract class Coupon extends BaseEntity{
 
 	private static final long serialVersionUID = -1836790232427858843L;
+	
+	public abstract void setCouponHolder(CouponHolder couponHolder);
+	public abstract CouponHolder getCouponHolder();
 
 	@Column(length=10)
 	private String couponString;
@@ -56,18 +59,16 @@ public abstract class Coupon extends BaseEntity{
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (!super.equals(obj))
+		}
+		if(!(obj instanceof Coupon)){
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Coupon other = (Coupon) obj;
-		if (couponString == null) {
-			if (other.couponString != null)
-				return false;
-		} else if (!couponString.equals(other.couponString))
+		if (couponString == null || !couponString.equals(other.couponString)){
 			return false;
+		}
 		return true;
 	}
 	

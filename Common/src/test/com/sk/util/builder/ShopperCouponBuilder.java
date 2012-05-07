@@ -27,7 +27,7 @@ public class ShopperCouponBuilder extends BaseBuilder<ShopperCoupon, ShopperCoup
 		ShopperCoupon coupon = new ShopperCoupon();
 		coupon.setCouponString(couponString);
 		coupon.setDiscount(discountAmount);
-		coupon.setShopper(shopper);
+		coupon.setCouponHolder(shopper);
 		coupon.setUsed(Boolean.FALSE);
 		return coupon;
 	}

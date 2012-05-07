@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,8 +21,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
 import com.sk.domain.Shopper;
+import com.sk.domain.coupon.CategoryCoupon;
+import com.sk.domain.coupon.CouponHolder;
 import com.sk.domain.coupon.ShopperCoupon;
 import com.sk.domain.dao.CouponDao;
+import com.sk.util.builder.CategoryBuilder;
 import com.sk.util.builder.ShopperBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -40,25 +44,37 @@ public class CouponServiceTest {
 	
 	@Test
 	public void shouldCreateCouponForShopper(){
-		Shopper shopper = new ShopperBuilder().build();
-		couponService.createCouponForShopper(shopper, 10, 2);
+		CouponHolder shopper = new ShopperBuilder().build();
+		couponService.createCoupon(ShopperCoupon.class, shopper, 10, 2);
 		
 		ArgumentCaptor<ShopperCoupon> captor = ArgumentCaptor.forClass(ShopperCoupon.class);
 		verify(couponDao, times(2)).persist(captor.capture());
 		
 		List<ShopperCoupon> shopperCoupons = captor.getAllValues();
-		assertThat(shopperCoupons.get(0).getShopper(), equalTo(shopper));
+		assertThat(shopperCoupons.get(0).getCouponHolder(), equalTo(shopper));
 		assertThat(shopperCoupons.get(1).getDiscount(), equalTo(10D));
 		assertThat(shopperCoupons.get(0).getCouponString().length(), equalTo(10));
 		assertThat(shopperCoupons.get(1).isUsed(), equalTo(false));
 	}
 	
 	@Test
-	public void shouldBeUniqueShopperCoupon(){
+	public void shouldCreateCouponForCategory(){
+		CouponHolder category = new CategoryBuilder().build();
+		couponService.createCoupon(CategoryCoupon.class, category, 10, 2);
+		
+		ArgumentCaptor<CategoryCoupon> captor = ArgumentCaptor.forClass(CategoryCoupon.class);
+		verify(couponDao, times(2)).persist(captor.capture());
+		
+		List<CategoryCoupon> categoryCoupons = captor.getAllValues();
+		assertThat(categoryCoupons.get(0).getCouponHolder(), equalTo(category));
+	}
+	
+	@Test
+	public void shouldBeUniqueCoupon(){
 		Shopper shopper = new ShopperBuilder().build();
 		final ShopperCoupon existedShopperCoupon = new ShopperCoupon();
 		
-		when(couponDao.findByCouponString(anyString())).thenAnswer(new Answer<ShopperCoupon>() {
+		when(couponDao.findByCouponString(anyString(), eq(ShopperCoupon.class))).thenAnswer(new Answer<ShopperCoupon>() {
 
 			@Override
 			public ShopperCoupon answer(InvocationOnMock invocation) throws Throwable {
@@ -73,10 +89,10 @@ public class CouponServiceTest {
 		
 		});
 		
-		couponService.createCouponForShopper(shopper, 10, 1);
+		couponService.createCoupon(ShopperCoupon.class, shopper, 10, 1);
 		
 		ArgumentCaptor<ShopperCoupon> captor = ArgumentCaptor.forClass(ShopperCoupon.class);
-		verify(couponDao, times(2)).findByCouponString(anyString());
+		verify(couponDao, times(2)).findByCouponString(anyString(), eq(ShopperCoupon.class));
 		verify(couponDao).persist(captor.capture());
 		
 		List<ShopperCoupon> shopperCoupons = captor.getAllValues();
@@ -85,8 +101,8 @@ public class CouponServiceTest {
 	}
 	
 	@Test
-	public void shouldReturnAllShopperCoupons(){
-		couponService.getAllShopperCoupons();
+	public void shouldReturnAllCouponsAccordingToType(){
+		couponService.getAllCouponsFor(ShopperCoupon.class);
 		verify(couponDao).getAllCoupons(ShopperCoupon.class);
 	}
 	

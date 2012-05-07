@@ -11,9 +11,11 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.sk.domain.coupon.CouponHolder;
+
 @Entity
 @Table(name="shopper")
-public class Shopper extends BaseEntity{
+public class Shopper extends BaseEntity implements CouponHolder{
 
 	private static final long serialVersionUID = 2109249821813990338L;
 
@@ -73,6 +75,7 @@ public class Shopper extends BaseEntity{
 		this.email = email;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}

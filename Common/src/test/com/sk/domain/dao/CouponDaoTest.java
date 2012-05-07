@@ -26,7 +26,7 @@ public class CouponDaoTest extends BaseIntegration{
 		Shopper shopper = new ShopperBuilder().persist(getSession());
 		new ShopperCouponBuilder().couponString("ASDFASDFAS").shopper(shopper).persist(getSession());
 		
-		Coupon existedCoupon = couponDao.findByCouponString("ASDFASDFAS");
+		Coupon existedCoupon = couponDao.findByCouponString("ASDFASDFAS", ShopperCoupon.class);
 		assertThat(existedCoupon, notNullValue());
 	}
 	

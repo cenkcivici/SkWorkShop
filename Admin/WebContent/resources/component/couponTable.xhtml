@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:composite="http://java.sun.com/jsf/composite">
+    
+    <composite:interface>
+    	<composite:attribute name="panelId" required="true"/>
+    	<composite:attribute name="couponBean" required="true"/>
+    	<composite:attribute name="formId" default="form"/>
+    </composite:interface>
+    
+    <composite:implementation>
+	    <p:outputPanel id="#{cc.attrs.panelId}">
+	   		<p:dataTable value="#{cc.attrs.couponBean.coupons}" var="coupon" paginator="true" rows="10" paginatorAlwaysVisible="false">
+	    	
+		    	<p:column headerText="Coupon String">
+		    		<h:outputText value="#{coupon.couponString}"/>
+		    	</p:column>
+		    	
+		    	<p:column headerText="User">
+		    		<h:outputText value="#{coupon.couponHolder.name}"/>
+		    	</p:column>
+		    	
+		    	<p:column headerText="Discount Amount">
+		    		<h:outputText value="#{coupon.discount}"/>
+		    	</p:column>
+		    	
+		    	<p:column headerText="Is Used">
+		    		<h:outputText value="#{coupon.used}"/>
+		    	</p:column>
+		    	
+		    	<p:column headerText="Delete">
+		    		<p:commandButton value="Delete" action="#{cc.attrs.couponBean.delete(coupon)}" process="@this" update=":#{cc.attrs.formId}:#{cc.clientId}:#{cc.attrs.panelId}"/>
+		    	</p:column>
+	      	</p:dataTable>
+	  	</p:outputPanel>
+  	</composite:implementation>
+</ui:composition>

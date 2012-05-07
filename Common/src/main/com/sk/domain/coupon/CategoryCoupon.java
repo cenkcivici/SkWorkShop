@@ -4,25 +4,25 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.sk.domain.Shopper;
+import com.sk.domain.Category;
 
 @Entity
-@DiscriminatorValue("ShopperCoupon")
-public class ShopperCoupon extends Coupon {
+@DiscriminatorValue("CategoryCoupon")
+public class CategoryCoupon extends Coupon {
 
-	private static final long serialVersionUID = -8960776463556210413L;
+	private static final long serialVersionUID = -4580681695558831088L;
 
 	@ManyToOne
-	private Shopper shopper;
+	private Category category;
 
 	@Override
 	public CouponHolder getCouponHolder() {
-		return shopper;
+		return category;
 	}
 	
 	@Override
 	public void setCouponHolder(CouponHolder couponHolder) {
-		shopper = ((Shopper)couponHolder);
+		category = ((Category)couponHolder);
 	}
-
+	
 }

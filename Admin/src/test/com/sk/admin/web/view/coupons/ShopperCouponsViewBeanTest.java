@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.sk.domain.Shopper;
+import com.sk.domain.coupon.ShopperCoupon;
 import com.sk.service.CouponService;
 import com.sk.util.builder.ShopperBuilder;
 
@@ -35,7 +36,7 @@ public class ShopperCouponsViewBeanTest {
 		
 		viewBean.createCoupon();
 
-		verify(couponService).createCouponForShopper(shopper, 10D, 1); 
+		verify(couponService).createCoupon(ShopperCoupon.class, shopper, 10D, 1); 
 		assertThat(viewBean.getSelectedShopper(), nullValue());
 		assertThat(viewBean.getDiscountAmount(), nullValue());
 		assertThat(viewBean.getNumberOfCoupons(), nullValue());
