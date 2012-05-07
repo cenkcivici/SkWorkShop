@@ -22,7 +22,7 @@ public class CategoryCoupon extends Coupon {
 	
 	@Override
 	public void setCouponHolder(CouponHolder couponHolder) {
-		category = ((Category)couponHolder);
+		category = (Category)couponHolder;
 	}
 	
 }

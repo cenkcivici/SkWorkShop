@@ -17,6 +17,7 @@ import com.sk.service.CategoryService;
 public class CategoryCouponsViewBean extends BaseCouponViewBean{
 
 	private static final long serialVersionUID = -1803243458890317349L;
+	private static final Class<CategoryCoupon> COUPON_CLASS = CategoryCoupon.class;
 
 	@ManagedProperty("#{categoryService}")
 	private transient CategoryService categoryService;
@@ -26,12 +27,13 @@ public class CategoryCouponsViewBean extends BaseCouponViewBean{
 	
 	@Override
 	public List<? extends Coupon> getCoupons() {
-		return getCoupons(CategoryCoupon.class);
+		return getCoupons(COUPON_CLASS);
 	}
 
 	@Override
 	public void createCoupon() {
-		createCoupon(CategoryCoupon.class, getSelectedCategory());
+		createCoupon(COUPON_CLASS, selectedCategory);
+		selectedCategory = null;
 	}
 	
 	@Override
@@ -42,16 +44,16 @@ public class CategoryCouponsViewBean extends BaseCouponViewBean{
 		return categories;
 	}
 
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+	
 	public Category getSelectedCategory() {
 		return selectedCategory;
 	}
 
 	public void setSelectedCategory(Category selectedCategory) {
 		this.selectedCategory = selectedCategory;
-	}
-
-	public void setCategoryService(CategoryService categoryService) {
-		this.categoryService = categoryService;
 	}
 
 }

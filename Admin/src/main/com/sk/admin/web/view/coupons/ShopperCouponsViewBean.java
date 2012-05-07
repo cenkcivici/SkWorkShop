@@ -17,6 +17,7 @@ import com.sk.service.ShopperService;
 public class ShopperCouponsViewBean extends BaseCouponViewBean{
 
 	private static final long serialVersionUID = -2218714912704661066L;
+	private static final Class<ShopperCoupon> COUPON_CLASS = ShopperCoupon.class;
 
 	@ManagedProperty("#{shopperService}")
 	private transient ShopperService shopperService;
@@ -26,13 +27,13 @@ public class ShopperCouponsViewBean extends BaseCouponViewBean{
 
 	@Override
 	public void createCoupon() {
-		createCoupon(ShopperCoupon.class, selectedShopper);
+		createCoupon(COUPON_CLASS, selectedShopper);
 		selectedShopper = null;
 	}
 	
 	@Override
 	public List<? extends Coupon> getCoupons() {
-		return getCoupons(ShopperCoupon.class);
+		return getCoupons(COUPON_CLASS);
 	}
 
 	@Override
@@ -43,16 +44,16 @@ public class ShopperCouponsViewBean extends BaseCouponViewBean{
 		return shoppers;
 	}
 	
+	public void setShopperService(ShopperService shopperService) {
+		this.shopperService = shopperService;
+	}
+	
 	public Shopper getSelectedShopper() {
 		return selectedShopper;
 	}
 
 	public void setSelectedShopper(Shopper selectedShopper) {
 		this.selectedShopper = selectedShopper;
-	}
-
-	public void setShopperService(ShopperService shopperService) {
-		this.shopperService = shopperService;
 	}
 
 }

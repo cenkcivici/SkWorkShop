@@ -23,16 +23,29 @@
 		        <p:commandButton value="Add Category Coupon" type="button" onclick="categoryCouponDialog.show()"/>
 		        <skc:couponTable id="categoryTable" panelId="categoryCouponPanel" couponBean="#{categoryCouponsViewBean}"/>
 		    </p:tab>
+		    
+		    <p:tab title="Product Coupons">
+		    	<p:commandButton value="Add Product Coupon" type="button" onclick="productCouponDialog.show()"/>
+		    	<skc:couponTable id="productTable" panelId="productCouponPanel" couponBean="#{productCouponsViewBean}"/>
+		    </p:tab>
 		</p:tabView>
 		
 		<p:dialog modal="true" widgetVar="shopperCouponDialog">
 			<skc:couponInputPanel couponHolderLabel="Shopper" couponBean="#{shopperCouponsViewBean}"
-									selectedCouponHolder="#{shopperCouponsViewBean.selectedShopper}" update=":form:tabView:shopperTable:shopperCouponPanel" dialogWidgetVar="shopperCouponDialog"/>
+									selectedCouponHolder="#{shopperCouponsViewBean.selectedShopper}"
+									update=":form:tabView:shopperTable:shopperCouponPanel" dialogWidgetVar="shopperCouponDialog"/>
 		</p:dialog>
 		
 		<p:dialog modal="true" widgetVar="categoryCouponDialog">
 			<skc:couponInputPanel couponHolderLabel="Category" couponBean="#{categoryCouponsViewBean}"
-									selectedCouponHolder="#{categoryCouponsViewBean.selectedCategory}" update=":form:tabView:categoryTable:categoryCouponPanel" dialogWidgetVar="categoryCouponDialog"/>
+									selectedCouponHolder="#{categoryCouponsViewBean.selectedCategory}" 
+									update=":form:tabView:categoryTable:categoryCouponPanel" dialogWidgetVar="categoryCouponDialog"/>
+		</p:dialog>
+		
+		<p:dialog modal="true" widgetVar="productCouponDialog">
+			<skc:couponInputPanel couponHolderLabel="Product" couponBean="#{productCouponsViewBean}"
+									selectedCouponHolder="#{productCouponsViewBean.selectedProduct}" 
+									update=":form:tabView:productTable:productCouponPanel" dialogWidgetVar="productCouponDialog"/>
 		</p:dialog>
 		
 	</ui:define>
