@@ -30,12 +30,12 @@ public class InstallmentPlanController {
 	}
 
 	@RequestMapping(value = "/show", method = RequestMethod.POST)
-	public ModelAndView show(@RequestParam("creditCardNumber") String creditcardnumber,HttpServletRequest request)  {
+	public ModelAndView show(@RequestParam("creditCardNumber") String creditCardNumber,HttpServletRequest request)  {
 		ModelAndView mav = new ModelAndView("installmentplanselection");
 		
 		ShoppingCart cart = (ShoppingCart) request.getAttribute(ShoppingCartInterceptor.CART);
 		
-		Entry<CreditCardProfile,Map<InstallmentPlan, Double>> paymentEntry = creditCardProfileService.availablePlanFor(creditcardnumber,cart);
+		Entry<CreditCardProfile,Map<InstallmentPlan, Double>> paymentEntry = creditCardProfileService.availablePlanFor(creditCardNumber,cart);
 		mav.addObject("paymentEntry",paymentEntry);
 		return mav;
 	}
