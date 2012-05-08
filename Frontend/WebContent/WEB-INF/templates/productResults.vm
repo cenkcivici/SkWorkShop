@@ -1,0 +1,72 @@
+#@page()
+<table border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td>
+			
+			<table border="0" cellpadding="0" cellspacing="0"
+				style="background: url(${staticRoot}/images/left_bg.gif)">
+				<tr>
+					<td><img src="${staticRoot}/images/left_left.gif" width="21"
+						height="29" border="0" alt=""></td>
+					<td><img src="${staticRoot}/images/spacer.gif" width="7"
+						height="1" border="0" alt=""></td>
+					<td width="404"><div class="lb">Product Search Results</div>
+						<div class="lw">Product Search Results</div></td>
+					<td><img src="${staticRoot}/images/left_right.gif" width="6"
+						height="29" border="0" alt=""></td>
+				</tr>
+			</table>
+			
+			<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td style="background: url(${staticRoot}/images/c_left.gif)"><img
+					src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+					alt=""></td>
+				<td width="428" align="center">
+					<div>
+						<img src="${staticRoot}/images/spacer.gif" width="1" height="12" border="0" alt="">
+					</div>
+					#if ($productResults.size() > 0)
+					<table border="0" cellpadding="5" cellspacing="5">
+						<tr>
+							<td>&nbsp;</td>
+							<td>Title</td>
+							<td>Category</td>
+							<td>Price</td>
+						</tr>
+						#foreach( $product in $productResults )
+					    <tr>
+					    	<td>$foreach.count</td>
+					    	<td><a href="${appRoot}/product/${product.url}">$product.title</a></td>
+					    	<td>$product.category.name</td>
+					    	<td>$product.price</td>
+					    </tr>
+						#end
+					</table>
+					#else
+						No items in shopping cart.
+					#end
+					<div>
+						<img src="${staticRoot}/images/spacer.gif" width="1" height="14" border="0" alt="">
+					</div>
+				</td>
+				<td style="background: url(${staticRoot}/images/c_right.gif)"><img
+					src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+					alt="">
+				</td>
+			</tr>
+			<tr>
+				<td><img src="${staticRoot}/images/c4.gif" width="5" height="5"
+					border="0" alt=""></td>
+				<td style="background: url(${staticRoot}/images/c_bot.gif)"><img
+					src="${staticRoot}/images/spacer.gif" width="1" height="1" border="0"
+					alt=""></td>
+				<td><img src="${staticRoot}/images/c3.gif" width="5" height="5"
+					border="0" alt=""></td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+	
+#end

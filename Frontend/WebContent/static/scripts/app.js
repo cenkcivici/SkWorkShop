@@ -139,3 +139,47 @@ function OrdersService() {
 				success: callback});
 	};
 }
+
+function SearchController(view, service) {
+	var instance = this;
+	instance.view = view;
+	instance.service = service;
+
+	this.start = function() {
+		instance.view.init(instance);
+	};
+	
+	this.searchProduct = function(keyword) {
+		instance.service.searchProduct(keyword);
+	};
+};
+
+function SearchView() {
+	var instance = this;
+
+	this.init = function(controller) {
+		instance.controller = controller;
+		$(document).on('click','#searchButton', instance.search);
+		$(document).on('click','#keyword', instance.clearKeyword);
+		
+	};
+	
+	this.search = function() {
+		var keyword = $('#keyword').val();
+		instance.controller.searchProduct(keyword);
+	};
+	
+	this.clearKeyword = function(){
+		$('#keyword').val('');
+	};
+
+}
+
+function SearchService() {
+	var instance = this;
+	
+	this.searchProduct = function(keyword) {
+		
+		window.location = appRoot + "/search?keyword="+keyword;
+	};
+}

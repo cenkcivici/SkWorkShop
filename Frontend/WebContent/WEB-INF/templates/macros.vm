@@ -13,7 +13,13 @@
 <script type="text/javascript">
 	var staticRoot = '${staticRoot}';
 	var appRoot = '${appRoot}';
+	
+	var searchService = new SearchService();
+	var searchView = new SearchView();
+	var searchController = new SearchController(searchView, searchService);
+	searchController.start();
 </script>
+
 </head>
 <body>
 <table border="0" cellpadding="0" cellspacing="0" align="center">
@@ -73,10 +79,10 @@
 		
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<form>
-					<td><div style="padding: 0 6px 0 7px"><input type="text" name="search" size="40" maxlength="256" class="search" value="search"></div></td>
-					<td><input type="image" src="${staticRoot}/images/menu_go.gif" border="0" width="38" height="28" alt=""></td>
-					</form>
+					<td>
+						<div style="padding: 0 6px 0 7px"><input id="keyword" type="text" name="keyword" size="40" maxlength="256" class="search" value="search"></div>
+					</td>
+					<td><input id="searchButton" type="image" src="${staticRoot}/images/menu_go.gif" border="0" width="38" height="28" alt=""></td>
 					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="16"></td>
 					<td><div class="mb">Home</div> <div class="mw"><a href="#" class="aw">Home</a></div></td>
 					<td><img src="${staticRoot}/images/menu_line.gif" width="2" height="29" border="0" alt="" hspace="13"></td>
@@ -118,6 +124,7 @@
 	</tr>
 </table>
 <div><img src="${staticRoot}/images/spacer.gif" width="1" height="42" border="0" alt=""></div>
+
 </body>
 </html>
 
