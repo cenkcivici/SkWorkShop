@@ -10,10 +10,16 @@ public class ShopperCouponBuilder extends BaseBuilder<ShopperCoupon, ShopperCoup
 
 	private String couponString = RandomStringUtils.randomAlphabetic(10);
 	private Double discountAmount = RandomUtils.nextDouble();
+	private Boolean used = false;
 	private Shopper shopper = new ShopperBuilder().build();
 	
 	public ShopperCouponBuilder couponString(String couponString){
 		this.couponString = couponString;
+		return this;
+	}
+	
+	public ShopperCouponBuilder used(Boolean used){
+		this.used = used;
 		return this;
 	}
 	
@@ -28,7 +34,7 @@ public class ShopperCouponBuilder extends BaseBuilder<ShopperCoupon, ShopperCoup
 		coupon.setCouponString(couponString);
 		coupon.setDiscount(discountAmount);
 		coupon.setCouponHolder(shopper);
-		coupon.setUsed(Boolean.FALSE);
+		coupon.setUsed(used);
 		return coupon;
 	}
 
