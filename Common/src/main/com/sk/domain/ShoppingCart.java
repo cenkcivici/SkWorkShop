@@ -1,22 +1,21 @@
 package com.sk.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinTable;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "shopping_cart")
-public class ShoppingCart extends BaseEntity {
+@Embeddable
+public class ShoppingCart implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 2740196508859684992L;
+	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "cart_items")
+	@JoinColumn(name = "order_id")
 	private Set<ProductWithQuantity> items = new HashSet<ProductWithQuantity>();
 
 	public Set<ProductWithQuantity> getItems() {
