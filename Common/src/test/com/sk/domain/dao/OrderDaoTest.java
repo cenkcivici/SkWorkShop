@@ -19,7 +19,6 @@ import com.sk.domain.ProductWithQuantity;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
 import com.sk.util.BaseIntegration;
-import com.sk.util.Clock;
 import com.sk.util.builder.CategoryBuilder;
 import com.sk.util.builder.CreditCardBuilder;
 import com.sk.util.builder.CreditCardPaymentMethodBuilder;
