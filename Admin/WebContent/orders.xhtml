@@ -30,6 +30,11 @@
 					#{order.totalAmount}
 				</p:column>
 				
+				<p:column headerText="Bonus Used">
+					<h:outputText value="#{order.paymentMethod.bonusUsed}" rendered="#{order.paymentMethod.bonusUsed gt 0}"/>
+					<h:outputText value="No Bonus used" rendered="#{order.paymentMethod.bonusUsed le 0}"/>
+				</p:column>
+				
 				<p:column headerText="Order Status" filterBy="#{order.orderStatus}"  
 							filterOptions="#{ordersView.orderStatus}" filterMatchMode="exact">
 					<h:outputText value="#{order.orderStatus}"/>
