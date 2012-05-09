@@ -18,16 +18,16 @@ public class CreditCard extends BaseEntity{
 	private String owner;
 	
 	@Column(length=60)
-	private String cardNumber = "5331690000149028"; // for testing
+	private String cardNumber = "5209409007513022"; // for testing
 	
 	@Column(length=25)
-	private String cvc = "583";
+	private String cvc = "774";
 	
 	@Column(length=25)
-	private String month = "12";
+	private String month = "06";
 	
 	@Column(length=25)
-	private String year = "2013";
+	private String year = "2012";
 
 	@Enumerated(EnumType.STRING)
 	private CreditCardType creditCardType;
