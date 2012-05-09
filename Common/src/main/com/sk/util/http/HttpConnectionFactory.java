@@ -25,7 +25,6 @@ public class HttpConnectionFactory {
 		HttpConnectionParams.setSoTimeout(httpParams, socketTimeoutMillis);
 		
 		HttpClient httpClient = new DefaultHttpClient(httpParams);
-//		httpClient = WebClientWrapper.wrapClient(httpClient);
 		HttpPost httpPost =  new HttpPost(uri);
 		
 		return new HttpConnection(httpClient, httpPost);
