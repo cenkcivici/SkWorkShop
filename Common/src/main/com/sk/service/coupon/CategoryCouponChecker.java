@@ -18,8 +18,9 @@ public class CategoryCouponChecker implements CouponChecker {
 	public Boolean canUseCoupon(Order order) {
 		Set<ProductWithQuantity> items = order.getShoppingCart().getItems();
 		for (ProductWithQuantity productWithQuantity : items) {
-			if(productWithQuantity.getProduct().getCategory().equals(category))
+			if (productWithQuantity.getProduct().getCategory().equals(category)) {
 				return true;
+			}
 		}
 		return false;
 	}

@@ -16,13 +16,14 @@ public class ProductCouponChecker implements CouponChecker {
 
 	@Override
 	public Boolean canUseCoupon(Order order) {
-		
+
 		Set<ProductWithQuantity> items = order.getShoppingCart().getItems();
 		for (ProductWithQuantity productWithQuantity : items) {
-			if(productWithQuantity.getProduct().equals(product))
+			if (productWithQuantity.getProduct().equals(product)) {
 				return true;
+			}
 		}
-		
+
 		return false;
 	}
 

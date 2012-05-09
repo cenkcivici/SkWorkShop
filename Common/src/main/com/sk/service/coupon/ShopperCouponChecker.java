@@ -13,9 +13,10 @@ public class ShopperCouponChecker implements CouponChecker {
 
 	@Override
 	public Boolean canUseCoupon(Order order) {
-		if(order.getShopper().equals(shopper))
+		if (order.getShopper().equals(shopper)) {
 			return true;
-		
+		}
+
 		return false;
 	}
 
