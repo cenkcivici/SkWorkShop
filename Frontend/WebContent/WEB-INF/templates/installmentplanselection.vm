@@ -1,3 +1,4 @@
+#if ($paymentEntry.getKey())
 <table>
 <tr>
 	<td>Select Payment Plan</td>
@@ -24,3 +25,4 @@
 	</td>
 </tr>
 </table>
+#end

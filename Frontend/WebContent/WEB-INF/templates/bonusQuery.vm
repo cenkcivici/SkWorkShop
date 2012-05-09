@@ -1,0 +1,1 @@
+#if ( $bonus )	You have $bonus in your credit.<br/>		Use bonus ? <input type="checkbox" name="useBonus" value="$bonus">#else	You don't have any bonus.	 #end

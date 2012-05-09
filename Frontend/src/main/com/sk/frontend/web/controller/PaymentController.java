@@ -101,7 +101,8 @@ public class PaymentController {
 		}
 
 		initializeInstallmentPlan(payment, request);
-
+		initializeBonusPoints(payment, request);
+		
 		ShoppingCart cart = getShoppingCart(request);
 		Order order = orderService.createOrder(cart, payment);
 		VPOSResponse vposResponse = garantiVPOSService.makePayment(order);
@@ -113,6 +114,16 @@ public class PaymentController {
 
 	}
 
+	private void initializeBonusPoints(CreditCardPaymentMethod payment, HttpServletRequest request) {
+		String useBonusValue = request.getParameter("useBonus");
+		if( StringUtils.isNotBlank(useBonusValue)){
+			Double bonus = Double.parseDouble(useBonusValue);
+			if( bonus != null ){
+				payment.setBonusUsed(bonus); 
+			}
+		}
+	}
+	
 	private void initializeInstallmentPlan(CreditCardPaymentMethod payment, HttpServletRequest request) {
 		String selectPlan = request.getParameter("selectPlan");
 		if (StringUtils.isNotEmpty(selectPlan) && StringUtils.isNumeric(selectPlan)) {

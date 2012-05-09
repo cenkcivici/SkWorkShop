@@ -174,12 +174,13 @@ public class PaymentControllerTest {
 	}
 
 	@Test
-	public void shoulCallOrderServiceIfCardIsValid() {
+	public void shouldAddBonusInfoIfUserWantsToUseBonus() {
 		when(bindingResult.hasErrors()).thenReturn(false);
 
 		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
 		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
 		request.setAttribute("cart", shoppingCart);
+		request.setParameter("useBonus","10.5");
 
 		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
 		
@@ -189,6 +190,28 @@ public class PaymentControllerTest {
 		
 		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request,response);
 
+		verify(orderService).createOrder(shoppingCart, cardPaymentMethod);
+		verify(bindingResult).hasErrors();
+		assertThat(mav.getViewName(), equalTo("redirect:orderSuccess"));
+		assertThat(cardPaymentMethod.getBonusUsed(),equalTo(10.5d));
+	}
+	
+	@Test
+	public void shouldCallOrderServiceIfCardIsValid() {
+		when(bindingResult.hasErrors()).thenReturn(false);
+		
+		CreditCardPaymentMethod cardPaymentMethod = new CreditCardPaymentMethodBuilder().build();
+		ShoppingCart shoppingCart = new ShoppingCartBuilder().build();
+		request.setAttribute("cart", shoppingCart);
+		
+		VPOSResponse vposResponse = new VPOSResponse(ResponseStatus.SUCCESS);
+		
+		Order order = new OrderBuilder().paymentMethod(cardPaymentMethod).shoppingCart(shoppingCart).build();
+		when(orderService.createOrder(shoppingCart,cardPaymentMethod)).thenReturn(order);
+		when(garantiVPOSService.makePayment(order)).thenReturn(vposResponse);
+		
+		ModelAndView mav = controller.submit(cardPaymentMethod, bindingResult, request,response);
+		
 		verify(orderService).createOrder(shoppingCart, cardPaymentMethod);
 		verify(bindingResult).hasErrors();
 		assertThat(mav.getViewName(), equalTo("redirect:orderSuccess"));

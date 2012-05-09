@@ -59,6 +59,10 @@ function PaymentController(view, service) {
 		instance.view.init(instance);
 	};
 	
+	this.displayBonus = function(creditCardNumber,callback) {
+		instance.service.getBonusPoints(creditCardNumber,callback);
+	};
+	
 	this.displayPaymentPlan = function(creditCardNumber,callback) {
 		instance.service.getInstallmentPlan(creditCardNumber,callback);
 	};
@@ -70,6 +74,7 @@ function PaymentView() {
 	this.init = function(controller) {
 		instance.controller = controller;
 		$('#creditCard\\.cardNumber').blur(instance.viewPaymentPlan);
+		$('#creditCard\\.cardNumber').blur(instance.viewBonus);
 	};
 	
 	this.viewPaymentPlan = function() {
@@ -77,8 +82,17 @@ function PaymentView() {
 		instance.controller.displayPaymentPlan(creditCardNumber,instance.updatePaymentPlan);
 	};
 	
+	this.viewBonus = function() {
+		var creditCardNumber = $('#creditCard\\.cardNumber').val();
+		instance.controller.displayBonus(creditCardNumber,instance.updateBonus);
+	};
+	
 	this.updatePaymentPlan = function(html) {
 		$('#availablePlans').html(html);
+	};
+	
+	this.updateBonus = function(html) {
+		$('#availableBonusPoints').html(html);
 	};
 };
 
@@ -91,6 +105,14 @@ function PaymentService() {
 				data: {'creditCardNumber' : creditCardNumber},
 				type:'post',
 				success: callback});
+	};
+	
+	this.getBonusPoints = function(creditCardNumber,callback) {
+		$.ajax ({
+			url:appRoot + "/queryBonus/",
+			data: {'creditCardNumber' : creditCardNumber},
+			type:'post',
+			success: callback});
 	};
 }
 
