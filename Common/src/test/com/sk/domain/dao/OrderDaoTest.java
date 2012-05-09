@@ -57,8 +57,9 @@ public class OrderDaoTest extends BaseIntegration {
 		
 		
 		PaymentMethod creditCardPaymentMethod = new CreditCardPaymentMethodBuilder().creditCard(creditCard).installmentPlan(installmentPlan).build(); 
+		Shopper shopper = new ShopperBuilder().persist(getSession());
 
-		Order toPersist = new OrderBuilder().shoppingCart(shoppingCart).paymentMethod(creditCardPaymentMethod).orderDate(now).build();
+		Order toPersist = new OrderBuilder().shopper(shopper).shoppingCart(shoppingCart).paymentMethod(creditCardPaymentMethod).orderDate(now).build();
 
 		toPersist = orderDao.persist(toPersist);
 

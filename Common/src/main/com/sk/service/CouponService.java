@@ -35,7 +35,7 @@ public class CouponService {
 				coupon.setCouponHolder(couponHolder);
 				coupon.setUsed(Boolean.FALSE);
 	
-				String couponString = prepareCouponString(couponClass);
+				String couponString = prepareCouponString();
 				
 				coupon.setCouponString(couponString);
 				couponDao.persist(coupon);
@@ -51,12 +51,12 @@ public class CouponService {
 		couponDao.delete(coupon);
 	}
 
-	private String prepareCouponString(Class<? extends Coupon> couponClass) {
+	private String prepareCouponString() {
 		String couponString;
 		Coupon existingCoupon;
 		do{
 			couponString = RandomStringUtils.randomAlphabetic(10);
-			existingCoupon = couponDao.findByCouponString(couponString, couponClass);
+			existingCoupon = couponDao.findByCouponString(couponString);
 		}while(existingCoupon != null);
 		return couponString;
 	}

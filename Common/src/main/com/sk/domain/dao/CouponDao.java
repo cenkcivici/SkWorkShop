@@ -16,14 +16,22 @@ public class CouponDao extends GenericDao<Coupon>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Coupon> T findByCouponString(String couponString, Class<T> couponClass) {
-		Criteria criteria = getSession().createCriteria(couponClass);
+	public <T extends Coupon> T findByCouponString(String couponString) {
+		Criteria criteria = getSession().createCriteria(Coupon.class);
 		return (T) criteria.add(Restrictions.eq("couponString", couponString)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T extends Coupon> List<T> getAllCoupons(Class<T> couponClass) {
 		return getSession().createCriteria(couponClass).list();
+	}
+
+	public Coupon findUnusedByCouponString(String couponString) {
+		Coupon coupon = findByCouponString(couponString);
+		if(coupon.isUsed())
+			return null;
+		else
+			return coupon;
 	}
 
 }

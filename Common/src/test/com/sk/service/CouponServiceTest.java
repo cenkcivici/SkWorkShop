@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -74,7 +73,7 @@ public class CouponServiceTest {
 		Shopper shopper = new ShopperBuilder().build();
 		final ShopperCoupon existedShopperCoupon = new ShopperCoupon();
 		
-		when(couponDao.findByCouponString(anyString(), eq(ShopperCoupon.class))).thenAnswer(new Answer<ShopperCoupon>() {
+		when(couponDao.findByCouponString(anyString())).thenAnswer(new Answer<ShopperCoupon>() {
 
 			@Override
 			public ShopperCoupon answer(InvocationOnMock invocation) throws Throwable {
@@ -92,7 +91,7 @@ public class CouponServiceTest {
 		couponService.createCoupon(ShopperCoupon.class, shopper, 10, 1);
 		
 		ArgumentCaptor<ShopperCoupon> captor = ArgumentCaptor.forClass(ShopperCoupon.class);
-		verify(couponDao, times(2)).findByCouponString(anyString(), eq(ShopperCoupon.class));
+		verify(couponDao, times(2)).findByCouponString(anyString());
 		verify(couponDao).persist(captor.capture());
 		
 		List<ShopperCoupon> shopperCoupons = captor.getAllValues();

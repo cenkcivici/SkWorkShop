@@ -97,7 +97,7 @@
 	</target>
 
 	<target name="run-unit-tests" depends="compile-prod,compile-test">
-		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
+		<junit failureproperty="unit.tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<classpath>
 				<path refid="admin.test.classpath" />
@@ -111,10 +111,11 @@
 				</fileset>
 			</batchtest>
 		</junit>
+		<fail if="unit.tests.failed" message="Unit tests failed" />
 	</target>
 	
 	<target name="run-func-tests" depends="compile-functest">
-		<junit failureproperty="tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
+		<junit failureproperty="func.tests.failed" dir="${basedir}" haltonerror="true" fork="true" forkmode="once" maxmemory="512M">
 			<jvmarg value="-XX:MaxPermSize=512m" />
 			<classpath>
 				<pathelement location="${test.classes.dir}" />
@@ -128,6 +129,7 @@
 				</fileset>
 			</batchtest>
 		</junit>
+		<fail if="func.tests.failed" message="Func tests failed" />
 	</target>
 
 	<target name="deploy-to-tomcat" depends="init, compile-prod">

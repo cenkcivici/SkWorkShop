@@ -68,6 +68,7 @@
 				</fileset>
 			</batchtest>
 		</junit>
+		<fail if="tests.failed" message="Unit tests failed" />
 	</target>
 	
 	<target name="dist" depends="run-unit-tests">
