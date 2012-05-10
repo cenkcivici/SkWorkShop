@@ -14,12 +14,12 @@ public class UrlGeneratorService {
 		String url = text.toLowerCase(Locale.ENGLISH);
 
 		url = StringUtils.replace(url, " ", "-");
-		url = unAccentString(url);		
+		url = unAccentString(url);
 		url = url.replaceAll("[^a-z 0-9 \\-]*", "");
 		return url;
 	}
-	
-	private String unAccentString(String url){
+
+	private String unAccentString(String url) {
 		url = url.replaceAll("[ı]", "i");
 		url = Normalizer.normalize(url, Normalizer.Form.NFD);
 		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");

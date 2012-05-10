@@ -30,6 +30,10 @@
 					#{order.totalAmount}
 				</p:column>
 				
+				<p:column headerText="Order Id">
+					#{order.orderID}
+				</p:column>
+				
 				<p:column headerText="Bonus Used">
 					<h:outputText value="#{order.paymentMethod.bonusUsed}" rendered="#{order.paymentMethod.bonusUsed gt 0}"/>
 					<h:outputText value="No Bonus used" rendered="#{empty order.paymentMethod.bonusUsed or order.paymentMethod.bonusUsed le 0}"/>

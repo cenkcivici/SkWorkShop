@@ -57,6 +57,7 @@
 		<copy todir="${webinf.classes.dir}">
 			<fileset dir="${prod.src.dir}">
 				<include name="**/*.xml" />
+				<include name="**/*.vm" />
 				<include name="**/*.xsd" />
 				<include name="**/*.properties" />
 			</fileset>
@@ -72,6 +73,7 @@
 		<copy todir="${test.classes.dir}">
 			<fileset dir="${test.src.dir}">
 				<include name="**/*.xml" />
+				<include name="**/*.vm" />
 				<include name="**/*.xsd" />
 				<include name="**/*.properties" />
 			</fileset>
@@ -87,6 +89,7 @@
 		<copy todir="${test.classes.dir}">
 			<fileset dir="${functest.src.dir}">
 				<include name="**/*.xml" />
+				<include name="**/*.vm" />
 				<include name="**/*.xsd" />
 				<include name="**/*.properties" />
 			</fileset>

@@ -12,7 +12,7 @@ import com.sk.domain.BaseEntity;
 import com.sk.domain.Order;
 
 @Entity
-@Table(name="catalog")
+@Table(name="coupon")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
 	    name="couponType",

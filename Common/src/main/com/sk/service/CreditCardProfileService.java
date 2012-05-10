@@ -19,12 +19,12 @@ import com.sk.domain.dao.InstallmentPlanDao;
 public class CreditCardProfileService {
 
 	private CreditCardProfileDao creditCardProfileDao;
-	
+
 	private InstallmentPlanDao installmentPlanDao;
 
 	public CreditCardProfileService() {
 	}
-	
+
 	@Autowired
 	public CreditCardProfileService(CreditCardProfileDao creditCardProfileDao, InstallmentPlanDao installmentPlanDao) {
 		this.creditCardProfileDao = creditCardProfileDao;
@@ -48,11 +48,11 @@ public class CreditCardProfileService {
 	public CreditCardProfile attach(CreditCardProfile creditCardProfile) {
 		return creditCardProfileDao.get(creditCardProfile.getId());
 	}
-	
+
 	public InstallmentPlan findInstallmentById(Long id) {
 		return installmentPlanDao.get(id);
 	}
-	
+
 	public Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsFor(ShoppingCart cart) {
 		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsMap = new TreeMap<CreditCardProfile, Map<InstallmentPlan, Double>>();
 		List<CreditCardProfile> allProfiles = creditCardProfileDao.getAll();
@@ -65,15 +65,15 @@ public class CreditCardProfileService {
 	}
 
 	public Entry<CreditCardProfile, Map<InstallmentPlan, Double>> availablePlanFor(String creditCardNo, ShoppingCart cart) {
-		
+
 		Map<CreditCardProfile, Map<InstallmentPlan, Double>> paymentsMap = paymentsFor(cart);
-		
-		for (Entry<CreditCardProfile,Map<InstallmentPlan, Double>> eachEntry : paymentsMap.entrySet()) {
+
+		for (Entry<CreditCardProfile, Map<InstallmentPlan, Double>> eachEntry : paymentsMap.entrySet()) {
 			if (eachEntry.getKey().issuerOf(creditCardNo)) {
 				return eachEntry;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -83,6 +83,7 @@ public class CreditCardProfileService {
 			double monthlyPayment = creditCardProfile.monthlyPaymentOf(total, eachInstallmentPlan.getMonths());
 			planMap.put(eachInstallmentPlan, monthlyPayment);
 		}
+		
 		availablePaymentsMap.put(creditCardProfile, planMap);
 	}
 

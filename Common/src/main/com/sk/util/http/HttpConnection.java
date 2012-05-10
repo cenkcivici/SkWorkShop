@@ -45,10 +45,4 @@ public class HttpConnection {
 			throw new ServiceException(e);
 		}
 	}
-
-	public void addHeader(String key, String value) {
-		httpPost.addHeader(key,value);
-		
-	}
-
 }

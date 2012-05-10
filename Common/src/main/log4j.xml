@@ -10,14 +10,14 @@
 	</appender>
 
 	<category name="org.hibernate">
-		<priority value="error" />
+		<priority value="info" />
 	</category>
 
 	<category name="org.springframework">
-		<priority value="debug" />
+		<priority value="info" />
 	</category>
 	
-	<category name="httpclient.wire">
+	<category name="com.sk">
 		<priority value="debug" />
 	</category>
 

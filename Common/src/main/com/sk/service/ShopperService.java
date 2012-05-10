@@ -17,8 +17,9 @@ public class ShopperService {
 	private EncryptionService encryptionService;
 	private ShopperDao shopperDao;
 
-	public ShopperService(){}
-	
+	public ShopperService() {
+	}
+
 	@Autowired
 	public ShopperService(EncryptionService encryptionService, ShopperDao shopperDao) {
 		this.encryptionService = encryptionService;
@@ -26,18 +27,18 @@ public class ShopperService {
 	}
 
 	public void encryptAndsaveCardInfo(Shopper shopper, CreditCard card) {
-		
+
 		CreditCard encryptedCard = encryptCreditCardInfo(card);
-		
+
 		shopper.addCreditCard(encryptedCard);
 		shopperDao.persist(shopper);
 	}
-	
+
 	public void encryptCreditCardInfo(CreditCardPaymentMethod payment) {
 		payment.setCreditCard(encryptCreditCardInfo(payment.getCreditCard()));
 	}
-	
-	public CreditCard encryptCreditCardInfo(CreditCard card){
+
+	public CreditCard encryptCreditCardInfo(CreditCard card) {
 		CreditCard encryptedCard = new CreditCard();
 		encryptedCard.setId(card.getId());
 		encryptedCard.setOwner(encryptionService.encrypt(card.getOwner()));
@@ -60,10 +61,10 @@ public class ShopperService {
 		card.setCreditCardType(encryptedCard.getCreditCardType());
 		return card;
 	}
-	
+
 	public Shopper getStubShopper() {
 		Shopper stubShopper = shopperDao.findByEmail("default@default.com");
-		if(stubShopper == null){
+		if (stubShopper == null) {
 			Shopper shopper = new Shopper();
 			shopper.setEmail("default@default.com");
 			shopper.setName("Default Shopper");
