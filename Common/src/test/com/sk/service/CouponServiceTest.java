@@ -1,5 +1,6 @@
 package com.sk.service;
 
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -146,5 +147,20 @@ public class CouponServiceTest {
 		Coupon coupon = couponService.getUnusedCoupon("ABCabcZXCc", order);
 
 		assertThat(coupon, nullValue());
+	}
+	
+	@Test
+	public void shouldSetCouponStatusToUsedIfAvaiable(){
+		
+		Shopper shopper = new ShopperBuilder().build();
+		Order order = new OrderBuilder().shopper(shopper).build();
+		Coupon coupon = new ShopperCouponBuilder().shopper(shopper).build();
+		when(couponDao.findUnusedByCouponString("ABCabcZXCc")).thenReturn(coupon);
+		
+		couponService.useCouponIfAvailable("ABCabcZXCc", order);
+		
+		assertThat(order.getCoupon(), equalTo(coupon));
+		assertTrue(coupon.isUsed());
+		
 	}
 }
