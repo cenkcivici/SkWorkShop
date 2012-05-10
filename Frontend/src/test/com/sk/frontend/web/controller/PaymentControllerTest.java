@@ -1,12 +1,11 @@
 package com.sk.frontend.web.controller;
 
-<<<<<<< HEAD
-=======
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasKey;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -53,18 +52,6 @@ import com.sk.util.builder.ProductWithQuantityBuilder;
 import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShopperCouponBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasKey;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentControllerTest {
@@ -115,7 +102,7 @@ public class PaymentControllerTest {
 		assertThat(fromModel.keySet().size(), equalTo(2));
 		
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSetMonthsWhileCreatingModel(){
