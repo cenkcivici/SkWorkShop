@@ -3,6 +3,7 @@ package com.sk.service;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,13 +20,17 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import com.sk.domain.Order;
 import com.sk.domain.Shopper;
 import com.sk.domain.coupon.CategoryCoupon;
+import com.sk.domain.coupon.Coupon;
 import com.sk.domain.coupon.CouponHolder;
 import com.sk.domain.coupon.ShopperCoupon;
 import com.sk.domain.dao.CouponDao;
 import com.sk.util.builder.CategoryBuilder;
+import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ShopperBuilder;
+import com.sk.util.builder.ShopperCouponBuilder;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CouponServiceTest {
@@ -105,4 +110,41 @@ public class CouponServiceTest {
 		verify(couponDao).getAllCoupons(ShopperCoupon.class);
 	}
 	
+	@Test
+	public void shouldReturnUnusedCouponIfAvailable(){
+		
+		Shopper shopper = new ShopperBuilder().build();
+		ShopperCoupon shopperCoupon = new ShopperCouponBuilder().shopper(shopper).build();
+		Order order = new OrderBuilder().shopper(shopper).build();
+		when(couponDao.findUnusedByCouponString("ABCabcZXCc")).thenReturn(shopperCoupon);
+		
+		Coupon coupon = couponService.getUnusedCoupon("ABCabcZXCc", order);
+
+		assertThat((ShopperCoupon)coupon, equalTo(shopperCoupon));
+	}
+	
+	@Test
+	public void shouldReturnNullIfUnusedCouponNotExist(){
+		Order order = new OrderBuilder().build();
+		when(couponDao.findUnusedByCouponString("ABCabcZXCc")).thenReturn(null);
+		
+		Coupon coupon = couponService.getUnusedCoupon("ABCabcZXCc", order);
+
+		assertThat(coupon, nullValue());
+	}
+	
+	@Test
+	public void shouldReturnNullIfUnusedCouponOwnerDifferent(){
+		
+		Shopper shopper = new ShopperBuilder().build();
+		ShopperCoupon shopperCoupon = new ShopperCouponBuilder().shopper(shopper).build();
+		
+		Shopper differentShopper = new ShopperBuilder().build();
+		Order order = new OrderBuilder().shopper(differentShopper).build();
+		when(couponDao.findUnusedByCouponString("ABCabcZXCc")).thenReturn(shopperCoupon);
+		
+		Coupon coupon = couponService.getUnusedCoupon("ABCabcZXCc", order);
+
+		assertThat(coupon, nullValue());
+	}
 }

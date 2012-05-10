@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sk.domain.CreditCard;
@@ -21,10 +22,12 @@ import com.sk.domain.InstallmentPlan;
 import com.sk.domain.Order;
 import com.sk.domain.Shopper;
 import com.sk.domain.ShoppingCart;
+import com.sk.domain.coupon.Coupon;
 import com.sk.frontend.service.ShoppingCartService;
 import com.sk.frontend.web.helper.CreditCardPopulatorHelper;
 import com.sk.frontend.web.interceptor.ShoppingCartInterceptor;
 import com.sk.frontend.web.validator.CreditCardValidator;
+import com.sk.service.CouponService;
 import com.sk.service.CreditCardProfileService;
 import com.sk.service.OrderService;
 import com.sk.service.ShopperService;
@@ -41,6 +44,7 @@ public class PaymentController {
 	private CreditCardPopulatorHelper cardPopulatorHelper;
 	private CreditCardProfileService creditCardProfileService;
 	private ShoppingCartService shoppingCartService;
+	private CouponService couponService;
 
 	@InitBinder
 	public void init(WebDataBinder binder) {
@@ -48,13 +52,14 @@ public class PaymentController {
 	}
 
 	@Autowired
-	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper, CreditCardProfileService creditCardProfileService, ShoppingCartService shoppingCartService) {
+	public PaymentController(OrderService orderService, ShopperService shopperService, GarantiVPOSService garantiVPOSService, CreditCardPopulatorHelper cardPopulatorHelper, CreditCardProfileService creditCardProfileService, ShoppingCartService shoppingCartService, CouponService couponService) {
 		this.orderService = orderService;
 		this.shopperService = shopperService;
 		this.garantiVPOSService = garantiVPOSService;
 		this.cardPopulatorHelper = cardPopulatorHelper;
 		this.creditCardProfileService = creditCardProfileService;
 		this.shoppingCartService = shoppingCartService;
+		this.couponService = couponService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -105,6 +110,13 @@ public class PaymentController {
 		
 		ShoppingCart cart = getShoppingCart(request);
 		Order order = orderService.createOrder(cart, payment);
+		
+		if(StringUtils.isNotBlank(request.getParameter("couponStringParam"))){
+			String couponString = request.getParameter("couponStringParam");
+			couponService.useCouponIfAvailable(couponString, order);
+		}
+		
+		
 		VPOSResponse vposResponse = garantiVPOSService.makePayment(order);
 		if (vposResponse.isSuccessful()) {
 			return saveOrder(order, request, response);
@@ -113,7 +125,37 @@ public class PaymentController {
 		}
 
 	}
-
+	
+	
+	@RequestMapping(value = "/useCoupon", method = RequestMethod.POST)
+	public ModelAndView useCoupon(@RequestParam String couponString, HttpServletRequest request) {
+		
+		Order order = new Order();
+		order.setShopper(shopperService.getStubShopper());
+		
+		ShoppingCart shoppingCart = getShoppingCart(request);
+		order.setShoppingCart(shoppingCart);
+		
+		Coupon coupon = couponService.getUnusedCoupon(couponString, order);
+		
+		String status = null;
+		Double discountedAmount = 0D;
+		
+		if(coupon != null){
+			status = "Valid";
+			discountedAmount = Math.max(0, shoppingCart.getTotalCost() - coupon.getDiscount());
+		}
+		else{
+			status = "Invalid";
+			discountedAmount = shoppingCart.getTotalCost();
+		}
+		
+		ModelAndView mav = new ModelAndView("couponStatus");
+		mav.addObject("status", status);
+		mav.addObject("discountedAmount", discountedAmount);
+		return mav;
+	}
+	
 	private void initializeBonusPoints(CreditCardPaymentMethod payment, HttpServletRequest request) {
 		String useBonusValue = request.getParameter("useBonus");
 		if( StringUtils.isNotBlank(useBonusValue)){

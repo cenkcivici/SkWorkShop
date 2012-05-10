@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import com.sk.domain.Category;
+import com.sk.domain.Order;
+import com.sk.service.coupon.CategoryCouponChecker;
 
 @Entity
 @DiscriminatorValue("CategoryCoupon")
@@ -23,6 +25,11 @@ public class CategoryCoupon extends Coupon {
 	@Override
 	public void setCouponHolder(CouponHolder couponHolder) {
 		category = (Category)couponHolder;
+	}
+
+	@Override
+	public Boolean canUseCoupon(Order order) {
+		return new CategoryCouponChecker(category).canUseCoupon(order);
 	}
 	
 }

@@ -9,6 +9,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import com.sk.domain.BaseEntity;
+import com.sk.domain.Order;
 
 @Entity
 @Table(name="catalog")
@@ -23,6 +24,7 @@ public abstract class Coupon extends BaseEntity{
 	
 	public abstract void setCouponHolder(CouponHolder couponHolder);
 	public abstract CouponHolder getCouponHolder();
+	public abstract Boolean canUseCoupon(Order order);
 
 	@Column(length=10)
 	private String couponString;

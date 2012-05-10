@@ -1,0 +1,4 @@
+<div>
+	<span id="couponStatus">${status}</span>
+	<span id="discountedAmount">${discountedAmount}</span>
+</div>
