@@ -143,7 +143,7 @@ public class PaymentController {
 		
 		if(coupon != null){
 			status = "Valid";
-			discountedAmount = Math.max(0, shoppingCart.getTotalCost() - coupon.getDiscount());
+			discountedAmount = shoppingCart.getTotalDiscountedCost(coupon);
 		}
 		else{
 			status = "Invalid";

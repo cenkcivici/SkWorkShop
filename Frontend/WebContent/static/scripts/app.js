@@ -94,7 +94,9 @@ function PaymentView() {
 	
 	this.updateCost = function() {
 		var couponString = $('#couponString').val();
-		instance.controller.updateCouponStatus(couponString, instance.updateCouponStatus);
+		if(couponString != ''){
+			instance.controller.updateCouponStatus(couponString, instance.updateCouponStatus);
+		}
 	};
 	
 	this.updatePaymentPlan = function(html) {

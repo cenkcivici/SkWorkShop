@@ -9,6 +9,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.sk.domain.coupon.Coupon;
+
 @Embeddable
 public class ShoppingCart implements Serializable{
 
@@ -33,6 +35,14 @@ public class ShoppingCart implements Serializable{
 		}
 
 		return totalCost;
+	}
+	
+	public Double getTotalDiscountedCost(Coupon coupon) {
+		if(coupon == null){
+			return getTotalCost();
+		}
+		
+		return Math.max(0, getTotalCost() - coupon.getDiscount());
 	}
 
 	public int getCount() {
