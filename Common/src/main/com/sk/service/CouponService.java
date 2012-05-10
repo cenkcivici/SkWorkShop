@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sk.domain.coupon.Coupon;
 import com.sk.domain.coupon.CouponHolder;
 import com.sk.domain.dao.CouponDao;
+import com.sk.service.exception.ServiceException;
 
 @Service
 public class CouponService {
@@ -41,9 +42,9 @@ public class CouponService {
 				couponDao.persist(coupon);
 			}
 		}catch(IllegalAccessException e){
-			throw new RuntimeException(e);
+			throw new ServiceException(e);
 		}catch(InstantiationException e){
-			throw new RuntimeException(e);
+			throw new ServiceException(e);
 		}
 	}
 	
@@ -54,10 +55,12 @@ public class CouponService {
 	private String prepareCouponString() {
 		String couponString;
 		Coupon existingCoupon;
+		
 		do{
 			couponString = RandomStringUtils.randomAlphabetic(10);
 			existingCoupon = couponDao.findByCouponString(couponString);
 		}while(existingCoupon != null);
+		
 		return couponString;
 	}
 
