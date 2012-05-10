@@ -1,14 +1,5 @@
 package com.sk.frontend.web.controller;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +33,18 @@ import com.sk.util.builder.CreditCardPaymentMethodBuilder;
 import com.sk.util.builder.OrderBuilder;
 import com.sk.util.builder.ShopperBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasKey;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PaymentControllerTest {
@@ -78,7 +81,7 @@ public class PaymentControllerTest {
 	public void shouldCreateModelForPayment() {
 
 		ModelAndView mav = controller.getPaymentMAV(null,request);
-		assertThat(mav.getModelMap().containsKey("payment"), equalTo(true));
+		assertThat(mav.getModelMap(),hasKey("payment"));
 		
 	}
 	
@@ -91,14 +94,14 @@ public class PaymentControllerTest {
 		
 		when(cardPopulatorHelper.getYears()).thenReturn(years);
 		ModelAndView mav = controller.getPaymentMAV(null,request);
-		assertThat(mav.getModelMap().containsKey("years"), equalTo(true));
-		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("years");
-		assertThat(fromModel.containsKey("2012"), equalTo(true));
-		assertThat(fromModel.containsKey("2013"), equalTo(true));
+		assertThat(mav.getModelMap(),hasKey("years"));
+		Map<String,Object> fromModel = (Map<String, Object>) mav.getModelMap().get("years");
+		assertThat(fromModel,hasKey("2012"));
+		assertThat(fromModel,hasKey("2013"));
 		assertThat(fromModel.keySet().size(), equalTo(2));
 		
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSetMonthsWhileCreatingModel(){
@@ -109,10 +112,10 @@ public class PaymentControllerTest {
 		when(cardPopulatorHelper.getMonths()).thenReturn(months);
 		
 		ModelAndView mav = controller.getPaymentMAV(null,request);
-		assertThat(mav.getModelMap().containsKey("months"), equalTo(true));
-		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("months");
-		assertThat(fromModel.containsKey("01"), equalTo(true));
-		assertThat(fromModel.containsKey("02"), equalTo(true));
+		assertThat(mav.getModelMap(),hasKey("months"));
+		Map<String,Object> fromModel = (Map<String, Object>) mav.getModelMap().get("months");
+		assertThat(fromModel,hasKey("01"));
+		assertThat(fromModel,hasKey("02"));
 		assertThat(fromModel.keySet().size(), equalTo(2));
 	}
 	
@@ -125,10 +128,10 @@ public class PaymentControllerTest {
 		
 		when(cardPopulatorHelper.getCreditCardTypes()).thenReturn(creditCardTypes);
 		ModelAndView mav = controller.getPaymentMAV(null,request);
-		assertThat(mav.getModelMap().containsKey("creditCardTypes"), equalTo(true));
-		Map<String,String> fromModel = (Map<String, String>) mav.getModelMap().get("creditCardTypes");
-		assertThat(fromModel.containsKey(CreditCardType.MASTERCARD.name()), equalTo(true));
-		assertThat(fromModel.containsKey(CreditCardType.VISA.name()), equalTo(true));
+		assertThat(mav.getModelMap(),hasKey("creditCardTypes"));
+		Map<String,Object> fromModel = (Map<String, Object>) mav.getModelMap().get("creditCardTypes");
+		assertThat(fromModel,hasKey(CreditCardType.MASTERCARD.name()));
+		assertThat(fromModel,hasKey(CreditCardType.VISA.name()));
 		assertThat(fromModel.keySet().size(), equalTo(2));
 
 	}
