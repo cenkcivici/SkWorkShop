@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.sk.domain.BaseEntity;
 
 @Entity
-@Table(name="catalog")
+@Table(name="coupon")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
 	    name="couponType",
