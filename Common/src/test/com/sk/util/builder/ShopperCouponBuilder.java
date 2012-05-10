@@ -23,6 +23,11 @@ public class ShopperCouponBuilder extends BaseBuilder<ShopperCoupon, ShopperCoup
 		return this;
 	}
 	
+	public ShopperCouponBuilder discount(Double discount){
+		this.discountAmount = discount;
+		return this;
+	}
+	
 	public ShopperCouponBuilder shopper(Shopper shopper){
 		this.shopper = shopper;
 		return this;

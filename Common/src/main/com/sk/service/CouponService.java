@@ -6,6 +6,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sk.domain.Order;
 import com.sk.domain.coupon.Coupon;
 import com.sk.domain.coupon.CouponHolder;
 import com.sk.domain.dao.CouponDao;
@@ -25,6 +26,14 @@ public class CouponService {
 
 	public <T extends Coupon> List<T> getAllCouponsFor(Class<T> couponClass){
 		return couponDao.getAllCoupons(couponClass);
+	}
+	
+	public Coupon getCoupon(String couponString){
+		return couponDao.findByCouponString(couponString);
+	}
+	
+	public Coupon persist(Coupon coupon){
+		return couponDao.persist(coupon);
 	}
 	
 	public <T extends Coupon> void createCoupon(Class<T> couponClass, CouponHolder couponHolder, double discountAmount, int numberOfCoupons){
@@ -62,6 +71,23 @@ public class CouponService {
 		}while(existingCoupon != null);
 		
 		return couponString;
+	}
+
+	public Coupon getUnusedCoupon(String couponString, Order order) {
+		
+		Coupon coupon = couponDao.findUnusedByCouponString(couponString);
+		if(coupon != null && coupon.canUseCoupon(order)){
+			return coupon;
+		}
+		
+		return null;
+	}
+
+	public void useCouponIfAvailable(String couponString, Order order) {
+		Coupon coupon = getUnusedCoupon(couponString, order);
+		if(coupon != null){
+			order.useCoupon(coupon);
+		}
 	}
 
 }

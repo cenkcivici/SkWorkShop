@@ -66,6 +66,10 @@ function PaymentController(view, service) {
 	this.displayPaymentPlan = function(creditCardNumber,callback) {
 		instance.service.getInstallmentPlan(creditCardNumber,callback);
 	};
+	
+	this.updateCouponStatus = function(couponString, callback){
+		instance.service.updateCouponStatus(couponString, callback);
+	};
 };
 
 function PaymentView() {
@@ -75,6 +79,7 @@ function PaymentView() {
 		instance.controller = controller;
 		$('#creditCard\\.cardNumber').blur(instance.viewPaymentPlan);
 		$('#creditCard\\.cardNumber').blur(instance.viewBonus);
+		$('#couponString').blur(instance.updateCost);
 	};
 	
 	this.viewPaymentPlan = function() {
@@ -87,12 +92,33 @@ function PaymentView() {
 		instance.controller.displayBonus(creditCardNumber,instance.updateBonus);
 	};
 	
+	this.updateCost = function() {
+		var couponString = $('#couponString').val();
+		instance.controller.updateCouponStatus(couponString, instance.updateCouponStatus);
+	};
+	
 	this.updatePaymentPlan = function(html) {
 		$('#availablePlans').html(html);
 	};
 	
 	this.updateBonus = function(html) {
 		$('#availableBonusPoints').html(html);
+	};
+	
+	this.updateCouponStatus = function(html) {
+		
+		var couponStatus = $('#couponStatus',$(html)).html();
+		var discountedAmount = $('#discountedAmount',$(html)).html();
+		
+		$('#couponStatus').html(couponStatus);
+		$('#discountedAmount').html(discountedAmount);
+		
+		if(couponStatus == "Valid"){
+			$('#couponStringParam').val($('#couponString').val());
+		}else{
+			$('#couponStringParam').val("");
+		}
+		
 	};
 };
 
@@ -111,6 +137,14 @@ function PaymentService() {
 		$.ajax ({
 			url:appRoot + "/queryBonus/",
 			data: {'creditCardNumber' : creditCardNumber},
+			type:'post',
+			success: callback});
+	};
+	
+	this.updateCouponStatus = function(couponString, callback){
+		$.ajax ({
+			url:appRoot + "/payment/useCoupon",
+			data: {'couponString' : couponString},
 			type:'post',
 			success: callback});
 	};

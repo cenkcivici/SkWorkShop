@@ -62,4 +62,10 @@ public class CouponDaoTest extends BaseIntegration{
 		Coupon coupon = couponDao.findUnusedByCouponString("ASDFASDFAS");
 		assertThat(coupon, nullValue());
 	}
+	
+	@Test
+	public void shouldReturnNullIfCouponNotExists(){
+		Coupon coupon = couponDao.findUnusedByCouponString("ASDFASDFAS");
+		assertThat(coupon, nullValue());
+	}
 }
