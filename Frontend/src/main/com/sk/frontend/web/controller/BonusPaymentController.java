@@ -28,7 +28,7 @@ public class BonusPaymentController {
 		ModelAndView mav = new ModelAndView("bonusQuery");
 		
 		VPOSResponse vposResponse = garantiVPOSService.queryBonus(creditCardNumber);
-		mav.addObject("bonus",vposResponse.getDetailMessage());
+		mav.addObject("abonus",vposResponse.getDetailMessage());
 		return mav;
 	}
 }
