@@ -56,8 +56,10 @@ public class Shopper extends BaseEntity implements CouponHolder{
 			if (other.email != null){
 				return false;
 			}
-		} else if (!email.equals(other.email))
+		} else if (!email.equals(other.email)){
 			return false;
+		}
+		
 		return true;
 	}
 
