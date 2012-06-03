@@ -50,17 +50,22 @@ public class InstallmentPlan extends BaseEntity implements Comparable<Installmen
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)){
 			return false;
-		if (Hibernate.getClass(this) != Hibernate.getClass(obj))
+		}
+		if (Hibernate.getClass(this) != Hibernate.getClass(obj)){
 			return false;
+		}
 		InstallmentPlan other = (InstallmentPlan) obj;
-		if (Double.doubleToLongBits(interestRate) != Double.doubleToLongBits(other.interestRate))
+		if (Double.doubleToLongBits(interestRate) != Double.doubleToLongBits(other.interestRate)){
 			return false;
-		if (months != other.months)
+		}
+		if (months != other.months){
 			return false;
+		}
 		return true;
 	}
 

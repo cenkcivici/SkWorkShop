@@ -13,6 +13,8 @@ import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.sk.service.exception.ServiceException;
+
 @Service
 public class EncryptionService {
 
@@ -36,7 +38,7 @@ public class EncryptionService {
 			return new String(Hex.encodeHex(encrypted)).toUpperCase();
 	
 		}catch(Exception e){
-			throw new RuntimeException(e);
+			throw new ServiceException(e);
 		}
 
 	}
@@ -54,7 +56,7 @@ public class EncryptionService {
 			return new String(decrypted, "UTF-8");
 	
 		}catch(Exception e){
-			throw new RuntimeException(e);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -78,7 +80,7 @@ public class EncryptionService {
 			
 			return cipher;
 		}catch(Exception e){
-			throw new RuntimeException(e);
+			throw new ServiceException(e);
 		}
 	}
 

@@ -28,10 +28,12 @@ public class CouponDao extends GenericDao<Coupon>{
 
 	public Coupon findUnusedByCouponString(String couponString) {
 		Coupon coupon = findByCouponString(couponString);
-		if(coupon == null || coupon.isUsed())
+		if(coupon == null || coupon.isUsed()){
 			return null;
-		else
+		}
+		else{
 			return coupon;
+		}
 	}
 
 }

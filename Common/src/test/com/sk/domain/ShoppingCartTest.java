@@ -6,8 +6,10 @@ import static org.hamcrest.Matchers.sameInstance;
 
 import org.junit.Test;
 
+import com.sk.domain.coupon.Coupon;
 import com.sk.util.builder.ProductBuilder;
 import com.sk.util.builder.ProductWithQuantityBuilder;
+import com.sk.util.builder.ShopperCouponBuilder;
 import com.sk.util.builder.ShoppingCartBuilder;
 
 
@@ -24,6 +26,21 @@ public class ShoppingCartTest {
 		ShoppingCart cart = new ShoppingCartBuilder().items(productWithQuantityA,productWithQuantityB).build();
 		
 		assertThat(cart.getTotalCost(), equalTo(800d));
+	}
+	
+	@Test
+	public void shouldCalculateDiscountedTotalCost(){
+		
+		Product productA = new ProductBuilder().price(100d).build();
+		Product productB = new ProductBuilder().price(200d).build();
+		
+		ProductWithQuantity productWithQuantityA = new ProductWithQuantityBuilder().product(productA).quantity(2).build();
+		ProductWithQuantity productWithQuantityB = new ProductWithQuantityBuilder().product(productB).quantity(3).build();
+		
+		ShoppingCart cart = new ShoppingCartBuilder().items(productWithQuantityA,productWithQuantityB).build();
+		Coupon coupon = new ShopperCouponBuilder().discount(10D).build();
+		assertThat(cart.getTotalDiscountedCost(coupon), equalTo(790d));
+		
 	}
 	
 	@Test
