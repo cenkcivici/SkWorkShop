@@ -16,11 +16,17 @@ public class CreditCardProfileTest {
 		InstallmentPlan installmentPlan = new InstallmentPlanBuilder().build();
 		CreditCardProfile cardProfile = new CreditCardProfileBuilder().installmentPlans(installmentPlan).build();
 		
+		
 		cardProfile.deleteInstallmentPlan(installmentPlan);
 		
 		assertThat(cardProfile.getInstallmentPlans().size(),equalTo(0));
 	}
 	
+
+	@Test
+	public void shouldTestSKWorkshop5() {
+		System.out.println("Testing");
+	}
 	@Test
 	public void shouldAddInstallmentPlan() {
 		InstallmentPlan installmentPlan = new InstallmentPlanBuilder().build();
