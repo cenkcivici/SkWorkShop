@@ -23,10 +23,13 @@ public class BonusPaymentController {
 		this.garantiVPOSService = garantiVPOSService;
 	}
 
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView query(@RequestParam("creditCardNumber") String creditCardNumber,HttpServletRequest request)  {
 		ModelAndView mav = new ModelAndView("bonusQuery");
 		
+		
+		System.out.println("Code change");
 		VPOSResponse vposResponse = garantiVPOSService.queryBonus(creditCardNumber);
 		mav.addObject("bonus",vposResponse.getDetailMessage());
 		return mav;
