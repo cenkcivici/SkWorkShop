@@ -30,6 +30,7 @@ public class CreditCardProfile extends BaseEntity implements Comparable<CreditCa
 
 	public void setBinDigits(String binDigits) {
 		this.binDigits = binDigits;
+		System.out.println("New change for SKWORKSHOP 4");
 	}
 
 	public String getVendor() {
